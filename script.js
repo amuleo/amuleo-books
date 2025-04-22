@@ -74,3 +74,71 @@ pageTitle.insertAdjacentElement('afterend', summaryBox);
 }
 
 document.addEventListener('DOMContentLoaded', loadBooks);
+
+// ---------------------------
+// اسکریپت مربوط به فایل جدید
+// ---------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    // انتخاب المان‌های ورود رمز عبور
+    const loginContainer = document.getElementById('loginContainer');
+    const addBookContainer = document.getElementById('addBookContainer');
+    const loginButton = document.getElementById('loginButton');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginError = document.getElementById('loginError');
+
+    // انتخاب المان‌های اضافه کردن کتاب
+    const addBookButton = document.getElementById('addBookButton');
+    const bookName = document.getElementById('bookName');
+    const bookAuthor = document.getElementById('bookAuthor');
+    const bookPages = document.getElementById('bookPages');
+    const bookYear = document.getElementById('bookYear');
+    const addBookMessage = document.getElementById('addBookMessage');
+
+    // رمز عبور ثابت
+    const predefinedPassword = "12345";
+
+    // مدیریت ورود رمز عبور
+    loginButton.addEventListener('click', () => {
+        const enteredPassword = passwordInput.value;
+        if (enteredPassword === predefinedPassword) {
+            loginContainer.style.display = "none"; // مخفی کردن فرم ورود
+            addBookContainer.style.display = "block"; // نمایش فرم اضافه کردن کتاب
+        } else {
+            loginError.style.display = "block"; // نمایش خطا
+        }
+    });
+
+    // مدیریت اضافه کردن کتاب
+    addBookButton.addEventListener('click', async () => {
+        const newBook = {
+            name: bookName.value,
+            author: bookAuthor.value,
+            pages: parseInt(bookPages.value),
+            year: bookYear.value
+        };
+
+        try {
+            // ذخیره کتاب به JSON (نیاز به سرور)
+            const response = await fetch('books.json', {
+                method: 'POST', // نوع درخواست
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(newBook) // تبدیل کتاب به JSON
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to add book');
+            }
+
+            // نمایش پیام موفقیت
+            addBookMessage.style.display = "block";
+            bookName.value = "";
+            bookAuthor.value = "";
+            bookPages.value = "";
+            bookYear.value = "";
+        } catch (error) {
+            console.error(error.message);
+        }
+    });
+});
