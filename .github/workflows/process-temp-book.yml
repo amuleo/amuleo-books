@@ -1,0 +1,23 @@
+name: Process Temporary Book
+
+on:
+  push:
+    paths:
+      - temp-book.json # فقط وقتی این فایل تغییر کنه، اجرا بشه
+
+jobs:
+  process-book:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Read and process book file
+        run: |
+          echo "Reading temp-book.json..."
+          BOOK_DATA=$(cat temp-book.json)
+          echo "Processing book data: $BOOK_DATA"
+
+      - name: Clean up temporary file
+        run: rm temp-book.json
