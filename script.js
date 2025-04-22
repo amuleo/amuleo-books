@@ -78,38 +78,10 @@ document.addEventListener('DOMContentLoaded', loadBooks);
 // ---------------------------
 // اسکریپت مربوط به فایل جدید
 // ---------------------------
-document.addEventListener('DOMContentLoaded', () => {
-    // انتخاب المان‌های ورود رمز عبور
-    const loginContainer = document.getElementById('loginContainer');
-    const addBookContainer = document.getElementById('addBookContainer');
-    const loginButton = document.getElementById('loginButton');
-    const passwordInput = document.getElementById('passwordInput');
-    const loginError = document.getElementById('loginError');
 
-    // انتخاب المان‌های اضافه کردن کتاب
-    const addBookButton = document.getElementById('addBookButton');
-    const bookName = document.getElementById('bookName');
-    const bookAuthor = document.getElementById('bookAuthor');
-    const bookPages = document.getElementById('bookPages');
-    const bookYear = document.getElementById('bookYear');
-    const addBookMessage = document.getElementById('addBookMessage');
-
-    // رمز عبور ثابت
-    const predefinedPassword = "12345";
-
-    // مدیریت ورود رمز عبور
-    loginButton.addEventListener('click', () => {
-        const enteredPassword = passwordInput.value;
-        if (enteredPassword === predefinedPassword) {
-            loginContainer.style.display = "none"; // مخفی کردن فرم ورود
-            addBookContainer.style.display = "block"; // نمایش فرم اضافه کردن کتاب
-        } else {
-            loginError.style.display = "block"; // نمایش خطا
-        }
-    });
-
-    // مدیریت اضافه کردن کتاب
+// مدیریت اضافه کردن کتاب
 addBookButton.addEventListener('click', async () => {
+    // اطلاعات وارد شده توسط کاربر
     const newBook = {
         bookName: bookName.value,
         bookAuthor: bookAuthor.value,
@@ -118,16 +90,22 @@ addBookButton.addEventListener('click', async () => {
     };
 
     try {
-        // ارسال درخواست به GitHub API
+        // بررسی رمز عبور (اگر نیاز باشد)
+        const password = passwordInput.value; // فرض بر این که فیلد رمز عبور داریم
+        if (password !== "12345") {  // رمز عبور معتبر را جایگزین کنید
+            throw new Error('رمز عبور اشتباه است!');
+        }
+
+        // ارسال درخواست به GitHub API برای اجرای Workflow
         const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // جایگزین با توکن خود
+                'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // توکن خودتان را قرار دهید
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                ref: 'main', // شاخه هدف
+                ref: 'main', // برنچ هدف
                 inputs: newBook // ارسال اطلاعات کتاب به Workflow
             })
         });
@@ -136,14 +114,19 @@ addBookButton.addEventListener('click', async () => {
             throw new Error('Failed to trigger workflow');
         }
 
-        // نمایش پیام موفقیت
+        // نمایش پیام موفقیت و پاک کردن مقادیر
         addBookMessage.style.display = "block";
+        addBookMessage.innerText = "کتاب با موفقیت اضافه شد!";
         bookName.value = "";
         bookAuthor.value = "";
         bookPages.value = "";
         bookYear.value = "";
+        passwordInput.value = ""; // پاک کردن فیلد رمز عبور
         console.log("Workflow triggered successfully!");
     } catch (error) {
+        // نمایش پیام خطا
+        addBookMessage.style.display = "block";
+        addBookMessage.innerText = error.message;
         console.error("Error:", error.message);
     }
 });
