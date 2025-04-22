@@ -81,6 +81,7 @@ document.addEventListener('DOMContentLoaded', loadBooks);
 
 document.addEventListener('DOMContentLoaded', () => {
     // انتخاب عناصر HTML
+    const loginButton = document.getElementById('loginButton'); 
     const addBookButton = document.getElementById('addBookButton');
     const bookName = document.getElementById('bookName');
     const bookAuthor = document.getElementById('bookAuthor');
@@ -100,13 +101,19 @@ document.addEventListener('DOMContentLoaded', () => {
             bookYear: bookYear.value
         };
 
-        try {
-            // بررسی رمز عبور
-            const password = passwordInput.value;
-            if (password !== "12345") { // جایگزین رمز عبور معتبر
-                throw new Error('رمز عبور اشتباه است!');
-            }
+          // مدیریت ورود
+    loginButton.addEventListener('click', (event) => {
+        event.preventDefault(); // جلوگیری از رفتار پیش‌فرض فرم
 
+        const password = passwordInput.value;
+        if (password === "12345") { // رمز عبور معتبر
+            addBookSection.style.display = "block"; // نمایش بخش اضافه کردن کتاب
+            console.log("رمز عبور درست است. بخش اضافه کردن کتاب نمایش داده شد.");
+        } else {
+            alert("رمز عبور اشتباه است!"); // پیام خطا
+            console.error("رمز عبور اشتباه.");
+        }
+    });
             // ارسال درخواست به GitHub API برای اجرای Workflow
             const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
                 method: 'POST',
