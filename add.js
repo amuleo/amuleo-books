@@ -39,8 +39,8 @@ document.addEventListener('DOMContentLoaded', () => {
             bookAuthor,
             bookPages,
             bookYear
-        };
-
+        }
+                const GH_TOKEN = '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'
         try {
             // ارسال درخواست به GitHub API
             const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
