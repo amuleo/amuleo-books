@@ -79,16 +79,16 @@
         <div id="message">JSON با موفقیت کپی شد!</div>
     </div>
 
-    <script>
+   <script>
     document.getElementById('copyJson').addEventListener('click', () => {
         // دریافت مقادیر فرم
-        const name = document.getElementById('bookName').value;
-        const author = document.getElementById('bookAuthor').value;
-        const pages = parseInt(document.getElementById('bookPages').value);
-        const year = parseInt(document.getElementById('bookYear').value);
+        const bookName = document.getElementById('bookName').value;
+        const bookAuthor = document.getElementById('bookAuthor').value;
+        const bookPages = parseInt(document.getElementById('bookPages').value);
+        const bookYear = parseInt(document.getElementById('bookYear').value);
 
         // ایجاد مقدار نهایی
-        const bookData = `, { bookName: "${bookName}", bookAuthor: "${bookAuthor}", bookPages: ${bookPages}, bookYear: ${bookYear} };`;
+        const bookData = `, { name: "${bookName}", author: "${bookAuthor}", pages: ${bookPages}, year: ${bookYear} };`;
 
         // کپی به کلیپ‌بورد
         navigator.clipboard.writeText(bookData)
@@ -104,6 +104,6 @@
                 console.error('Error copying to clipboard:', err);
             });
     });
-    </script>
+</script>
 </body>
 </html>
