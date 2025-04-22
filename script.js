@@ -17,7 +17,7 @@ const totalPages = books.reduce((sum, book) => sum + book.pages, 0); // جمع �
 
 // افزودن متن به باکس خلاصه
 const summaryText = document.createElement('p');
-summaryText.textContent = `تعداد کتاب‌های مطالعه‌شده: ${totalBooks} | تعداد کل صفحات: ${totalPages}`;
+summaryText.textContent = `تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}`;
 summaryBox.appendChild(summaryText);
 
 // اضافه کردن خلاصه به بالای صفحه
