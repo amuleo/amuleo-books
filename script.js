@@ -79,54 +79,68 @@ document.addEventListener('DOMContentLoaded', loadBooks);
 // اسکریپت مربوط به فایل جدید
 // ---------------------------
 
-// مدیریت اضافه کردن کتاب
-addBookButton.addEventListener('click', async () => {
-    // اطلاعات وارد شده توسط کاربر
-    const newBook = {
-        bookName: bookName.value,
-        bookAuthor: bookAuthor.value,
-        bookPages: bookPages.value,
-        bookYear: bookYear.value
-    };
+document.addEventListener('DOMContentLoaded', () => {
+    // انتخاب عناصر HTML
+    const addBookButton = document.getElementById('addBookButton');
+    const bookName = document.getElementById('bookName');
+    const bookAuthor = document.getElementById('bookAuthor');
+    const bookPages = document.getElementById('bookPages');
+    const bookYear = document.getElementById('bookYear');
+    const passwordInput = document.getElementById('passwordInput');
+    const addBookMessage = document.getElementById('addBookMessage');
 
-    try {
-        // بررسی رمز عبور (اگر نیاز باشد)
-        const password = passwordInput.value; // فرض بر این که فیلد رمز عبور داریم
-        if (password !== "12345") {  // رمز عبور معتبر را جایگزین کنید
-            throw new Error('رمز عبور اشتباه است!');
+    // مدیریت اضافه کردن کتاب
+    addBookButton.addEventListener('click', async (event) => {
+        event.preventDefault(); // جلوگیری از رفتار پیش‌فرض فرم
+
+        const newBook = {
+            bookName: bookName.value,
+            bookAuthor: bookAuthor.value,
+            bookPages: bookPages.value,
+            bookYear: bookYear.value
+        };
+
+        try {
+            // بررسی رمز عبور
+            const password = passwordInput.value;
+            if (password !== "12345") { // جایگزین رمز عبور معتبر
+                throw new Error('رمز عبور اشتباه است!');
+            }
+
+            // ارسال درخواست به GitHub API برای اجرای Workflow
+            const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // جایگزین توکن خودتان
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ref: 'main', // برنچ هدف
+                    inputs: newBook // ارسال اطلاعات کتاب به Workflow
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to trigger workflow');
+            }
+
+            // نمایش پیام موفقیت و پاک کردن مقادیر
+            addBookMessage.style.display = "block";
+            addBookMessage.classList.add('success');
+            addBookMessage.innerText = "کتاب با موفقیت اضافه شد!";
+            bookName.value = "";
+            bookAuthor.value = "";
+            bookPages.value = "";
+            bookYear.value = "";
+            passwordInput.value = ""; // پاک کردن فیلد رمز عبور
+            console.log("Workflow triggered successfully!");
+        } catch (error) {
+            // نمایش پیام خطا
+            addBookMessage.style.display = "block";
+            addBookMessage.classList.add('error');
+            addBookMessage.innerText = error.message;
+            console.error("Error:", error.message);
         }
-
-        // ارسال درخواست به GitHub API برای اجرای Workflow
-        const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // توکن خودتان را قرار دهید
-                'Accept': 'application/vnd.github.v3+json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                ref: 'main', // برنچ هدف
-                inputs: newBook // ارسال اطلاعات کتاب به Workflow
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error('Failed to trigger workflow');
-        }
-
-        // نمایش پیام موفقیت و پاک کردن مقادیر
-        addBookMessage.style.display = "block";
-        addBookMessage.innerText = "کتاب با موفقیت اضافه شد!";
-        bookName.value = "";
-        bookAuthor.value = "";
-        bookPages.value = "";
-        bookYear.value = "";
-        passwordInput.value = ""; // پاک کردن فیلد رمز عبور
-        console.log("Workflow triggered successfully!");
-    } catch (error) {
-        // نمایش پیام خطا
-        addBookMessage.style.display = "block";
-        addBookMessage.innerText = error.message;
-        console.error("Error:", error.message);
-    }
+    });
 });
