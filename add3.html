@@ -88,13 +88,8 @@
             const bookYear = parseInt(document.getElementById('bookYear').value);
 
             // ایجاد آبجکت JSON
-            const bookData = ,
-    {
-    bookName,
-    bookAuthor,
-    bookPages,
-    bookYear
-    };
+            const bookData = ', { bookName, bookAuthor, bookPages, bookYear };';
+
 
             // تبدیل به JSON و کپی به کلیپ‌بورد
             navigator.clipboard.writeText(JSON.stringify(bookData, null, 2))
