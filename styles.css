@@ -31,7 +31,7 @@ body {
     margin-bottom: 20px;
     background-color: #cfcab9;
     text-align: center;
-    width: 70vmax;;
+    width: 70vmax; /* عرض کارت */
     height: auto; /* انعطاف‌پذیری ارتفاع کارت */
     min-height: 250px; /* حداقل ارتفاع */
     box-sizing: border-box;
@@ -43,45 +43,12 @@ body {
     direction: rtl;
 }
 
-@media (max-width: 768px) {
-    body {
-        font-size: 4vw; /* اندازه متن برای موبایل */
-    }
-
-    .container {
-        padding-top: 10px; /* کاهش فاصله برای موبایل */
-        width: 100%;
-    }
-
-    .card {
-        width: 40vmax; /* کارد کمی باریک‌تر شود برای موبایل */
-        padding: 10px; /* کاهش فضای داخلی در موبایل */
-    }
-
-    .text-centered {
-        font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
-        line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
-    }
-
-      .card-background-text {
-        font-size: 20vw !important; /* اضافه کردن !important برای اولویت‌دهی */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-    }
-
-    .card-content {
-    margin-right: 10px; /* فاصله منفی از سمت راست کارت */
-    }
-
-}
-
 .card-content {
     position: relative;
     z-index: 1; /* متن اصلی روی شماره قرار بگیرد */
     text-align: justify; /* تنظیم متن به حالت Justify */
     direction: rtl; /* جهت متن راست به چپ */
-    margin-right: 20px; /* فاصله منفی از سمت راست کارت */
+    margin-right: 20px; /* فاصله از سمت راست کارت */
 }
 
 .card-background-text {
@@ -111,14 +78,38 @@ body {
     margin: 20px; /* فاصله از اطراف */
     font-size: 2vw; /* اندازه متن مناسب */
     text-align: center; /* متن وسط‌چین */
-    width: 68.2vmax;
+    width: 68.2vmax; /* عرض باکس خلاصه */
 }
 
 @media (max-width: 768px) {
+    body {
+        font-size: 90%; /* کوچک‌سازی کل صفحه */
+        transform: scale(0.95); /* مقیاس‌دهی کلی به صورت ذره‌بینی */
+        transform-origin: top center; /* تنظیم نقطه مقیاس */
+    }
+
+    .container {
+        padding-top: 10px; /* کاهش فاصله برای موبایل */
+        width: 95%; /* کمی باریک‌تر شدن برای موبایل */
+    }
+
+    .card {
+        width: 65vmax; /* کاهش عرض کارت */
+        padding: 10px; /* کاهش فضای داخلی */
+    }
+
+    .card-content {
+        font-size: 1.6rem; /* متن کمی کوچک‌تر */
+        margin-right: 10px; /* فاصله از سمت راست کمتر شود */
+    }
+
+    .card-background-text {
+        font-size: 18vw !important; /* اندازه کمی کوچک‌تر شود */
+    }
+
     .summary-box {
-        width: 37.5vmax; /* کارد کمی باریک‌تر شود برای موبایل */
-        padding: 10px; /* کاهش فضای داخلی در موبایل */
-        font-size: 3vw; /* اندازه متن برای موبایل */
-         margin: 10px;
+        width: 60vmax; /* کوچک‌تر شدن باکس خلاصه */
+        padding: 12px; /* تنظیم فضای داخلی */
+        font-size: 1.8rem; /* متن کمی کوچک‌تر شود */
     }
 }
