@@ -31,7 +31,7 @@ body {
     margin-bottom: 20px;
     background-color: #cfcab9;
     text-align: center;
-    width: 90%;
+    width: width: 70vmax;;
     height: auto; /* انعطاف‌پذیری ارتفاع کارت */
     min-height: 250px; /* حداقل ارتفاع */
     box-sizing: border-box;
@@ -54,7 +54,7 @@ body {
     }
 
     .card {
-        width: 95%; /* کارد کمی باریک‌تر شود برای موبایل */
+        width: 70vmax; /* کارد کمی باریک‌تر شود برای موبایل */
         padding: 10px; /* کاهش فضای داخلی در موبایل */
     }
 
