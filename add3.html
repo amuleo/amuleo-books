@@ -67,7 +67,8 @@
         }
 
         #jsonButton {
-    background-color: #f39c12; /* رنگ نارنجی جذاب */
+            background-color: #f39c12; /* رنگ نارنجی جذاب */
+            display: none; /* مخفی کردن دکمه در شروع */
 }
 
 #jsonButton:hover {
@@ -83,10 +84,10 @@
         <input type="text" id="bookAuthor" placeholder="نویسنده کتاب" required>
         <input type="number" id="bookPages" placeholder="تعداد صفحات" required>
         <input type="number" id="bookYear" placeholder="سال انتشار" required>
-        <button id="copyJson">کپی JSON در کلیپ‌بورد</button>
+        <button id="copyJson">کپی جیسون در کلیپ‌بورد</button>
         <button id="githubButton" onclick="window.open('https://github.com/login', '_blank')">ورود به گیت‌هاب</button>
-        <button id="jsonButton" onclick="window.open('https://github.com/amuleo/amuleo-books/blob/main/books.json', '_blank')">ورود به JSON</button>
-        <div id="message">JSON با موفقیت کپی شد!</div>
+        <button id="jsonButton" onclick="window.open('https://github.com/amuleo/amuleo-books/blob/main/books.json', '_blank')">ورود به جیسون</button>
+        <div id="message">جیسون با موفقیت کپی شد!</div>
     </div>
 
    <script>
