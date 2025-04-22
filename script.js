@@ -5,27 +5,24 @@ async function loadBooks() {
             throw new Error('Failed to load JSON');
         }
         const books = await response.json(); // تبدیل به JSON
-        console.log('Fetched books:', books); // بررسی محتوا
-
         const bookContainer = document.getElementById('bookContainer');
-        console.log('Book container:', bookContainer); // بررسی DOM برای اطمینان از وجود container
 
         // ساخت و افزودن باکس خلاصه
-        const summaryBox = document.createElement('div');
-        summaryBox.className = 'summary-box';
+const summaryBox = document.createElement('div');
+summaryBox.className = 'summary-box';
 
-        // محاسبه تعداد کتاب‌ها و تعداد کل صفحات
-        const totalBooks = books.length;
-        const totalPages = books.reduce((sum, book) => sum + book.pages, 0); // جمع کل صفحات
+// محاسبه تعداد کتاب‌ها و تعداد کل صفحات
+const totalBooks = books.length;
+const totalPages = books.reduce((sum, book) => sum + book.pages, 0); // جمع کل صفحات
 
-        // افزودن متن به باکس خلاصه
-        const summaryText = document.createElement('p');
-        summaryText.textContent = `تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}`;
-        summaryBox.appendChild(summaryText);
+// افزودن متن به باکس خلاصه
+const summaryText = document.createElement('p');
+summaryText.textContent = `تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}`;
+summaryBox.appendChild(summaryText);
 
-        // اضافه کردن خلاصه به بالای صفحه
-        const pageTitle = document.querySelector('h1'); // انتخاب h1
-        pageTitle.insertAdjacentElement('afterend', summaryBox);
+// اضافه کردن خلاصه به بالای صفحه
+const pageTitle = document.querySelector('h1'); // انتخاب h1
+pageTitle.insertAdjacentElement('afterend', summaryBox);
 
         books.forEach((book, index) => {
             const card = document.createElement('div');
@@ -69,15 +66,10 @@ async function loadBooks() {
             // ترکیب متن پس‌زمینه و محتوای اصلی
             card.appendChild(backgroundText); // اضافه کردن متن بزرگ
             card.appendChild(content); // اضافه کردن محتوای کارت
-
-            console.log('Card created:', card); // لاگ برای بررسی کارت
-
             bookContainer.appendChild(card); // اضافه کردن کارت به صفحه
         });
-
-        console.log('All cards added successfully'); // تایید اینکه همه کارت‌ها اضافه شدند
     } catch (error) {
-        console.error('Error loading books:', error.message);
+        console.error(error.message);
     }
 }
 
