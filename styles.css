@@ -24,15 +24,18 @@ body {
 }
 
 .card {
-    position: relative; /* برای کنترل موقعیت عدد */
+    display: flex; /* استفاده از Flexbox */
+    flex-direction: column; /* متن‌ها به صورت عمودی مرتب شوند */
+    justify-content: center; /* عمودی وسط‌چین شود */
+    align-items: center; /* افقی وسط‌چین شود */
     border: 2px solid #9e8e71;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
     background-color: #cfcab9;
-    text-align: right;
+    text-align: center; /* متن‌ها وسط‌چین شوند */
     width: 90%;
-    overflow: hidden; /* برای جلوگیری از خروج محتوا */
+    position: relative;
 }
 
 .text-centered {
@@ -59,6 +62,10 @@ body {
         font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
         line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
     }
+
+      .card-number-bg {
+        font-size: 10vw; /* اندازه عدد بزرگ‌تر برای صفحه‌های کوچکتر */
+    }
 }
 
 .card-number-bg {
@@ -66,7 +73,7 @@ body {
     top: 50%; /* وسط کارت */
     left: 50%; /* وسط کارت */
     transform: translate(-50%, -50%); /* دقیقاً مرکز */
-    font-size: 6vw; /* عدد بزرگ */
+    font-size: 20vw; /* عدد بزرگ */
     font-weight: bold; /* ضخیم */
     color: rgba(0, 0, 0, 0.1); /* کم‌رنگ */
     z-index: 0; /* پشت متن اصلی */
