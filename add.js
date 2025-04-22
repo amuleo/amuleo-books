@@ -1,22 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // انتخاب عناصر مرتبط
+    // انتخاب عناصر مرتبط با ورود و اضافه کردن کتاب
+    const loginButton = document.getElementById('loginButton');
+    const loginPassword = document.getElementById('loginPassword');
+    const loginError = document.getElementById('loginError');
+    const addBookSection = document.getElementById('addBookSection');
     const addBookForm = document.getElementById('addBookForm');
-    const passwordInput = document.getElementById('passwordInput');
     const addBookMessage = document.getElementById('addBookMessage');
 
-    // مدیریت ارسال فرم
-    addBookForm.addEventListener('submit', async (event) => {
+    // مدیریت ورود
+    loginButton.addEventListener('click', (event) => {
         event.preventDefault();
 
-        // اعتبارسنجی رمز عبور
-        const password = passwordInput.value;
-        if (password !== '12345') {
-            addBookMessage.style.display = 'block';
-            addBookMessage.textContent = 'رمز عبور اشتباه است!';
-            addBookMessage.classList.add('error');
+        const password = loginPassword.value; // دریافت مقدار رمز عبور
+        if (password === '12345') { // رمز عبور صحیح
+            document.getElementById('loginContainer').style.display = 'none'; // مخفی کردن فرم ورود
+            addBookSection.style.display = 'block'; // نمایش بخش اضافه کردن کتاب
+            console.log('رمز عبور صحیح وارد شد.');
+        } else {
+            loginError.style.display = 'block'; // نمایش پیام خطا
+            loginError.textContent = 'رمز عبور اشتباه است!';
             console.error('رمز عبور اشتباه.');
-            return;
         }
+    });
+
+    // مدیریت اضافه کردن کتاب
+    addBookForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
 
         // دریافت مقادیر فرم
         const bookName = document.getElementById('bookName').value;
