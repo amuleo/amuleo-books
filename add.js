@@ -45,11 +45,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // ارسال درخواست به GitHub API
             const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
                 method: 'POST',
-                headers: {
-                    'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // توکن را جایگزین کنید
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json',
-                },
+               headers: {
+    'Authorization': `Bearer GH_TOKEN`, // اینجا GH_TOKEN رو وارد می‌کنید
+    'Accept': 'application/vnd.github.v3+json',
+    'Content-Type': 'application/json'
+            },
                 body: JSON.stringify({
                     ref: 'main', // شاخه هدف
                     inputs: newBook // ارسال ورودی‌ها به Workflow
