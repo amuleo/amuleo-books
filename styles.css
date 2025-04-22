@@ -64,7 +64,10 @@ body {
     }
 
       .card-background-text {
-        font-size: 15vw; /* اندازه عدد بزرگ‌تر برای صفحه‌های کوچکتر */
+        font-size: 20vw !important; /* اضافه کردن !important برای اولویت‌دهی */
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
     }
 }
 
