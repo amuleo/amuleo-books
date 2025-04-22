@@ -74,6 +74,10 @@ body {
 .card-content {
     position: relative;
     z-index: 1; /* متن اصلی روی شماره قرار بگیرد */
+    text-align: justify; /* تنظیم متن به حالت Justify */
+    direction: rtl; /* جهت متن راست به چپ */
+    margin-right: 20px; /* فاصله منفی از سمت راست کارت */
+}
 }
 
 .card-background-text {
