@@ -66,73 +66,44 @@ document.addEventListener('DOMContentLoaded', () => {
         loadBooks();
     }
 
-    // انتخاب عناصر مرتبط با فرم ورود و اضافه کردن کتاب
-    const loginButton = document.getElementById('loginButton');
-    const passwordInput = document.getElementById('passwordInput');
-    const addBookSection = document.getElementById('addBookSection');
-    const addBookButton = document.getElementById('addBookButton');
-    const bookName = document.getElementById('bookName');
-    const bookAuthor = document.getElementById('bookAuthor');
-    const bookPages = document.getElementById('bookPages');
-    const bookYear = document.getElementById('bookYear');
-    const addBookMessage = document.getElementById('addBookMessage');
+if (addBookButton) {
+    addBookButton.addEventListener('click', async (event) => {
+        event.preventDefault();
 
-    // مدیریت ورود
-    if (loginButton) {
-        loginButton.addEventListener('click', (event) => {
-            event.preventDefault();
+        const newBook = {
+            bookName: bookName.value,
+            bookAuthor: bookAuthor.value,
+            bookPages: parseInt(bookPages.value), // تبدیل به عدد صحیح
+            bookYear: parseInt(bookYear.value) // تبدیل به عدد صحیح
+        };
 
-            const password = passwordInput.value;
-            if (password === '12345') {
-                addBookSection.style.display = 'block';
-                console.log('رمز عبور درست است.');
-            } else {
-                alert('رمز عبور اشتباه است!');
-                console.error('رمز عبور اشتباه.');
-            }
-        });
-    }
+        try {
+            const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // جایگزین با توکن معتبر
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ref: 'main', // شاخه هدف
+                    inputs: newBook, // ورودی‌های ارسال‌شده به Workflow
+                }),
+            });
 
-    // مدیریت اضافه کردن کتاب
-    if (addBookButton) {
-        addBookButton.addEventListener('click', async (event) => {
-            event.preventDefault();
+            if (!response.ok) throw new Error('Failed to trigger workflow');
 
-            const newBook = {
-                bookName: bookName.value,
-                bookAuthor: bookAuthor.value,
-                bookPages: bookPages.value,
-                bookYear: bookYear.value,
-            };
-
-            try {
-                const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        ref: 'main',
-                        inputs: newBook,
-                    }),
-                });
-
-                if (!response.ok) throw new Error('Failed to trigger workflow');
-
-                addBookMessage.style.display = 'block';
-                addBookMessage.textContent = 'کتاب با موفقیت اضافه شد!';
-                bookName.value = '';
-                bookAuthor.value = '';
-                bookPages.value = '';
-                bookYear.value = '';
-                console.log('Book added successfully!');
-            } catch (error) {
-                addBookMessage.style.display = 'block';
-                addBookMessage.textContent = error.message;
-                console.error('Error adding book:', error.message);
-            }
-        });
-    }
-});
+            addBookMessage.style.display = 'block';
+            addBookMessage.textContent = 'کتاب با موفقیت اضافه شد!';
+            bookName.value = '';
+            bookAuthor.value = '';
+            bookPages.value = '';
+            bookYear.value = '';
+            console.log('Book added successfully!');
+        } catch (error) {
+            addBookMessage.style.display = 'block';
+            addBookMessage.textContent = error.message;
+            console.error('Error adding book:', error.message);
+        }
+    });
+}
