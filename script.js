@@ -43,7 +43,7 @@ async function loadBooks() {
             content.appendChild(hr3);
 
             const year = document.createElement('p');
-            year.textContent = `سال مطالعه: ${book.year}`;
+            year.textContent = `تاریخ مطالعه: ${book.year}`;
             content.appendChild(year);
 
             // ترکیب متن پس‌زمینه و محتوای اصلی
