@@ -109,36 +109,41 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // مدیریت اضافه کردن کتاب
-    addBookButton.addEventListener('click', async () => {
-        const newBook = {
-            name: bookName.value,
-            author: bookAuthor.value,
-            pages: parseInt(bookPages.value),
-            year: bookYear.value
-        };
+addBookButton.addEventListener('click', async () => {
+    const newBook = {
+        bookName: bookName.value,
+        bookAuthor: bookAuthor.value,
+        bookPages: bookPages.value,
+        bookYear: bookYear.value
+    };
 
-        try {
-            // ذخیره کتاب به JSON (نیاز به سرور)
-            const response = await fetch('books.json', {
-                method: 'POST', // نوع درخواست
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newBook) // تبدیل کتاب به JSON
-            });
+    try {
+        // ارسال درخواست به GitHub API
+        const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // جایگزین با توکن خود
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ref: 'main', // شاخه هدف
+                inputs: newBook // ارسال اطلاعات کتاب به Workflow
+            })
+        });
 
-            if (!response.ok) {
-                throw new Error('Failed to add book');
-            }
-
-            // نمایش پیام موفقیت
-            addBookMessage.style.display = "block";
-            bookName.value = "";
-            bookAuthor.value = "";
-            bookPages.value = "";
-            bookYear.value = "";
-        } catch (error) {
-            console.error(error.message);
+        if (!response.ok) {
+            throw new Error('Failed to trigger workflow');
         }
-    });
+
+        // نمایش پیام موفقیت
+        addBookMessage.style.display = "block";
+        bookName.value = "";
+        bookAuthor.value = "";
+        bookPages.value = "";
+        bookYear.value = "";
+        console.log("Workflow triggered successfully!");
+    } catch (error) {
+        console.error("Error:", error.message);
+    }
 });
