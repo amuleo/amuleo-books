@@ -56,4 +56,4 @@ jobs:
         git config user.email "actions@github.com"
         git add books.json
         git commit -m "Added new book: ${{ github.event.inputs.bookName }}"
-        git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/amuleo/amuleo-books.git
+        git push https://x-access-token:${{ secrets.AMULEO_TOKEN }}@github.com/amuleo/amuleo-books.git
