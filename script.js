@@ -8,40 +8,48 @@ async function loadBooks() {
         const bookContainer = document.getElementById('bookContainer');
 
         books.forEach((book, index) => {
-              const card = document.createElement('div');
-    card.className = 'card'; // کارت اصلی
+            const card = document.createElement('div');
+            card.className = 'card'; // کارت اصلی
 
-    // متن بزرگ در پس‌زمینه
-    const backgroundText = document.createElement('div');
-    backgroundText.className = 'card-background-text';
-    backgroundText.textContent = index + 1; // شماره خودکار
+            // متن بزرگ در پس‌زمینه
+            const backgroundText = document.createElement('div');
+            backgroundText.className = 'card-background-text';
+            backgroundText.textContent = index + 1; // شماره خودکار
 
-    // محتوای اصلی کارت
-    const content = document.createElement('div');
-    content.className = 'card-content';
+            // محتوای اصلی کارت
+            const content = document.createElement('div');
+            content.className = 'card-content';
 
-    const name = document.createElement('p');
-    name.textContent = `نام کتاب: ${book.name}`;
+            // اضافه کردن متن و خطوط افقی
+            const name = document.createElement('p');
+            name.textContent = `نام کتاب: ${book.name}`;
+            content.appendChild(name);
 
-    const author = document.createElement('p');
-    author.textContent = `نویسنده: ${book.author}`;
+            const hr1 = document.createElement('hr'); // خط افقی
+            content.appendChild(hr1);
 
-    const pages = document.createElement('p');
-    pages.textContent = `تعداد صفحات: ${book.pages}`;
+            const author = document.createElement('p');
+            author.textContent = `نویسنده: ${book.author}`;
+            content.appendChild(author);
 
-    const year = document.createElement('p');
-    year.textContent = `سال مطالعه: ${book.year}`;
+            const hr2 = document.createElement('hr'); // خط افقی
+            content.appendChild(hr2);
 
-    // افزودن محتوا به کارت
-    content.appendChild(name);
-    content.appendChild(author);
-    content.appendChild(pages);
-    content.appendChild(year);
+            const pages = document.createElement('p');
+            pages.textContent = `تعداد صفحات: ${book.pages}`;
+            content.appendChild(pages);
 
-    // ترکیب متن پس‌زمینه و محتوای اصلی
-    card.appendChild(backgroundText); // اضافه کردن متن بزرگ
-    card.appendChild(content); // اضافه کردن محتوای کارت
-    bookContainer.appendChild(card); // اضافه کردن کارت به صفحه
+            const hr3 = document.createElement('hr'); // خط افقی
+            content.appendChild(hr3);
+
+            const year = document.createElement('p');
+            year.textContent = `سال مطالعه: ${book.year}`;
+            content.appendChild(year);
+
+            // ترکیب متن پس‌زمینه و محتوای اصلی
+            card.appendChild(backgroundText); // اضافه کردن متن بزرگ
+            card.appendChild(content); // اضافه کردن محتوای کارت
+            bookContainer.appendChild(card); // اضافه کردن کارت به صفحه
         });
     } catch (error) {
         console.error(error.message);
