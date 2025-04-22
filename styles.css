@@ -110,13 +110,11 @@ body {
 }
 
 .summary-box {
-    background-color: #f8f2e9; /* رنگ زمینه روشن */
+    background-color: #cfcab9; /* رنگ زمینه روشن */
     border: 1px solid #9e8e71; /* رنگ حاشیه */
     border-radius: 10px; /* گرد کردن گوشه‌ها */
     padding: 15px; /* فاصله داخلی */
     margin: 20px; /* فاصله از اطراف */
-    font-size: 1.2rem; /* اندازه متن مناسب */
-    font-weight: bold; /* متن برجسته */
+    font-size: 2vw; /* اندازه متن مناسب */
     text-align: center; /* متن وسط‌چین */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* سایه ملایم */
 }
