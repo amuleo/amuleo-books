@@ -129,7 +129,7 @@
         <div class="header-row">
             <h1>لیست کتاب‌ها</h1>
             <button class="theme-button" id="themeToggle" title="تغییر حالت">
-                <i class="fas fa-adjust"></i>
+                <i id="themeIcon" class="fas"></i>
             </button>
         </div>
         <div id="bookContainer"></div>
@@ -181,11 +181,29 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadBooks);
+        function updateThemeIcon(isDark) {
+            const icon = document.getElementById('themeIcon');
+            icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        function applyStoredTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            const isDark = storedTheme === 'dark';
+            document.body.classList.toggle('dark', isDark);
+            updateThemeIcon(isDark);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            applyStoredTheme();
+            loadBooks();
+        });
 
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
+            const isDark = document.body.classList.contains('dark');
+            updateThemeIcon(isDark);
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
     </script>
 </body>
