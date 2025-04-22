@@ -7,6 +7,23 @@ async function loadBooks() {
         const books = await response.json(); // تبدیل به JSON
         const bookContainer = document.getElementById('bookContainer');
 
+        // ساخت و افزودن باکس خلاصه
+const summaryBox = document.createElement('div');
+summaryBox.className = 'summary-box';
+
+// محاسبه تعداد کتاب‌ها و تعداد کل صفحات
+const totalBooks = books.length;
+const totalPages = books.reduce((sum, book) => sum + book.pages, 0); // جمع کل صفحات
+
+// افزودن متن به باکس خلاصه
+const summaryText = document.createElement('p');
+summaryText.textContent = `تعداد کتاب‌های مطالعه‌شده: ${totalBooks} | تعداد کل صفحات: ${totalPages}`;
+summaryBox.appendChild(summaryText);
+
+// اضافه کردن خلاصه به بالای صفحه
+const body = document.body;
+body.prepend(summaryBox); // اضافه کردن باکس به ابتدای صفحه
+        
         books.forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'card'; // کارت اصلی
