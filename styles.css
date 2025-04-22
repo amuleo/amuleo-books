@@ -75,9 +75,10 @@ body {
     }
 
     .summary-box {
-        font-size: 1rem; /* کاهش اندازه متن */
+        font-size: 4vw; /* کاهش اندازه متن */
         padding: 10px; /* کاهش فاصله داخلی */
         margin: 10px; /* کاهش فاصله از اطراف */
+        width: 40vmax;
     }
 
 }
@@ -111,10 +112,11 @@ body {
 
 .summary-box {
     background-color: #cfcab9; /* رنگ زمینه روشن */
-    border: 1px solid #9e8e71; /* رنگ حاشیه */
+    border: 2px solid #9e8e71; /* رنگ حاشیه */
     border-radius: 10px; /* گرد کردن گوشه‌ها */
     padding: 15px; /* فاصله داخلی */
     margin: 20px; /* فاصله از اطراف */
     font-size: 2vw; /* اندازه متن مناسب */
     text-align: center; /* متن وسط‌چین */
+    width: 68.2vmax;
 }
