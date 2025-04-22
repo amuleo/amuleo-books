@@ -9,6 +9,19 @@
     <div class="container">
         <h1>لیست کتاب‌ها</h1>
         <div id="bookContainer" class="text-centered"></div>
+
+        <!-- فرم اضافه کردن کتاب -->
+        <form id="addBookForm" class="book-form">
+            <input id="bookName" type="text" placeholder="نام کتاب" required>
+            <input id="bookAuthor" type="text" placeholder="نام نویسنده" required>
+            <input id="bookPages" type="number" placeholder="تعداد صفحات" required>
+            <input id="bookYear" type="number" placeholder="سال انتشار" required>
+            <input id="passwordInput" type="password" placeholder="رمز عبور" required> <!-- بخش اعتبار سنجی -->
+            <button id="addBookButton">اضافه کردن کتاب</button>
+        </form>
+
+        <!-- پیام موفقیت یا خطا -->
+        <div id="addBookMessage" style="display: none;" class="message-box"></div>
     </div>
     <script src="script.js"></script> <!-- لینک به فایل جاوااسکریپت -->
 </body>
