@@ -4,13 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لیست کتاب‌ها</title>
-    <link rel="stylesheet" href="styles.css"> <!-- لینک به فایل CSS -->
+    <style>
+        @font-face {
+            font-family: 'YekanBakh';
+            src: url('fonts/YekanBakh-Regular.ttf') format('truetype');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #b4a990;
+            font-family: 'YekanBakh', sans-serif;
+            color: #333;
+            direction: rtl;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px 10px;
+        }
+
+        .summary-box, .card {
+            background-color: #cfcab9;
+            border: 2px solid #9e8e71;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            min-height: 250px;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+            text-align: justify;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .card-background-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12vw;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.1);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .card hr {
+            border: none;
+            border-top: 1px solid #9e8e71;
+            margin: 8px 0;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 1rem;
+            }
+
+            .card-content {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>لیست کتاب‌ها</h1>
-        <div id="bookContainer" class="text-centered"></div>
+        <div id="bookContainer"></div>
     </div>
-    <script src="script.js"></script> <!-- لینک به فایل جاوااسکریپت -->
+    <script>
+        async function loadBooks() {
+            try {
+                const response = await fetch('books.json');
+                if (!response.ok) throw new Error('Failed to load JSON');
+                const books = await response.json();
+
+                const bookContainer = document.getElementById('bookContainer');
+
+                const summaryBox = document.createElement('div');
+                summaryBox.className = 'summary-box';
+
+                const totalBooks = books.length;
+                const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
+
+                summaryBox.innerHTML = `<p>تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}</p>`;
+                document.querySelector('h1').insertAdjacentElement('afterend', summaryBox);
+
+                books.forEach((book, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    const backgroundText = document.createElement('div');
+                    backgroundText.className = 'card-background-text';
+                    backgroundText.textContent = index + 1;
+
+                    const content = document.createElement('div');
+                    content.className = 'card-content';
+                    content.innerHTML = `
+                        <p>نام کتاب: ${book.name}</p>
+                        <hr>
+                        <p>نویسنده: ${book.author}</p>
+                        <hr>
+                        <p>تعداد صفحات: ${book.pages}</p>
+                        <hr>
+                        <p>تاریخ مطالعه: ${book.year}</p>
+                    `;
+
+                    card.appendChild(backgroundText);
+                    card.appendChild(content);
+                    bookContainer.appendChild(card);
+                });
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadBooks);
+    </script>
 </body>
 </html>
