@@ -43,21 +43,37 @@ document.addEventListener('DOMContentLoaded', () => {
             bookPages,
             bookYear
         };
+try {
+    const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${GH_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ref: 'main',
+            inputs: {
+                bookName: 'کتاب تست',
+                bookAuthor: 'نویسنده تست',
+                bookPages: 150,
+                bookYear: 2023
+            }
+        })
+    });
 
-        try {
-            // ارسال درخواست به GitHub API
-            const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${GH_TOKEN}`, // استفاده از توکن
-                    'Accept': 'application/vnd.github.v3+json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    ref: 'main', // شاخه هدف
-                    inputs: newBook // ارسال ورودی‌ها به Workflow
-                })
-            });
+    console.log("Response status:", response.status);
+    console.log("Response body:", await response.text());
+
+    if (!response.ok) {
+        throw new Error('Failed to trigger workflow');
+    }
+
+    console.log('Workflow triggered successfully!');
+} catch (error) {
+    console.error('Error triggering workflow:', error.message);
+}
+
 
             if (!response.ok) {
                 throw new Error('Failed to trigger workflow');
