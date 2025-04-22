@@ -3,43 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>لیست کتاب‌ها</title>
-    <script>
-        async function loadBooks() {
-            const response = await fetch('books.json');
-            const books = await response.json();
-            const bookContainer = document.getElementById('bookContainer');
-
-            books.forEach(book => {
-                const card = document.createElement('div');
-                card.style.border = "1px solid black"; // برای تفکیک ساده
-                card.style.margin = "10px 0"; 
-                card.style.padding = "10px"; 
-
-                const name = document.createElement('p');
-                name.textContent = `نام کتاب: ${book.name}`;
-                
-                const author = document.createElement('p');
-                author.textContent = `نویسنده: ${book.author}`;
-                
-                const pages = document.createElement('p');
-                pages.textContent = `تعداد صفحات: ${book.pages}`;
-                
-                const year = document.createElement('p');
-                year.textContent = `سال مطالعه: ${book.year}`;
-                
-                // اضافه کردن عناصر به کارد
-                card.appendChild(name);
-                card.appendChild(author);
-                card.appendChild(pages);
-                card.appendChild(year);
-                
-                bookContainer.appendChild(card);
-            });
-        }
-    </script>
+    <link rel="stylesheet" href="styles.css"> <!-- لینک به فایل CSS -->
 </head>
-<body onload="loadBooks()">
-    <h1>لیست کتاب‌ها</h1>
-    <div id="bookContainer"></div>
+<body>
+    <div class="container">
+        <h1>لیست کتاب‌ها</h1>
+        <div id="bookContainer" class="text-centered"></div>
+    </div>
+    <script src="script.js"></script> <!-- لینک به فایل جاوااسکریپت -->
 </body>
 </html>
