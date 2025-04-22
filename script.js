@@ -21,9 +21,9 @@ summaryText.textContent = `تعداد کتاب‌های خوانده شده: ${t
 summaryBox.appendChild(summaryText);
 
 // اضافه کردن خلاصه به بالای صفحه
-const body = document.body;
-body.prepend(summaryBox); // اضافه کردن باکس به ابتدای صفحه
-        
+const pageTitle = document.querySelector('h1'); // انتخاب h1
+pageTitle.insertAdjacentElement('afterend', summaryBox);
+
         books.forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'card'; // کارت اصلی
