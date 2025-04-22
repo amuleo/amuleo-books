@@ -24,13 +24,15 @@ body {
 }
 
 .card {
-    border: 2px solid #9e8e71; /* حاشیه طلایی */
+    position: relative; /* برای کنترل موقعیت عدد */
+    border: 2px solid #9e8e71;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
-    background-color: #cfcab9; /* رنگ زمینه روشن */
-    text-align: right; /* راست‌چین */
-    width: 90%; /* عرض کارد برای واکنش‌پذیری */
+    background-color: #cfcab9;
+    text-align: right;
+    width: 90%;
+    overflow: hidden; /* برای جلوگیری از خروج محتوا */
 }
 
 .text-centered {
@@ -57,4 +59,21 @@ body {
         font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
         line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
     }
+}
+
+.card-number-bg {
+    position: absolute;
+    top: 50%; /* وسط کارت */
+    left: 50%; /* وسط کارت */
+    transform: translate(-50%, -50%); /* دقیقاً مرکز */
+    font-size: 6vw; /* عدد بزرگ */
+    font-weight: bold; /* ضخیم */
+    color: rgba(0, 0, 0, 0.1); /* کم‌رنگ */
+    z-index: 0; /* پشت متن اصلی */
+    pointer-events: none; /* عدم تأثیر بر تعامل */
+}
+
+.card-content {
+    position: relative;
+    z-index: 1; /* متن اصلی روی شماره قرار بگیرد */
 }
