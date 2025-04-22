@@ -31,7 +31,7 @@ body {
     margin-bottom: 20px;
     background-color: #cfcab9;
     text-align: center;
-    width: width: 70vmax;;
+    width: 70vmax;;
     height: auto; /* انعطاف‌پذیری ارتفاع کارت */
     min-height: 250px; /* حداقل ارتفاع */
     box-sizing: border-box;
