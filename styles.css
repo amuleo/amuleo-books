@@ -49,6 +49,8 @@ body {
     text-align: justify; /* تنظیم متن به حالت Justify */
     direction: rtl; /* جهت متن راست به چپ */
     margin-right: 20px; /* فاصله از سمت راست کارت */
+    font-size: 1.5rem; /* اندازه متن تنظیم شده */
+    line-height: 1.8; /* فاصله خطوط بهتر */
 }
 
 .card-background-text {
