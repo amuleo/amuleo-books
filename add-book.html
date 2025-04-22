@@ -15,15 +15,22 @@
         <p id="loginError" style="color: red; display: none;">رمز عبور اشتباه است!</p>
     </div>
 
-    <div id="addBookContainer" class="summary-box" style="display: none;">
-        <h2>اضافه کردن کتاب جدید</h2>
-        <input type="text" id="bookName" placeholder="نام کتاب">
-        <input type="text" id="bookAuthor" placeholder="نویسنده">
-        <input type="number" id="bookPages" placeholder="تعداد صفحات">
-        <input type="text" id="bookYear" placeholder="سال مطالعه">
-        <button id="addBookButton">اضافه کردن کتاب</button>
-        <p id="addBookMessage" style="color: green; display: none;">کتاب با موفقیت اضافه شد!</p>
+   <div id="bookContainer" class="text-centered"></div>
+
+        <!-- فرم اضافه کردن کتاب -->
+        <form id="addBookForm" class="book-form">
+            <input id="bookName" type="text" placeholder="نام کتاب" required>
+            <input id="bookAuthor" type="text" placeholder="نام نویسنده" required>
+            <input id="bookPages" type="number" placeholder="تعداد صفحات" required>
+            <input id="bookYear" type="number" placeholder="سال انتشار" required>
+            <input id="passwordInput" type="password" placeholder="رمز عبور" required> <!-- بخش اعتبار سنجی -->
+            <button id="addBookButton">اضافه کردن کتاب</button>
+        </form>
+
+        <!-- پیام موفقیت یا خطا -->
+        <div id="addBookMessage" style="display: none;" class="message-box"></div>
     </div>
+    
 </body>
 <script src="script.js"></script>
 </html>
