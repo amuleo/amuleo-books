@@ -74,13 +74,6 @@ body {
     margin-right: 10px; /* فاصله منفی از سمت راست کارت */
     }
 
-    .summary-box {
-        font-size: 4vw; /* کاهش اندازه متن */
-        padding: 10px; /* کاهش فاصله داخلی */
-        margin: 10px; /* کاهش فاصله از اطراف */
-        width: 40vmax;
-    }
-
 }
 
 .card-content {
@@ -119,4 +112,13 @@ body {
     font-size: 2vw; /* اندازه متن مناسب */
     text-align: center; /* متن وسط‌چین */
     width: 68.2vmax;
+}
+
+@media (max-width: 768px) {
+    .summary-box {
+        width: 37.5vmax; /* کارد کمی باریک‌تر شود برای موبایل */
+        padding: 10px; /* کاهش فضای داخلی در موبایل */
+        font-size: 3vw; /* اندازه متن برای موبایل */
+         margin: 10px;
+    }
 }
