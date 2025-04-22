@@ -65,6 +65,15 @@
             display: none;
             color: green;
         }
+
+        #jsonButton {
+    background-color: #f39c12; /* رنگ نارنجی جذاب */
+}
+
+#jsonButton:hover {
+    background-color: #d68910; /* رنگ تیره‌تر در حالت هاور */
+}
+
     </style>
 </head>
 <body>
@@ -76,6 +85,7 @@
         <input type="number" id="bookYear" placeholder="سال انتشار" required>
         <button id="copyJson">کپی JSON در کلیپ‌بورد</button>
         <button id="githubButton" onclick="window.open('https://github.com/login', '_blank')">ورود به گیت‌هاب</button>
+        <button id="jsonButton" onclick="window.open('https://github.com/amuleo/amuleo-books/blob/main/books.json', '_blank')">ورود به JSON</button>
         <div id="message">JSON با موفقیت کپی شد!</div>
     </div>
 
@@ -98,7 +108,10 @@
                 setTimeout(() => message.style.display = 'none', 2000);
 
                 // نمایش دکمه گیت‌هاب
-                document.getElementById('githubButton').style.display = 'inline-block';
+                document.getElementById('copyJson').style.display = 'none'; // مخفی کردن دکمه "کپی JSON"
+                document.getElementById('githubButton').style.display = 'inline-block'; // نمایش دکمه "ورود به گیت‌هاب"
+                document.getElementById('jsonButton').style.display = 'inline-block'; // نمایش دکمه "ورود به JSON"
+
             })
             .catch(err => {
                 console.error('Error copying to clipboard:', err);
