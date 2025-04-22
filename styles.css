@@ -31,49 +31,16 @@ body {
     margin-bottom: 20px;
     background-color: #cfcab9;
     text-align: center;
-    width: 70vmax;;
+    width: 70vmax;
     height: auto; /* انعطاف‌پذیری ارتفاع کارت */
     min-height: 250px; /* حداقل ارتفاع */
     box-sizing: border-box;
-    overflow: hidden; /* جلوگیری از خروج محتوا */
+    overflow: visible; /* اجازه بده متن‌ها نمایش داده شوند */
 }
 
 .text-centered {
     text-align: center;
     direction: rtl;
-}
-
-@media (max-width: 768px) {
-    body {
-        font-size: 4vw; /* اندازه متن برای موبایل */
-    }
-
-    .container {
-        padding-top: 10px; /* کاهش فاصله برای موبایل */
-        width: 100%;
-    }
-
-    .card {
-        width: 40vmax; /* کارد کمی باریک‌تر شود برای موبایل */
-        padding: 10px; /* کاهش فضای داخلی در موبایل */
-    }
-
-    .text-centered {
-        font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
-        line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
-    }
-
-      .card-background-text {
-        font-size: 20vw !important; /* اضافه کردن !important برای اولویت‌دهی */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-    }
-
-    .card-content {
-    margin-right: 10px; /* فاصله منفی از سمت راست کارت */
-    }
-
 }
 
 .card-content {
@@ -82,6 +49,8 @@ body {
     text-align: justify; /* تنظیم متن به حالت Justify */
     direction: rtl; /* جهت متن راست به چپ */
     margin-right: 20px; /* فاصله منفی از سمت راست کارت */
+    display: block; /* مطمئن شو که محتوا نمایش داده می‌شود */
+    word-break: break-word; /* شکستن کلمات طولانی */
 }
 
 .card-background-text {
@@ -91,7 +60,7 @@ body {
     transform: translate(-50%, -50%); /* قرارگیری دقیق در مرکز */
     font-size: 10vw; /* اندازه بزرگ و واکنش‌پذیر */
     font-weight: bold; /* ضخیم */
-    color: rgba(0, 0, 0, 0.1); /* بسیار کم‌رنگ */
+    color: rgba(0, 0, 0, 0.2); /* شفافیت بهتر */
     z-index: 1; /* در پشت محتوای کارت */
     pointer-events: none; /* تعامل‌ناپذیر */
 }
@@ -115,10 +84,55 @@ body {
 }
 
 @media (max-width: 768px) {
+    body {
+        font-size: 4vw; /* اندازه متن برای موبایل */
+    }
+
+    .container {
+        padding-top: 10px; /* کاهش فاصله برای موبایل */
+        width: 100%;
+    }
+
+    .card {
+        width: 40vmax; /* کارد کمی باریک‌تر شود برای موبایل */
+        padding: 10px; /* کاهش فضای داخلی در موبایل */
+        height: auto; /* انعطاف‌پذیری برای موبایل */
+    }
+
+    .card-content {
+        margin-right: 10px; /* فاصله منفی از سمت راست کارت */
+        word-break: break-word; /* شکستن کلمات طولانی */
+    }
+
+    .text-centered {
+        font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
+        line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
+    }
+
+    .card-background-text {
+        font-size: 20vw !important; /* اندازه بزرگ‌تر برای عدد محو */
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        opacity: 0.2; /* شفافیت مناسب برای نمایش بهتر */
+    }
+
     .summary-box {
         width: 37.5vmax; /* کارد کمی باریک‌تر شود برای موبایل */
         padding: 10px; /* کاهش فضای داخلی در موبایل */
         font-size: 3vw; /* اندازه متن برای موبایل */
-         margin: 10px;
+        margin: 10px;
+    }
+}
+
+@media (orientation: portrait) {
+    .card {
+        height: auto; /* ارتفاع انعطاف‌پذیر برای حالت عمودی */
+    }
+}
+
+@media (orientation: landscape) {
+    .card {
+        height: auto; /* ارتفاع انعطاف‌پذیر برای حالت افقی */
     }
 }
