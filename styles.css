@@ -74,6 +74,12 @@ body {
     margin-right: 10px; /* فاصله منفی از سمت راست کارت */
     }
 
+    .summary-box {
+        font-size: 1rem; /* کاهش اندازه متن */
+        padding: 10px; /* کاهش فاصله داخلی */
+        margin: 10px; /* کاهش فاصله از اطراف */
+    }
+
 }
 
 .card-content {
@@ -101,4 +107,16 @@ body {
     border-top: 1px solid #9e8e71; /* خط ساده طلایی */
     margin: 10px 0; /* فاصله بالا و پایین */
     opacity: 0.5; /* شفافیت */
+}
+
+.summary-box {
+    background-color: #f8f2e9; /* رنگ زمینه روشن */
+    border: 1px solid #9e8e71; /* رنگ حاشیه */
+    border-radius: 10px; /* گرد کردن گوشه‌ها */
+    padding: 15px; /* فاصله داخلی */
+    margin: 20px; /* فاصله از اطراف */
+    font-size: 1.2rem; /* اندازه متن مناسب */
+    font-weight: bold; /* متن برجسته */
+    text-align: center; /* متن وسط‌چین */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* سایه ملایم */
 }
