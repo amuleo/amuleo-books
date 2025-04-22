@@ -24,18 +24,18 @@ body {
 }
 
 .card {
-    display: flex; /* استفاده از Flexbox */
-    flex-direction: column; /* متن‌ها به صورت عمودی مرتب شوند */
-    justify-content: center; /* عمودی وسط‌چین شود */
-    align-items: center; /* افقی وسط‌چین شود */
+    position: relative; /* تنظیم موقعیت برای متن مطلق */
     border: 2px solid #9e8e71;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
     background-color: #cfcab9;
-    text-align: center; /* متن‌ها وسط‌چین شوند */
+    text-align: center;
     width: 90%;
-    position: relative;
+    height: auto; /* انعطاف‌پذیری ارتفاع کارت */
+    min-height: 250px; /* حداقل ارتفاع */
+    box-sizing: border-box;
+    overflow: hidden; /* جلوگیری از خروج محتوا */
 }
 
 .text-centered {
@@ -83,4 +83,16 @@ body {
 .card-content {
     position: relative;
     z-index: 1; /* متن اصلی روی شماره قرار بگیرد */
+}
+
+.card-background-text {
+    position: absolute; /* موقعیت مطلق */
+    top: 50%; /* مرکز عمودی کارت */
+    left: 50%; /* مرکز افقی کارت */
+    transform: translate(-50%, -50%); /* قرارگیری دقیق در مرکز */
+    font-size: 20vw; /* اندازه بزرگ و واکنش‌پذیر */
+    font-weight: bold; /* ضخیم */
+    color: rgba(0, 0, 0, 0.1); /* بسیار کم‌رنگ */
+    z-index: 1; /* در پشت محتوای کارت */
+    pointer-events: none; /* تعامل‌ناپذیر */
 }
