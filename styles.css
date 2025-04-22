@@ -87,3 +87,10 @@ body {
     z-index: 1; /* در پشت محتوای کارت */
     pointer-events: none; /* تعامل‌ناپذیر */
 }
+
+.card hr {
+    border: none;
+    border-top: 1px solid #9e8e71; /* خط ساده طلایی */
+    margin: 10px 0; /* فاصله بالا و پایین */
+    opacity: 0.5; /* شفافیت */
+}
