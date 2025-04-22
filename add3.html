@@ -80,31 +80,30 @@
     </div>
 
     <script>
-        document.getElementById('copyJson').addEventListener('click', () => {
-            // دریافت مقادیر فرم
-            const bookName = document.getElementById('bookName').value;
-            const bookAuthor = document.getElementById('bookAuthor').value;
-            const bookPages = parseInt(document.getElementById('bookPages').value);
-            const bookYear = parseInt(document.getElementById('bookYear').value);
+    document.getElementById('copyJson').addEventListener('click', () => {
+        // دریافت مقادیر فرم
+        const bookName = document.getElementById('bookName').value;
+        const bookAuthor = document.getElementById('bookAuthor').value;
+        const bookPages = parseInt(document.getElementById('bookPages').value);
+        const bookYear = parseInt(document.getElementById('bookYear').value);
 
-            // ایجاد آبجکت JSON
-            const bookData = ', { bookName, bookAuthor, bookPages, bookYear };';
+        // ایجاد مقدار نهایی
+        const bookData = `, { bookName: "${bookName}", bookAuthor: "${bookAuthor}", bookPages: ${bookPages}, bookYear: ${bookYear} };`;
 
+        // کپی به کلیپ‌بورد
+        navigator.clipboard.writeText(bookData)
+            .then(() => {
+                const message = document.getElementById('message');
+                message.style.display = 'block'; // نمایش پیام موفقیت
+                setTimeout(() => message.style.display = 'none', 2000);
 
-            // تبدیل به JSON و کپی به کلیپ‌بورد
-            navigator.clipboard.writeText(JSON.stringify(bookData, null, 2))
-                .then(() => {
-                    const message = document.getElementById('message');
-                    message.style.display = 'block'; // نمایش پیام موفقیت
-                    setTimeout(() => message.style.display = 'none', 2000);
-
-                    // نمایش دکمه گیت‌هاب
-                    document.getElementById('githubButton').style.display = 'inline-block';
-                })
-                .catch(err => {
-                    console.error('Error copying JSON:', err);
-                });
-        });
+                // نمایش دکمه گیت‌هاب
+                document.getElementById('githubButton').style.display = 'inline-block';
+            })
+            .catch(err => {
+                console.error('Error copying to clipboard:', err);
+            });
+    });
     </script>
 </body>
 </html>
