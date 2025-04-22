@@ -35,7 +35,7 @@ body {
     height: auto; /* انعطاف‌پذیری ارتفاع کارت */
     min-height: 250px; /* حداقل ارتفاع */
     box-sizing: border-box;
-    overflow: hidden; /* جلوگیری از خروج محتوا */
+    overflow: visible; /* نمایش کامل محتوا */
 }
 
 .text-centered {
@@ -59,7 +59,7 @@ body {
     font-size: 10vw; /* اندازه بزرگ و واکنش‌پذیر */
     font-weight: bold; /* ضخیم */
     color: rgba(0, 0, 0, 0.1); /* بسیار کم‌رنگ */
-    z-index: 1; /* در پشت محتوای کارت */
+    z-index: 0; /* در پشت محتوای کارت */
     pointer-events: none; /* تعامل‌ناپذیر */
 }
 
@@ -83,33 +83,36 @@ body {
 
 @media (max-width: 768px) {
     body {
-        font-size: 90%; /* کوچک‌سازی کل صفحه */
-        transform: scale(0.95); /* مقیاس‌دهی کلی به صورت ذره‌بینی */
-        transform-origin: top center; /* تنظیم نقطه مقیاس */
+        font-size: 3vw; /* متن مناسب‌تر برای موبایل */
     }
 
     .container {
+        flex-wrap: wrap; /* چیدمان واکنش‌پذیر کارت‌ها */
         padding-top: 10px; /* کاهش فاصله برای موبایل */
-        width: 95%; /* کمی باریک‌تر شدن برای موبایل */
+        width: 90%; /* کمی باریک‌تر شدن برای موبایل */
     }
 
     .card {
-        width: 65vmax; /* کاهش عرض کارت */
-        padding: 10px; /* کاهش فضای داخلی */
+        width: 85%; /* عرض کارت بیشتر برای موبایل */
+        padding: 10px; /* کاهش فضای داخلی کارت */
+        min-height: 220px; /* ارتفاع استاندارد کارت */
+        overflow: visible; /* رفع مشکل نمایش محتوا */
     }
 
     .card-content {
-        font-size: 1.6rem; /* متن کمی کوچک‌تر */
-        margin-right: 10px; /* فاصله از سمت راست کمتر شود */
+        font-size: 1rem; /* متن کوچک‌تر اما خوانا در موبایل */
+        padding: 5px; /* تنظیم فضای داخلی مناسب‌تر */
     }
 
     .card-background-text {
-        font-size: 18vw !important; /* اندازه کمی کوچک‌تر شود */
+        font-size: 12vw; /* متن پس‌زمینه واکنش‌پذیر */
+        opacity: 0.2; /* وضوح مناسب برای متن محو */
     }
 
     .summary-box {
-        width: 60vmax; /* کوچک‌تر شدن باکس خلاصه */
-        padding: 12px; /* تنظیم فضای داخلی */
-        font-size: 1.8rem; /* متن کمی کوچک‌تر شود */
+        width: 85%; /* هماهنگی با کارت‌ها */
+        font-size: 1.6rem; /* متن کمی کوچک‌تر برای موبایل */
+        padding: 12px; /* فضای داخلی مناسب‌تر */
+        margin: 10px; /* فاصله خارجی مناسب‌تر */
     }
 }
