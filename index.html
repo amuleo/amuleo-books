@@ -10,15 +10,23 @@
             src: url('fonts/YekanBakh-Regular.ttf') format('truetype');
         }
 
+        :root {
+            --bg-color: #b4a990;
+            --card-color: #cfcab9;
+            --border-color: #9e8e71;
+            --text-color: #333;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background-color: #b4a990;
+            background-color: var(--bg-color);
             font-family: 'YekanBakh', sans-serif;
-            color: #333;
+            color: var(--text-color);
             direction: rtl;
             font-size: 1.1rem;
             text-align: center;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container {
@@ -27,9 +35,34 @@
             padding: 20px 10px;
         }
 
+        .theme-toggle {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+
+        .theme-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background-color: var(--card-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .theme-button svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--text-color);
+        }
+
         .summary-box, .card {
-            background-color: #cfcab9;
-            border: 2px solid #9e8e71;
+            background-color: var(--card-color);
+            border: 2px solid var(--border-color);
             border-radius: 10px;
             padding: 15px;
             margin: 15px auto;
@@ -66,7 +99,7 @@
 
         .card hr {
             border: none;
-            border-top: 1px solid #9e8e71;
+            border-top: 1px solid var(--border-color);
             margin: 8px 0;
             opacity: 0.5;
         }
@@ -80,10 +113,22 @@
                 font-size: 0.9rem;
             }
         }
+
+        body.dark {
+            --bg-color: #333;
+            --card-color: #4d4d4d;
+            --border-color: #777;
+            --text-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="theme-toggle">
+            <button class="theme-button" id="themeToggle" title="تغییر حالت">
+                <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 1 0-18z"/></svg>
+            </button>
+        </div>
         <h1>لیست کتاب‌ها</h1>
         <div id="bookContainer"></div>
     </div>
@@ -135,6 +180,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', loadBooks);
+
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+        });
     </script>
 </body>
 </html>
