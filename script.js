@@ -8,21 +8,21 @@ async function loadBooks() {
         const bookContainer = document.getElementById('bookContainer');
 
         // ساخت و افزودن باکس خلاصه
-const summaryBox = document.createElement('div');
-summaryBox.className = 'summary-box';
+        const summaryBox = document.createElement('div');
+        summaryBox.className = 'summary-box';
 
-// محاسبه تعداد کتاب‌ها و تعداد کل صفحات
-const totalBooks = books.length;
-const totalPages = books.reduce((sum, book) => sum + book.pages, 0); // جمع کل صفحات
+        // محاسبه تعداد کتاب‌ها و تعداد کل صفحات
+        const totalBooks = books.length;
+        const totalPages = books.reduce((sum, book) => sum + book.pages, 0); // جمع کل صفحات
 
-// افزودن متن به باکس خلاصه
-const summaryText = document.createElement('p');
-summaryText.textContent = `تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}`;
-summaryBox.appendChild(summaryText);
+        // افزودن متن به باکس خلاصه
+        const summaryText = document.createElement('p');
+        summaryText.textContent = `تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}`;
+        summaryBox.appendChild(summaryText);
 
-// اضافه کردن خلاصه به بالای صفحه
-const pageTitle = document.querySelector('h1'); // انتخاب h1
-pageTitle.insertAdjacentElement('afterend', summaryBox);
+        // اضافه کردن خلاصه به بالای صفحه
+        const pageTitle = document.querySelector('h1'); // انتخاب h1
+        pageTitle.insertAdjacentElement('afterend', summaryBox);
 
         books.forEach((book, index) => {
             const card = document.createElement('div');
