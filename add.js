@@ -43,40 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
             bookPages,
             bookYear
         };
-try {
-    const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${GH_TOKEN}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            ref: 'main',
-            inputs: {
-                bookName: 'کتاب تست',
-                bookAuthor: 'نویسنده تست',
-                bookPages: 150,
-                bookYear: 2023
-            }
-        })
-    });
 
-    console.log("Response status:", response.status);
-    console.log("Response body:", await response.text());
+        try {
+            // ارسال درخواست به GitHub API
+            const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${GH_TOKEN}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    ref: 'main', // شاخه هدف
+                    inputs: newBook // ارسال ورودی‌ها به Workflow
+                })
+            });
 
-    if (!response.ok) {
-        throw new Error('Failed to trigger workflow');
-    }
-
-    console.log('Workflow triggered successfully!');
-} catch (error) {
-    console.error('Error triggering workflow:', error.message);
-}
-
+            // نمایش وضعیت و پاسخ API برای دیباگ
+            console.log("Response status:", response.status);
+            const responseData = await response.json();
+            console.log("Response body:", responseData);
 
             if (!response.ok) {
-                throw new Error('Failed to trigger workflow');
+                throw new Error(`Failed to trigger workflow: ${responseData.message || 'Unknown error'}`);
             }
 
             // نمایش پیام موفقیت و پاک‌سازی فرم
@@ -88,7 +77,7 @@ try {
         } catch (error) {
             // مدیریت خطا
             addBookMessage.style.display = 'block';
-            addBookMessage.textContent = error.message;
+            addBookMessage.textContent = `خطا: ${error.message}`;
             addBookMessage.classList.add('error');
             console.error('Error:', error.message);
         }
