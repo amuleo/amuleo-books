@@ -11,7 +11,7 @@ body {
     color: #333333; /* سفید برای متن */
     text-align: center;
     direction: rtl;
-    font-size: 2vw;
+    font-size: 2vw; /* واکنش‌پذیر برای دسکتاپ */
 }
 
 .container {
@@ -19,9 +19,8 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 100vh; /* به جای height از min-height استفاده شود */
-    padding-top: 20px; /* فاصله برای جلوگیری از خروج از صفحه */
-    box-sizing: border-box; /* باکس مدل درست تنظیم شود */
+    padding-top: 20px;
+    box-sizing: border-box;
 }
 
 .card {
@@ -31,9 +30,31 @@ body {
     margin-bottom: 20px;
     background-color: #cfcab9; /* رنگ زمینه روشن */
     text-align: right; /* راست‌چین */
+    width: 90%; /* عرض کارد برای واکنش‌پذیری */
 }
 
 .text-centered {
     text-align: center;
     direction: rtl;
+}
+
+@media (max-width: 768px) {
+    body {
+        font-size: 4vw; /* اندازه متن برای موبایل */
+    }
+
+    .container {
+        padding-top: 10px; /* کاهش فاصله برای موبایل */
+        width: 100%;
+    }
+
+    .card {
+        width: 95%; /* کارد کمی باریک‌تر شود برای موبایل */
+        padding: 10px; /* کاهش فضای داخلی در موبایل */
+    }
+
+    .text-centered {
+        font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
+        line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
+    }
 }
