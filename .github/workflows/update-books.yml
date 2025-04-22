@@ -1,0 +1,49 @@
+name: Update Books JSON
+
+on:
+  workflow_dispatch:
+    inputs:
+      bookName:
+        description: "نام کتاب"
+        required: true
+      bookAuthor:
+        description: "نویسنده"
+        required: true
+      bookPages:
+        description: "تعداد صفحات"
+        required: true
+      bookYear:
+        description: "سال مطالعه"
+        required: true
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      
+    - name: Update books.json
+      run: |
+        BOOK_NAME="${{ github.event.inputs.bookName }}"
+        BOOK_AUTHOR="${{ github.event.inputs.bookAuthor }}"
+        BOOK_PAGES="${{ github.event.inputs.bookPages }}"
+        BOOK_YEAR="${{ github.event.inputs.bookYear }}"
+
+        jq --arg name "$BOOK_NAME" \
+           --arg author "$BOOK_AUTHOR" \
+           --arg pages "$BOOK_PAGES" \
+           --arg year "$BOOK_YEAR" \
+           '. += [{"name": $name, "author": $author, "pages": $pages | tonumber, "year": $year}]' \
+           data/books.json > data/books_new.json
+
+        mv data/books_new.json data/books.json
+
+    - name: Commit Changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git add data/books.json
+        git commit -m "Added new book: ${{ github.event.inputs.bookName }}"
+        git push
