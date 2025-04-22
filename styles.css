@@ -31,7 +31,8 @@ body {
     margin-bottom: 20px;
     background-color: #cfcab9;
     text-align: center;
-    width: 70vmax; /* عرض کارت */
+    width: 90%; /* عرض کارت واکنش‌پذیر */
+    max-width: 400px; /* حداکثر عرض */
     height: auto; /* انعطاف‌پذیری ارتفاع کارت */
     min-height: 250px; /* حداقل ارتفاع */
     box-sizing: border-box;
@@ -48,9 +49,9 @@ body {
     z-index: 1; /* متن اصلی روی شماره قرار بگیرد */
     text-align: justify; /* تنظیم متن به حالت Justify */
     direction: rtl; /* جهت متن راست به چپ */
-    margin-right: 20px; /* فاصله از سمت راست کارت */
-    font-size: 1.5rem; /* اندازه متن تنظیم شده */
-    line-height: 1.8; /* فاصله خطوط بهتر */
+    font-size: 1rem; /* اندازه متن */
+    line-height: 1.5; /* فاصله خطوط برای خوانایی بهتر */
+    padding: 10px;
 }
 
 .card-background-text {
@@ -78,43 +79,37 @@ body {
     border-radius: 10px; /* گرد کردن گوشه‌ها */
     padding: 15px; /* فاصله داخلی */
     margin: 20px; /* فاصله از اطراف */
-    font-size: 2vw; /* اندازه متن مناسب */
+    font-size: 1.6rem; /* اندازه متن مناسب */
     text-align: center; /* متن وسط‌چین */
-    width: 68.2vmax; /* عرض باکس خلاصه */
+    max-width: 400px;
+    width: 90%; /* عرض باکس خلاصه واکنش‌پذیر */
 }
 
 @media (max-width: 768px) {
     body {
-        font-size: 3vw; /* متن مناسب‌تر برای موبایل */
+        font-size: 3vw; /* اندازه متن برای موبایل */
     }
 
     .container {
-        flex-wrap: wrap; /* چیدمان واکنش‌پذیر کارت‌ها */
         padding-top: 10px; /* کاهش فاصله برای موبایل */
-        width: 90%; /* کمی باریک‌تر شدن برای موبایل */
+        width: 95%;
     }
 
     .card {
-        width: 85%; /* عرض کارت بیشتر برای موبایل */
-        padding: 10px; /* کاهش فضای داخلی کارت */
-        min-height: 220px; /* ارتفاع استاندارد کارت */
-        overflow: visible; /* رفع مشکل نمایش محتوا */
+        width: 90%; /* عرض کارت واکنش‌پذیر */
+        padding: 10px; /* کاهش فضای داخلی */
     }
 
     .card-content {
-        font-size: 1rem; /* متن کوچک‌تر اما خوانا در موبایل */
-        padding: 5px; /* تنظیم فضای داخلی مناسب‌تر */
+        font-size: 0.9rem; /* متن کوچک‌تر اما خوانا در موبایل */
     }
 
     .card-background-text {
-        font-size: 12vw; /* متن پس‌زمینه واکنش‌پذیر */
-        opacity: 0.2; /* وضوح مناسب برای متن محو */
+        font-size: 14vw; /* متن پس‌زمینه واکنش‌پذیر */
     }
 
     .summary-box {
-        width: 85%; /* هماهنگی با کارت‌ها */
-        font-size: 1.6rem; /* متن کمی کوچک‌تر برای موبایل */
-        padding: 12px; /* فضای داخلی مناسب‌تر */
+        font-size: 1.4rem; /* متن مناسب‌تر برای موبایل */
         margin: 10px; /* فاصله خارجی مناسب‌تر */
     }
 }
