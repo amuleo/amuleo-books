@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کپی JSON و ورود به گیت‌هاب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        #container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #githubButton {
+            display: none;
+            background-color: #0073b1;
+        }
+
+        #githubButton:hover {
+            background-color: #005688;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 14px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+        }
+
+        #message {
+            margin-top: 15px;
+            font-size: 14px;
+            display: none;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>اضافه کردن کتاب</h1>
+        <input type="text" id="bookName" placeholder="نام کتاب" required>
+        <input type="text" id="bookAuthor" placeholder="نویسنده کتاب" required>
+        <input type="number" id="bookPages" placeholder="تعداد صفحات" required>
+        <input type="number" id="bookYear" placeholder="سال انتشار" required>
+        <button id="copyJson">کپی JSON در کلیپ‌بورد</button>
+        <button id="githubButton" onclick="window.open('https://github.com/login', '_blank')">ورود به گیت‌هاب</button>
+        <div id="message">JSON با موفقیت کپی شد!</div>
+    </div>
+
+    <script>
+        document.getElementById('copyJson').addEventListener('click', () => {
+            // دریافت مقادیر فرم
+            const bookName = document.getElementById('bookName').value;
+            const bookAuthor = document.getElementById('bookAuthor').value;
+            const bookPages = parseInt(document.getElementById('bookPages').value);
+            const bookYear = parseInt(document.getElementById('bookYear').value);
+
+            // ایجاد آبجکت JSON
+            const bookData = [{
+                bookName,
+                bookAuthor,
+                bookPages,
+                bookYear
+            }];
+
+            // تبدیل به JSON و کپی به کلیپ‌بورد
+            navigator.clipboard.writeText(JSON.stringify(bookData, null, 2))
+                .then(() => {
+                    const message = document.getElementById('message');
+                    message.style.display = 'block'; // نمایش پیام موفقیت
+                    setTimeout(() => message.style.display = 'none', 2000);
+
+                    // نمایش دکمه گیت‌هاب
+                    document.getElementById('githubButton').style.display = 'inline-block';
+                })
+                .catch(err => {
+                    console.error('Error copying JSON:', err);
+                });
+        });
+    </script>
+</body>
+</html>
