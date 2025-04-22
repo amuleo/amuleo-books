@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // تعریف توکن در بالای کد
+    const GH_TOKEN = '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';
+
     // انتخاب عناصر مرتبط با ورود و اضافه کردن کتاب
     const loginButton = document.getElementById('loginButton');
     const loginPassword = document.getElementById('loginPassword');
@@ -39,18 +42,17 @@ document.addEventListener('DOMContentLoaded', () => {
             bookAuthor,
             bookPages,
             bookYear
-        }
+        };
 
         try {
             // ارسال درخواست به GitHub API
             const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/actions/workflows/update-books.yml/dispatches', {
-                   const GH_TOKEN = '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';
                 method: 'POST',
-               headers: {
-    'Authorization': `Bearer GH_TOKEN`, // اینجا GH_TOKEN رو وارد می‌کنید
-    'Accept': 'application/vnd.github.v3+json',
-    'Content-Type': 'application/json'
-            },
+                headers: {
+                    'Authorization': `Bearer ${GH_TOKEN}`, // استفاده از توکن
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify({
                     ref: 'main', // شاخه هدف
                     inputs: newBook // ارسال ورودی‌ها به Workflow
