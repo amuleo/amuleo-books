@@ -10,20 +10,20 @@
     <h1>ورود رمز عبور</h1>
     <div id="loginContainer" class="summary-box">
         <p>لطفاً رمز عبور را وارد کنید:</p>
-        <input type="password" id="passwordInput" placeholder="رمز عبور">
+        <input type="password" id="loginPassword" placeholder="رمز عبور"> <!-- تغییر آیدی -->
         <button id="loginButton">ورود</button>
         <p id="loginError" style="color: red; display: none;">رمز عبور اشتباه است!</p>
     </div>
 
-   <div id="bookContainer" class="text-centered"></div>
-
-        <!-- فرم اضافه کردن کتاب -->
+    <!-- فرم اضافه کردن کتاب -->
+    <div id="addBookSection" style="display: none;">
+        <h2>اضافه کردن کتاب</h2>
         <form id="addBookForm" class="book-form">
             <input id="bookName" type="text" placeholder="نام کتاب" required>
             <input id="bookAuthor" type="text" placeholder="نام نویسنده" required>
             <input id="bookPages" type="number" placeholder="تعداد صفحات" required>
             <input id="bookYear" type="number" placeholder="سال انتشار" required>
-            <input id="passwordInput" type="password" placeholder="رمز عبور" required> <!-- بخش اعتبار سنجی -->
+            <input id="addBookPassword" type="password" placeholder="رمز عبور" required> <!-- تغییر آیدی -->
             <button id="addBookButton">اضافه کردن کتاب</button>
         </form>
 
