@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لیست کتاب‌ها</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-E6bK0/xV8j+1hLxay+UX8vyo8YhSx+b9vGc9qv7QcJvv9cROvS3sK2L3lzHFmJlNKvM7nJzq1ZBfY6VR7B3mRw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         @font-face {
             font-family: 'YekanBakh';
@@ -35,10 +36,12 @@
             padding: 20px 10px;
         }
 
-        .theme-toggle {
+        .header-row {
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: 10px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .theme-button {
@@ -54,10 +57,9 @@
             transition: background-color 0.3s;
         }
 
-        .theme-button svg {
-            width: 20px;
-            height: 20px;
-            fill: var(--text-color);
+        .theme-button i {
+            font-size: 18px;
+            color: var(--text-color);
         }
 
         .summary-box, .card {
@@ -124,12 +126,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="theme-toggle">
+        <div class="header-row">
+            <h1>لیست کتاب‌ها</h1>
             <button class="theme-button" id="themeToggle" title="تغییر حالت">
-                <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 1 0-18z"/></svg>
+                <i class="fas fa-adjust"></i>
             </button>
         </div>
-        <h1>لیست کتاب‌ها</h1>
         <div id="bookContainer"></div>
     </div>
     <script>
@@ -148,7 +150,7 @@
                 const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
 
                 summaryBox.innerHTML = `<p>تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}</p>`;
-                document.querySelector('h1').insertAdjacentElement('afterend', summaryBox);
+                document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
 
                 books.forEach((book, index) => {
                     const card = document.createElement('div');
