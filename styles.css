@@ -19,7 +19,9 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* به جای height از min-height استفاده شود */
+    padding-top: 20px; /* فاصله برای جلوگیری از خروج از صفحه */
+    box-sizing: border-box; /* باکس مدل درست تنظیم شود */
 }
 
 .card {
