@@ -8,10 +8,10 @@ body {
     padding: 0;
     background-color: #b4a990; /* رنگ قهوه‌ای تیره */
     font-family: 'YekanBakh', sans-serif;
-    color: #333333; /* سفید برای متن */
+    color: #333333; /* رنگ متن */
     text-align: center;
     direction: rtl;
-    font-size: 2vw; /* واکنش‌پذیر برای دسکتاپ */
+    font-size: 2vw; /* متناسب برای دسکتاپ */
 }
 
 .container {
@@ -21,21 +21,27 @@ body {
     align-items: center;
     padding-top: 20px;
     box-sizing: border-box;
+    width: 100%; /* واکنش‌پذیری بهتر */
 }
 
 .card {
-    position: relative; /* تنظیم موقعیت برای متن مطلق */
+    position: relative; /* تنظیم موقعیت */
     border: 2px solid #9e8e71;
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 20px;
     background-color: #cfcab9;
     text-align: center;
-    width: 70vmax;
-    height: auto; /* انعطاف‌پذیری ارتفاع کارت */
-    min-height: 250px; /* حداقل ارتفاع */
+    width: 70%; /* عرض واکنش‌پذیر */
+    max-width: 400px; /* حداکثر عرض */
+    height: auto; /* انعطاف‌پذیری ارتفاع */
+    min-height: 200px; /* حداقل ارتفاع */
     box-sizing: border-box;
     overflow: visible; /* اجازه بده متن‌ها نمایش داده شوند */
+    display: flex; /* استفاده از Flexbox برای چیدمان */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .text-centered {
@@ -48,9 +54,10 @@ body {
     z-index: 1; /* متن اصلی روی شماره قرار بگیرد */
     text-align: justify; /* تنظیم متن به حالت Justify */
     direction: rtl; /* جهت متن راست به چپ */
-    margin-right: 20px; /* فاصله منفی از سمت راست کارت */
-    display: block; /* مطمئن شو که محتوا نمایش داده می‌شود */
     word-break: break-word; /* شکستن کلمات طولانی */
+    font-size: 1.5rem; /* اندازه متن واکنش‌پذیر */
+    line-height: 1.8; /* فاصله خطوط برای خوانایی بهتر */
+    padding: 10px; /* فاصله داخلی */
 }
 
 .card-background-text {
@@ -58,10 +65,10 @@ body {
     top: 50%; /* مرکز عمودی کارت */
     left: 50%; /* مرکز افقی کارت */
     transform: translate(-50%, -50%); /* قرارگیری دقیق در مرکز */
-    font-size: 10vw; /* اندازه بزرگ و واکنش‌پذیر */
+    font-size: 8vw; /* اندازه بزرگ و واکنش‌پذیر */
     font-weight: bold; /* ضخیم */
-    color: rgba(0, 0, 0, 0.2); /* شفافیت بهتر */
-    z-index: 1; /* در پشت محتوای کارت */
+    color: rgba(0, 0, 0, 0.1); /* شفافیت مناسب */
+    z-index: 0; /* در پشت محتوای کارت */
     pointer-events: none; /* تعامل‌ناپذیر */
 }
 
@@ -80,48 +87,43 @@ body {
     margin: 20px; /* فاصله از اطراف */
     font-size: 2vw; /* اندازه متن مناسب */
     text-align: center; /* متن وسط‌چین */
-    width: 68.2vmax;
+    max-width: 500px; /* حداکثر عرض */
+    width: 90%; /* عرض واکنش‌پذیر */
 }
 
 @media (max-width: 768px) {
     body {
-        font-size: 4vw; /* اندازه متن برای موبایل */
+        font-size: 4vw; /* اندازه متن مناسب برای موبایل */
     }
 
     .container {
         padding-top: 10px; /* کاهش فاصله برای موبایل */
-        width: 100%;
+        width: 100%; /* عرض تمام‌صفحه برای موبایل */
     }
 
     .card {
-        width: 40vmax; /* کارد کمی باریک‌تر شود برای موبایل */
+        width: 90%; /* کارت عرض بیشتری بگیرد برای موبایل */
         padding: 10px; /* کاهش فضای داخلی در موبایل */
-        height: auto; /* انعطاف‌پذیری برای موبایل */
+        min-height: 150px; /* حداقل ارتفاع کمتر برای موبایل */
     }
 
     .card-content {
-        margin-right: 10px; /* فاصله منفی از سمت راست کارت */
-        word-break: break-word; /* شکستن کلمات طولانی */
+        font-size: 4vw; /* اندازه مناسب متن برای موبایل */
+        padding: 5px; /* کاهش فضای داخلی */
     }
 
     .text-centered {
-        font-size: 3vw; /* متن‌ها واکنش‌پذیر شوند */
-        line-height: 1.5; /* ارتفاع خطوط برای خوانایی بهتر */
+        font-size: 3.5vw; /* متن واکنش‌پذیر برای موبایل */
     }
 
     .card-background-text {
-        font-size: 20vw !important; /* اندازه بزرگ‌تر برای عدد محو */
-        top: 50% !important;
-        left: 50% !important;
-        transform: translate(-50%, -50%) !important;
-        opacity: 0.2; /* شفافیت مناسب برای نمایش بهتر */
+        font-size: 15vw; /* اندازه بزرگ‌تر برای متن پس‌زمینه */
     }
 
     .summary-box {
-        width: 37.5vmax; /* کارد کمی باریک‌تر شود برای موبایل */
-        padding: 10px; /* کاهش فضای داخلی در موبایل */
-        font-size: 3vw; /* اندازه متن برای موبایل */
-        margin: 10px;
+        font-size: 3.5vw; /* اندازه متن برای موبایل */
+        padding: 10px; /* تنظیم فاصله داخلی */
+        margin: 15px; /* تنظیم فاصله خارجی */
     }
 }
 
