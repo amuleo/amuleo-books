@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>کپی JSON و ورود به گیت‌هاب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-               @font-face {
-              font-family: 'YekanBakh';
-              src: url('fonts/YekanBakh-Regular.ttf') format('truetype');
-              }
+        @font-face {
+            font-family: 'YekanBakh';
+            src: url('fonts/YekanBakh-Regular.ttf') format('truetype');
+        }
 
         body {
             font-family: YekanBakh, sans-serif;
@@ -21,6 +22,7 @@
             height: 100vh;
             flex-direction: column;
             color: #333333;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         #container {
@@ -31,6 +33,7 @@
             width: 100%;
             max-width: 400px;
             text-align: center;
+            transition: background-color 0.3s, box-shadow 0.3s;
         }
 
         button {
@@ -79,17 +82,59 @@
         }
 
         #jsonButton {
-            background-color: #f39c12; /* رنگ نارنجی جذاب */
-            display: none; /* مخفی کردن دکمه در شروع */
-}
+            background-color: #f39c12;
+            display: none;
+        }
 
-#jsonButton:hover {
-    background-color: #d68910; /* رنگ تیره‌تر در حالت هاور */
-}
+        #jsonButton:hover {
+            background-color: #d68910;
+        }
 
+        /* تم شب */
+        body.dark-mode {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+        }
+
+        #container.dark-mode {
+            background-color: #34495e;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* آیکن حالت شب و روز */
+        #themeToggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* رسانه‌های کوچک */
+        @media (max-width: 768px) {
+            body {
+                font-size: 3vw;
+            }
+
+            #container {
+                padding: 15px;
+            }
+
+            input {
+                font-size: 1.2rem;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <button id="themeToggle"><i class="fas fa-sun"></i></button>
     <div id="container">
         <h1>اضافه کردن کتاب</h1>
         <input type="text" id="bookName" placeholder="نام کتاب" required>
@@ -103,33 +148,55 @@
     </div>
 
    <script>
-    document.getElementById('copyJson').addEventListener('click', () => {
-        // دریافت مقادیر فرم
-        const bookName = document.getElementById('bookName').value;
-        const bookAuthor = document.getElementById('bookAuthor').value;
-        const bookPages = parseInt(document.getElementById('bookPages').value);
-        const bookYear = parseInt(document.getElementById('bookYear').value);
+        document.getElementById('copyJson').addEventListener('click', () => {
+            const bookName = document.getElementById('bookName').value;
+            const bookAuthor = document.getElementById('bookAuthor').value;
+            const bookPages = parseInt(document.getElementById('bookPages').value);
+            const bookYear = parseInt(document.getElementById('bookYear').value);
 
-        // ایجاد مقدار نهایی
-        const bookData = `, { name: "${bookName}", author: "${bookAuthor}", pages: ${bookPages}, year: ${bookYear} }`;
+            const bookData = `, { name: "${bookName}", author: "${bookAuthor}", pages: ${bookPages}, year: ${bookYear} }`;
 
-        // کپی به کلیپ‌بورد
-        navigator.clipboard.writeText(bookData)
-            .then(() => {
-                const message = document.getElementById('message');
-                message.style.display = 'block'; // نمایش پیام موفقیت
-                setTimeout(() => message.style.display = 'none', 2000);
+            navigator.clipboard.writeText(bookData)
+                .then(() => {
+                    const message = document.getElementById('message');
+                    message.style.display = 'block';
+                    setTimeout(() => message.style.display = 'none', 2000);
 
-                // نمایش دکمه گیت‌هاب
-                document.getElementById('copyJson').style.display = 'none'; // مخفی کردن دکمه "کپی JSON"
-                document.getElementById('githubButton').style.display = 'inline-block'; // نمایش دکمه "ورود به گیت‌هاب"
-                document.getElementById('jsonButton').style.display = 'inline-block'; // نمایش دکمه "ورود به JSON"
+                    document.getElementById('copyJson').style.display = 'none';
+                    document.getElementById('githubButton').style.display = 'inline-block';
+                    document.getElementById('jsonButton').style.display = 'inline-block';
+                })
+                .catch(err => {
+                    console.error('Error copying to clipboard:', err);
+                });
+        });
 
-            })
-            .catch(err => {
-                console.error('Error copying to clipboard:', err);
-            });
-    });
-</script>
+        // تنظیمات تم
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            document.getElementById('container').classList.toggle('dark-mode');
+
+            // تغییر آیکن شب/روز
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+
+            // ذخیره وضعیت تم
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        });
+
+        // بارگذاری تم ذخیره‌شده
+        window.onload = () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('container').classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        };
+    </script>
 </body>
 </html>
