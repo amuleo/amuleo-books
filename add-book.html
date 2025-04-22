@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اضافه کردن کتاب</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>ورود رمز عبور</h1>
+    <div id="loginContainer" class="summary-box">
+        <p>لطفاً رمز عبور را وارد کنید:</p>
+        <input type="password" id="passwordInput" placeholder="رمز عبور">
+        <button id="loginButton">ورود</button>
+        <p id="loginError" style="color: red; display: none;">رمز عبور اشتباه است!</p>
+    </div>
+
+    <div id="addBookContainer" class="summary-box" style="display: none;">
+        <h2>اضافه کردن کتاب جدید</h2>
+        <input type="text" id="bookName" placeholder="نام کتاب">
+        <input type="text" id="bookAuthor" placeholder="نویسنده">
+        <input type="number" id="bookPages" placeholder="تعداد صفحات">
+        <input type="text" id="bookYear" placeholder="سال مطالعه">
+        <button id="addBookButton">اضافه کردن کتاب</button>
+        <p id="addBookMessage" style="color: green; display: none;">کتاب با موفقیت اضافه شد!</p>
+    </div>
+</body>
+<script src="script.js"></script>
+</html>
