@@ -22,18 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // ارسال فایل JSON موقت به مخزن
-            const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/contents/temp-book.json', {
-                method: 'PUT',
-                headers: {
-                    'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`, // توکن موقت
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    message: 'Add temporary book file',
-                    content: btoa(JSON.stringify(newBook)), // تبدیل به Base64
-                    branch: 'main' // شاخه مقصد
-                })
-            });
+ const response = await fetch('https://api.github.com/repos/amuleo/amuleo-books/contents/temp-book.json', {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        message: 'Add temporary book file',
+        content: btoa(JSON.stringify(newBook)), // تبدیل داده‌ها به Base64
+        branch: 'main' // شاخه مقصد
+    })
+});
+
 
             if (!response.ok) {
                 throw new Error('Failed to upload temporary file');
