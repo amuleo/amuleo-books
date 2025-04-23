@@ -44,8 +44,7 @@
       background-color: var(--header-bg);  /* رنگ پس‌زمینه هدر */
       padding: 15px;
       border-radius: 10px;
-      
-      
+      margin-bottom: 30px;
     }
 
     .header-row h2 {
@@ -58,7 +57,7 @@
       height: 40px;
       border-radius: 10px;
       border: none;
-      background-color: var(--card-color);
+      background-color: var(--bg-color);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -127,6 +126,17 @@
       --text-color: #f0f0f0;
       --header-bg: #4d4d4d;  /* تغییر رنگ پس‌زمینه هدر */
     }
+  
+    @media (max-width: 480px) {
+        body {
+        font-size: 1rem;
+    }
+
+        .card-content {
+        font-size: 0.9rem;
+    }
+    }
+    
   </style>
 </head>
 <body>
