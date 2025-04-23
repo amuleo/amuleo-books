@@ -208,9 +208,9 @@
 
             summaryBox.innerHTML = `
             <p>
-                تا کنون ${totalBooks} کتاب خوانده ام و 
-                ${totalPages} صفحه را پشت سر گذاشته‌ام،
-                ، در سال جاری ${booksThisYear} کتاب خوانده‌ام.
+                تا کنون <span style="color: var(--bg-color);">${totalBooks}</span> کتاب خوانده ام و 
+                <span style="color: var(--bg-color);">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
+                ، در سال جاری <span style="color: var(--bg-color);">${booksThisYear}</span> کتاب خوانده‌ام.
             `;
             
             document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
