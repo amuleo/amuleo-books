@@ -16,6 +16,7 @@
       --card-color: #cfcab9;
       --border-color: #9e8e71;
       --text-color: #333;
+      --header-bg: #cfcab9;  /* تغییر رنگ پس‌زمینه هدر */
     }
 
     body {
@@ -30,18 +31,21 @@
     }
 
     .container {
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px 15px;
+      max-width: 800px;
+      margin: auto;
+      padding: 20px 10px;
     }
 
     .header-row {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
       gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
+      background-color: var(--header-bg);  /* رنگ پس‌زمینه هدر */
+      padding: 15px;
+      border-radius: 10px;
+      
+      
     }
 
     .header-row h2 {
@@ -121,6 +125,7 @@
       --card-color: #4d4d4d;
       --border-color: #777;
       --text-color: #f0f0f0;
+      --header-bg: #4d4d4d;  /* تغییر رنگ پس‌زمینه هدر */
     }
   </style>
 </head>
