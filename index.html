@@ -177,8 +177,16 @@
 
                 const totalBooks = books.length;
                 const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
+                const currentYear = 1404; // اینجا سال مورد نظرتو بذار
+                const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
+                
 
-                summaryBox.innerHTML = `<p>تعداد کتاب‌های که خوندم : ${totalBooks} | تعداد کل صفحاتی که مطالعه کردم: ${totalPages}</p>`;
+                summaryBox.innerHTML = `
+                <p>تعداد کتاب‌هایی که خوندم: ${totalBooks}</p>
+                <p>تعداد کل صفحاتی که مطالعه کردم: ${totalPages}</p>
+                <p>کتاب‌هایی که امسال (${currentYear}) مطالعه شدند: ${booksThisYear} کتاب</p>
+                `;
+                
                 document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
 
                 books.forEach((book, index) => {
