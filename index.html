@@ -162,113 +162,113 @@
         <div id="bookContainer"></div>
     </div>
 <script>
-    let isLoading = false; // متغیر برای جلوگیری از درخواست‌های دوباره
+    // Fetch and Display Books
+    async function loadBooks() {
+        try {
+            const response = await fetch('books.json');
+            if (!response.ok) throw new Error('Failed to load JSON');
+            const books = await response.json();
 
-async function loadBooks() {
-    if (isLoading) return; // اگر در حال بارگذاری هستیم، درخواست جدید ندهیم
-    isLoading = true; // بارگذاری شروع می‌شود
+            const bookContainer = document.getElementById('bookContainer');
+            const summaryBox = document.createElement('div');
+            summaryBox.className = 'summary-box';
 
-    try {
-        const response = await fetch('books.json');
-        if (!response.ok) throw new Error('Failed to load JSON');
-        const books = await response.json();
+            const totalBooks = books.length;
+            const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
+            const currentYear = 1404; // اینجا سال مورد نظرتو بذار
+            const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
 
-        const bookContainer = document.getElementById('bookContainer');
-
-        const summaryBox = document.createElement('div');
-        summaryBox.className = 'summary-box';
-
-        const totalBooks = books.length;
-        const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
-        const currentYear = 1404; // سال مورد نظر
-        const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
-
-        summaryBox.innerHTML = `
+            summaryBox.innerHTML = `
             <p>
-                در مجموع خوانده ام: ${totalBooks} کتاب |  
-                کل صفحات مطالعه شده: ${totalPages} صفحه |  
+                در مجموع خوانده ام: ${totalBooks} کتاب | 
+                کل صفحات مطالعه شده: ${totalPages} صفحه | 
                 امسال مطالعه شدند: ${booksThisYear} کتاب
             </p>
-        `;
-        
-        document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
-
-        // نمایش ۱۰ کتاب اول
-        const booksToDisplay = books.slice(0, 10); 
-        booksToDisplay.forEach((book, index) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-
-            const backgroundText = document.createElement('div');
-            backgroundText.className = 'card-background-text';
-            backgroundText.textContent = index + 1;
-
-            const content = document.createElement('div');
-            content.className = 'card-content';
-            content.innerHTML = `
-                <p>نام کتاب: ${book.name}</p>
-                <hr>
-                <p>نویسنده: ${book.author}</p>
-                <hr>
-                <p>تعداد صفحات: ${book.pages}</p>
-                <hr>
-                <p>تاریخ مطالعه: ${book.year}</p>
             `;
+            
+            document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
 
-            card.appendChild(backgroundText);
-            card.appendChild(content);
-            bookContainer.appendChild(card);
-        });
+            // Initially show 10 books
+            let displayedBooks = 10;
+            displayBooks(books, displayedBooks);
 
-        // بررسی اینکه آیا دیگر کتابی برای بارگذاری وجود ندارد
-        if (books.length <= 10) {
-            window.removeEventListener('scroll', handleScroll); // دیگر نیازی به بارگذاری بیشتر نیست
+            // Show more books functionality
+            const loadMoreButton = document.createElement('button');
+            loadMoreButton.className = 'load-more-btn';
+            loadMoreButton.textContent = 'نمایش بیشتر';
+            bookContainer.appendChild(loadMoreButton);
+
+            loadMoreButton.addEventListener('click', () => {
+                displayedBooks += 10;  // Increase by 10 each time
+                displayBooks(books, displayedBooks);
+
+                // If less than 10 books left to load, change the button text to "این آخر لیست است"
+                if (displayedBooks >= books.length) {
+                    loadMoreButton.remove(); // Remove the button once all books are displayed
+                    const endMessage = document.createElement('p');
+                    endMessage.textContent = 'این آخر لیست است';
+                    bookContainer.appendChild(endMessage);
+                }
+            });
+
+            function displayBooks(books, count) {
+                bookContainer.innerHTML = ''; // Clear previous books
+                books.slice(0, count).forEach((book, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+
+                    const backgroundText = document.createElement('div');
+                    backgroundText.className = 'card-background-text';
+                    backgroundText.textContent = index + 1;
+
+                    const content = document.createElement('div');
+                    content.className = 'card-content';
+                    content.innerHTML = `
+                        <p>نام کتاب: ${book.name}</p>
+                        <hr>
+                        <p>نویسنده: ${book.author}</p>
+                        <hr>
+                        <p>تعداد صفحات: ${book.pages}</p>
+                        <hr>
+                        <p>تاریخ مطالعه: ${book.year}</p>
+                    `;
+
+                    card.appendChild(backgroundText);
+                    card.appendChild(content);
+                    bookContainer.appendChild(card);
+                });
+            }
+
+        } catch (error) {
+            console.error(error.message);
         }
-    } catch (error) {
-        console.error(error.message);
     }
 
-    isLoading = false; // بارگذاری تمام شد
-}
+    // Theme Toggle Logic
+    function updateThemeIcon(isDark) {
+        const icon = document.getElementById('themeIcon');
+        icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+    }
 
-// تابعی برای بررسی اسکرول
-function handleScroll() {
-    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+    function applyStoredTheme() {
+        const storedTheme = localStorage.getItem('theme');
+        const isDark = storedTheme === 'dark';
+        document.body.classList.toggle('dark', isDark);
+        updateThemeIcon(isDark);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        applyStoredTheme();
         loadBooks();
-    }
-}
+    });
 
-// رویداد اسکرول را ثبت کنید
-window.addEventListener('scroll', handleScroll);
-
-// در ابتدا کتاب‌ها را لود کنید
-loadBooks();
-
-// Theme Toggle Logic
-function updateThemeIcon(isDark) {
-    const icon = document.getElementById('themeIcon');
-    icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
-}
-
-function applyStoredTheme() {
-    const storedTheme = localStorage.getItem('theme');
-    const isDark = storedTheme === 'dark';
-    document.body.classList.toggle('dark', isDark);
-    updateThemeIcon(isDark);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    applyStoredTheme();
-    loadBooks();
-});
-
-const themeToggle = document.getElementById('themeToggle');
-themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark');
-    const isDark = document.body.classList.contains('dark');
-    updateThemeIcon(isDark);
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-});
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark');
+        const isDark = document.body.classList.contains('dark');
+        updateThemeIcon(isDark);
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
 </script>
 </body>
 </html>
