@@ -18,6 +18,7 @@
             --text-color: #333;
             --header-bg: #cfcab9;  /* تغییر رنگ پس‌زمینه هدر */
             --header-text-color: #333333;  /* رنگ متن هدر */
+            --span-color: #9e8e71;  /* رنگ متن اسپن */
         }
 
         body {
@@ -142,6 +143,7 @@
             --text-color: #f0f0f0;
             --header-bg: #4d4d4d;  /* تغییر رنگ پس‌زمینه هدر در تم تاریک */
             --header-text-color: #f0f0f0;
+            --span-color: #333333;  /* رنگ متن اسپن */
         }
 
         /* استایل دکمه نمایش بیشتر */
@@ -208,9 +210,9 @@
 
             summaryBox.innerHTML = `
             <p>
-                تا کنون <span style="color: var(--bg-color);">${totalBooks}</span> کتاب خوانده ام و 
-                <span style="color: var(--bg-color);">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
-                ، در سال جاری <span style="color: var(--bg-color);">${booksThisYear}</span> کتاب خوانده‌ام.
+                تا کنون <span style="color: var(--span-color);">${totalBooks}</span> کتاب خوانده ام و 
+                <span style="color: var(--span-color);">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
+                در سال جاری <span style="color: var(--span-color);">${booksThisYear}</span> کتاب خوانده‌ام.
             `;
             
             document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
