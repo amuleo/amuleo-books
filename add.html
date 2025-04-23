@@ -173,7 +173,7 @@
       const pages = document.getElementById("bookPages").value;
       const year = document.getElementById("bookYear").value;
 
-      const bookData = `, { name: "${name}", author: "${author}", pages: ${pages}, year: ${year} }`;
+      const bookData = `, { "name": "${name}", "author": "${author}", "pages": ${pages}, "year": ${year} }`;
 
       navigator.clipboard.writeText(bookData).then(() => {
         document.getElementById("message").style.display = "block";
