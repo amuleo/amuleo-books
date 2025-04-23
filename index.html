@@ -143,6 +143,30 @@
             --header-bg: #4d4d4d;  /* تغییر رنگ پس‌زمینه هدر در تم تاریک */
             --header-text-color: #f0f0f0;
         }
+
+        /* استایل دکمه نمایش بیشتر */
+.show-more-btn {
+    background-color: var(--card-color); /* رنگ پس‌زمینه */
+    color: var(--text-color); /* رنگ متن */
+    border: none; /* حذف حاشیه */
+    padding: 10px; /* فاصله داخلی */
+    font-size: 16px; /* اندازه فونت */
+    border-radius: 5px; /* گوشه‌های گرد */
+    cursor: pointer; /* نشانگر موس */
+    transition: background-color 0.3s ease; /* انیمیشن تغییر رنگ */
+}
+
+/* تغییر رنگ دکمه هنگام هاور */
+.show-more-btn:hover {
+    background-color: #0056b3;
+}
+
+/* استایل زمانی که دکمه در پایین صفحه است */
+.show-more-btn.bottom {
+    display: block;
+    margin: 20px auto;
+}
+        
     </style>
 </head>
 <body>
