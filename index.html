@@ -36,12 +36,16 @@
             padding: 20px 10px;
         }
 
+        /* Header Style */
         .header-row {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
             gap: 10px;
-            flex-wrap: wrap;
+        }
+
+        .header-row h1 {
+            margin: 0;
         }
 
         .theme-button {
@@ -126,15 +130,23 @@
 </head>
 <body>
     <div class="container">
+        <!-- Header Section -->
         <div class="header-row">
             <h1>لیست کتاب‌ها</h1>
             <button class="theme-button" id="themeToggle" title="تغییر حالت">
                 <i id="themeIcon" class="fas"></i>
             </button>
         </div>
+
+        <!-- Summary Section -->
+        <div class="summary-box"></div>
+
+        <!-- Book Cards -->
         <div id="bookContainer"></div>
     </div>
+
     <script>
+        // Fetch and Display Books
         async function loadBooks() {
             try {
                 const response = await fetch('books.json');
@@ -181,6 +193,7 @@
             }
         }
 
+        // Theme Toggle Logic
         function updateThemeIcon(isDark) {
             const icon = document.getElementById('themeIcon');
             icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
