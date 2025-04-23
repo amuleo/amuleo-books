@@ -274,14 +274,32 @@
         }
     }
 
-    // Theme Toggle Logic
+    // Theme Toggle Logic with Cookies
+    function setCookie(name, value, days) {
+        const d = new Date();
+        d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000)); // مدت زمان انقضای کوکی
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = name + "=" + value + ";" + expires + ";path=/";
+    }
+
+    function getCookie(name) {
+        let nameEq = name + "=";
+        let ca = document.cookie.split(';');
+        for (let i = 0; i < ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEq) == 0) return c.substring(nameEq.length, c.length);
+        }
+        return "";
+    }
+
     function updateThemeIcon(isDark) {
         const icon = document.getElementById('themeIcon');
         icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
     }
 
     function applyStoredTheme() {
-        const storedTheme = localStorage.getItem('theme');
+        const storedTheme = getCookie('theme');
         const isDark = storedTheme === 'dark';
         document.body.classList.toggle('dark', isDark);
         updateThemeIcon(isDark);
@@ -297,7 +315,7 @@
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
         updateThemeIcon(isDark);
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        setCookie('theme', isDark ? 'dark' : 'light', 365); // ذخیره وضعیت در کوکی برای یک سال
     });
 </script>
 </body>
