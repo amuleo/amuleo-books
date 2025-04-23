@@ -16,6 +16,8 @@
             --card-color: #cfcab9;
             --border-color: #9e8e71;
             --text-color: #333;
+            --header-bg: #a69f91;  /* تغییر رنگ پس‌زمینه هدر */
+            --header-text-color: #fff;  /* رنگ متن هدر */
         }
 
         body {
@@ -42,10 +44,15 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
+            background-color: var(--header-bg);  /* رنگ پس‌زمینه هدر */
+            padding: 15px;
+            border-radius: 10px;
         }
 
         .header-row h1 {
             margin: 0;
+            color: var(--header-text-color); /* رنگ متن هدر */
+            font-size: 1.5rem;
         }
 
         .theme-button {
@@ -66,7 +73,7 @@
             color: var(--text-color);
         }
 
-        .summary-box, .card {
+        .summary-box {
             background-color: var(--card-color);
             border: 2px solid var(--border-color);
             border-radius: 10px;
@@ -78,6 +85,14 @@
         }
 
         .card {
+            background-color: var(--card-color);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px auto;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
             position: relative;
             overflow: hidden;
             min-height: 250px;
@@ -125,6 +140,8 @@
             --card-color: #4d4d4d;
             --border-color: #777;
             --text-color: #f0f0f0;
+            --header-bg: #444;  /* تغییر رنگ پس‌زمینه هدر در تم تاریک */
+            --header-text-color: #fff;
         }
     </style>
 </head>
@@ -210,7 +227,7 @@
             applyStoredTheme();
             loadBooks();
         });
-
+        
         const themeToggle = document.getElementById('themeToggle');
         themeToggle.addEventListener('click', () => {
             document.body.classList.toggle('dark');
