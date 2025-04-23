@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیست کتاب‌ها</title>
+    <title>کتابخونه عمو لئو</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         @font-face {
@@ -149,14 +149,14 @@
     <div class="container">
         <!-- Header Section -->
         <div class="header-row">
-            <h1>لیست کتاب‌ها</h1>
+            <h1>کتابخونۀ عمو لئو</h1>
             <button class="theme-button" id="themeToggle" title="تغییر حالت">
                 <i id="themeIcon" class="fas"></i>
             </button>
         </div>
 
         <!-- Summary Section -->
-        <div class="summary-box"></div>
+        
 
         <!-- Book Cards -->
         <div id="bookContainer"></div>
@@ -178,7 +178,7 @@
                 const totalBooks = books.length;
                 const totalPages = books.reduce((sum, book) => sum + book.pages, 0);
 
-                summaryBox.innerHTML = `<p>تعداد کتاب‌های خوانده شده: ${totalBooks} | تعداد کل صفحات مطالعه شده: ${totalPages}</p>`;
+                summaryBox.innerHTML = `<p>تعداد کتاب‌های که خوندم : ${totalBooks} | تعداد کل صفحاتی که مطالعه کردم: ${totalPages}</p>`;
                 document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
 
                 books.forEach((book, index) => {
