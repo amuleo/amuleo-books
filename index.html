@@ -182,9 +182,11 @@
                 
 
                 summaryBox.innerHTML = `
-                <p>تعداد کتاب‌هایی که خوندم: ${totalBooks}</p>
-                <p>تعداد کل صفحاتی که مطالعه کردم: ${totalPages}</p>
-                <p>کتاب‌هایی که امسال (${currentYear}) مطالعه شدند: ${booksThisYear} کتاب</p>
+                <p>
+                تعداد کتاب‌هایی که خوندم: ${totalBooks} | 
+                تعداد کل صفحاتی که مطالعه کردم: ${totalPages} | 
+                کتاب‌هایی که امسال مطالعه شدند: ${booksThisYear}
+                </p>
                 `;
                 
                 document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
