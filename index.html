@@ -166,6 +166,10 @@
     display: block;
     margin: 20px auto;
 }
+
+        .summaryBox p {
+    text-align: justify;
+        }
         
     </style>
 </head>
@@ -206,7 +210,7 @@
             <p>
                 تا کنون ${totalBooks} کتاب خوانده ام و 
                 ${totalPages} صفحه را پشت سر گذاشته‌ام،
-                ، در سال جاری ${booksThisYear} .کتاب خوانده‌ام
+                ، در سال جاری ${booksThisYear} کتاب خوانده‌ام.
             `;
             
             document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
