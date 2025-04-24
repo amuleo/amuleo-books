@@ -12,10 +12,11 @@
         }
 
         :root {
-            --bg: #b4a990;
-            --card: #cfcab9;
-            --border: #9e8e71;
+            --bg: #f9fafd;
+            --card: #ffffff;
+            --border: #e5e5e5;
             --text: #333;
+            --hover: #dbdce0;
             --span: #9e8e71;  /* رنگ متن اسپن */
         }
 
@@ -147,11 +148,10 @@
 
         body.dark {
             --bg: #212121;
-            : #303030;
-            --border: #777;
+            --card: #303030;
+            --border: #666;
             --text: #f0f0f0;
-            --card: #303030;  /* تغییر رنگ پس‌زمینه هدر در تم تاریک */
-            --text: #f0f0f0;
+            --hover: #1a1a1c;
         }
 
         /* استایل دکمه نمایش بیشتر */
@@ -169,7 +169,7 @@
 
 /* تغییر رنگ دکمه هنگام هاور */
 .load-more-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--hover);
 }
 
 /* استایل زمانی که دکمه در پایین صفحه است */
