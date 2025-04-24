@@ -12,21 +12,20 @@
         }
 
         :root {
-            --bg-color: #b4a990;
-            --card-color: #cfcab9;
-            --border-color: #9e8e71;
-            --text-color: #333;
-            --header-bg: #cfcab9;  /* تغییر رنگ پس‌زمینه هدر */
-            --header-text-color: #333333;  /* رنگ متن هدر */
-            --span-color: #9e8e71;  /* رنگ متن اسپن */
+            --bg: #b4a990;
+            --card: #cfcab9;
+            --border: #9e8e71;
+            --text: #333;
+            --text: #333333;  /* رنگ متن هدر */
+            --span: #9e8e71;  /* رنگ متن اسپن */
         }
 
         body {
             margin: 0;
             padding: 0;
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             font-family: 'YekanBakh', sans-serif;
-            color: var(--text-color);
+            color: var(--text);
             direction: rtl;
             font-size: 1.1rem;
             text-align: center;
@@ -45,14 +44,14 @@
             justify-content: space-between;
             align-items: center;
             gap: 10px;
-            background-color: var(--header-bg);  /* رنگ پس‌زمینه هدر */
+            background-color: var(--card);  /* رنگ پس‌زمینه هدر */
             padding: 15px;
             border-radius: 10px;
         }
 
         .header-row h1 {
             margin: 0;
-            color: var(--header-text-color); /* رنگ متن هدر */
+            color: var(--text); /* رنگ متن هدر */
             font-size: 1.5rem;
         }
 
@@ -61,7 +60,7 @@
             height: 40px;
             border-radius: 10px;
             border: none;
-            background-color: var(--bg-color);
+            background-color: var(--bg);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -71,12 +70,12 @@
 
         .theme-button i {
             font-size: 18px;
-            color: var(--text-color);
+            color: var(--text);
         }
 
         .summary-box {
-            background-color: var(--card-color);
-            border: 0px solid var(--border-color);
+            background-color: var(--card);
+            border: none;
             border-radius: 10px;
             padding: 15px;
             margin: 15px auto;
@@ -86,8 +85,8 @@
         }
 
         .card {
-            background-color: var(--card-color);
-            border: 0px solid var(--border-color);
+            background-color: var(--card);
+            border: none;
             border-radius: 10px;
             padding: 15px;
             margin: 15px auto;
@@ -121,7 +120,7 @@
 
         .card hr {
             border: none;
-            border-top: 1px solid var(--border-color);
+            border-top: 1px solid var(--border);
             margin: 8px 0;
             opacity: 0.5;
         }
@@ -137,19 +136,19 @@
         }
 
         body.dark {
-            --bg-color: #212121;
-            --card-color: #303030;
-            --border-color: #777;
-            --text-color: #f0f0f0;
-            --header-bg: #303030;  /* تغییر رنگ پس‌زمینه هدر در تم تاریک */
-            --header-text-color: #f0f0f0;
+            --bg: #212121;
+            : #303030;
+            --border: #777;
+            --text: #f0f0f0;
+            --card: #303030;  /* تغییر رنگ پس‌زمینه هدر در تم تاریک */
+            --text: #f0f0f0;
         }
 
         /* استایل دکمه نمایش بیشتر */
 .load-more-btn {
-    background-color: var(--card-color); /* رنگ پس‌زمینه */
+    background-color: var(); /* رنگ پس‌زمینه */
     font-family: 'YekanBakh', sans-serif;
-    color: var(--text-color); /* رنگ متن */
+    color: var(--text); /* رنگ متن */
     border: none; /* حذف حاشیه */
     padding: 10px; /* فاصله داخلی */
     font-size: 16px; /* اندازه فونت */
@@ -210,9 +209,9 @@
 
             summaryBox.innerHTML = `
             <p>
-                تا کنون <span style="color: var(--span-color);">${totalBooks}</span> کتاب خوانده ام و 
-                <span style="color: var(--span-color);">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
-                در سال جاری <span style="color: var(--span-color);">${booksThisYear}</span> کتاب خوانده‌ام.
+                تا کنون <span style="color: var(--span);">${totalBooks}</span> کتاب خوانده ام و 
+                <span style="color: var(--span);">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
+                در سال جاری <span style="color: var(--span);">${booksThisYear}</span> کتاب خوانده‌ام.
             `;
             
             document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
