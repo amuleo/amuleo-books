@@ -12,19 +12,18 @@
     }
 
     :root {
-      --bg-color: #b4a990;
-      --card-color: #cfcab9;
-      --border-color: #9e8e71;
-      --text-color: #333;
-      --header-bg: #cfcab9;  /* تغییر رنگ پس‌زمینه هدر */
+      --bg: #b4a990;
+      --card: #cfcab9;
+      --border: #9e8e71;
+      --text: #333;
     }
 
     body {
       margin: 0;
       padding: 0;
-      background-color: var(--bg-color);
+      background-color: var(--bg);
       font-family: 'YekanBakh', sans-serif;
-      color: var(--text-color);
+      color: var(--text);
       direction: rtl;
       text-align: center;
       transition: background-color 0.3s, color 0.3s;
@@ -57,7 +56,7 @@
       height: 40px;
       border-radius: 10px;
       border: none;
-      background-color: var(--bg-color);
+      background-color: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -68,12 +67,12 @@
 
     .theme-button i {
       font-size: 18px;
-      color: var(--text-color);
+      color: var(--text);
     }
 
     .card {
-      background-color: var(--card-color);
-      border: 0px solid var(--border-color);
+      background-color: var(--card);
+      border: 0px solid var(--border);
       border-radius: 10px;
       padding: 20px;
       margin-top: 10px;
@@ -86,7 +85,7 @@
       font-family: inherit;
       font-size: 1rem;
       border-radius: 5px;
-      border: 0px solid var(--border-color);
+      border: 0px solid var(--border);
     }
 
     .card button {
@@ -106,8 +105,8 @@
     }
 
     .card .link-button {
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      background-color: var(--bg);
+      color: var(--text);
       font-size: 0.9rem;
       font-family: 'YekanBakh', sans-serif;
       margin: 5px;
@@ -122,14 +121,14 @@
       margin-top: 15px;
       font-size: 14px;
       display: none;
-      color: var(--text-color);
+      color: var(--text);
     }
 
     body.dark {
-      --bg-color: #212121;
-      --card-color: #303030;
-      --border-color: #777;
-      --text-color: #f0f0f0;
+      --bg: #212121;
+      --card: #303030;
+      --border: #777;
+      --text: #f0f0f0;
       --header-bg: #303030;  /* تغییر رنگ پس‌زمینه هدر */
     }
   
