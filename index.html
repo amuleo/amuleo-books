@@ -38,7 +38,7 @@
         }
 
         /* Header Style */
-        .header-row {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -48,7 +48,7 @@
             border-radius: 10px;
         }
 
-        .header-row h1 {
+        .header h1 {
             margin: 0;
             color: var(--text); /* رنگ متن هدر */
             font-size: 1.5rem;
@@ -176,7 +176,7 @@
 <body>
     <div class="container">
         <!-- Header Section -->
-        <div class="header-row">
+        <div class="header">
             <h1>کتابخونۀ عمو لئو</h1>
             <button class="theme-button" id="themeToggle" title="تغییر حالت">
                 <i id="themeIcon" class="fas"></i>
@@ -213,7 +213,7 @@
                 در سال جاری <span style="color: var(--span);">${booksThisYear}</span> کتاب خوانده‌ام.
             `;
             
-            document.querySelector('.header-row').insertAdjacentElement('afterend', summaryBox);
+            document.querySelector('.header').insertAdjacentElement('afterend', summaryBox);
 
             // Initially show 10 books
             let displayedBooks = 10;
