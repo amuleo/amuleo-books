@@ -12,10 +12,12 @@
     }
 
     :root {
-      --bg: #b4a990;
-      --card: #cfcab9;
-      --border: #9e8e71;
+      --bg: #f9fafd;
+      --card: #ffffff;
+      --border: #e5e5e5;
       --text: #333;
+      --hover: #dbdce0;
+      --span: #9e8e71;  /* رنگ متن اسپن */
     }
 
     body {
@@ -100,13 +102,13 @@
       font-family: 'YekanBakh', sans-serif;
       border: none;
       border-radius: 8px;
-      background-color: #4caf50;
-      color: white;
+      background-color: var(--bg);
+      color: var(--text);
       cursor: pointer;
     }
 
     .card button:hover {
-      background-color: #449d48;
+      background-color: var(--hover);
     }
 
     .card .link-button {
@@ -118,8 +120,7 @@
     }
 
     .card .link-button:hover {
-      background-color: #4b3e38;
-      color: #b4a990;
+      background-color: var(--hover);
     }
 
     #message {
@@ -132,8 +133,9 @@
     body.dark {
       --bg: #212121;
       --card: #303030;
-      --border: #777;
+      --border: #666;
       --text: #f0f0f0;
+      --hover: #1a1a1c;
     }
   
     @media (max-width: 480px) {
