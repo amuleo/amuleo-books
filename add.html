@@ -215,6 +215,16 @@
         return "";
     }
 
+  function updateThemeColor(color) {
+    let themeMetaTag = document.querySelector('meta[name="theme-color"]');
+    if (!themeMetaTag) {
+        themeMetaTag = document.createElement('meta');
+        themeMetaTag.setAttribute('name', 'theme-color');
+        document.head.appendChild(themeMetaTag);
+    }
+    themeMetaTag.setAttribute('content', color);
+}
+
     const themeToggle = document.getElementById("themeToggle");
     themeToggle.addEventListener("click", () => {
         document.body.classList.toggle("dark");
