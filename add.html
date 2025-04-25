@@ -243,6 +243,9 @@
         if (saved === "dark") {
             document.body.classList.add("dark");
             document.getElementById("themeIcon").className = "fas fa-moon";
+          const isDark = getCookie("theme") === "dark";
+          updateThemeColor(isDark ? "#333" : "#f9fafd");
+
         }
     };
 
