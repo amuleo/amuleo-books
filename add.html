@@ -232,6 +232,7 @@
         const isDark = document.body.classList.contains("dark");
         icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
         setCookie("theme", isDark ? "dark" : "light", 365); // ذخیره وضعیت در کوکی برای یک سال
+        updateThemeColor(isDark ? "#333" : "#f9fafd"); // تغییر رنگ بر اساس تم
     });
 
     window.onload = () => {
@@ -239,6 +240,7 @@
         if (saved === "dark") {
             document.body.classList.add("dark");
             document.getElementById("themeIcon").className = "fas fa-moon";
+            updateThemeColor(isDark ? "#333" : "#f9fafd"); // تغییر رنگ بر اساس تم
         }
     };
 
