@@ -325,6 +325,19 @@
         updateThemeIcon(isDark);
         setCookie('theme', isDark ? 'dark' : 'light', 365); // ذخیره وضعیت در کوکی برای یک سال
     });
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const saved = getCookie("theme");
+    const isDark = saved === "dark";
+    
+    // اعمال حالت ذخیره شده
+    document.body.classList.toggle("dark", isDark);
+    icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+
+    // تنظیم رنگ تم مرورگر
+    updateThemeColor(isDark ? "#333" : "#f9fafd");
+});
+
 </script>
 </body>
 </html>
