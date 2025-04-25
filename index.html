@@ -301,6 +301,16 @@
         return "";
     }
 
+    function updateThemeColor(color) {
+    let themeMetaTag = document.querySelector('meta[name="theme-color"]');
+    if (!themeMetaTag) {
+        themeMetaTag = document.createElement('meta');
+        themeMetaTag.setAttribute('name', 'theme-color');
+        document.head.appendChild(themeMetaTag);
+    }
+    themeMetaTag.setAttribute('content', color);
+}
+
     function updateThemeIcon(isDark) {
         const icon = document.getElementById('themeIcon');
         icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
