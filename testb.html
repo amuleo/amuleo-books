@@ -26,7 +26,7 @@
             .then(response => response.json())
             .then(data => {
                 const table = document.getElementById("books-table");
-                data.forEach(book => {
+                data.results.forEach(book => {  // استفاده از data.results
                     let row = table.insertRow();
                     row.insertCell().textContent = book.id;
                     row.insertCell().textContent = book.title;
