@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>افزودن کتاب جدید</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input, button { margin: 10px; padding: 8px; }
+    </style>
+</head>
+<body>
+    <h1>افزودن کتاب جدید</h1>
+    <form id="add-book-form">
+        <input type="text" id="title" placeholder="عنوان کتاب" required>
+        <input type="text" id="author" placeholder="نام نویسنده" required>
+        <input type="number" id="year" placeholder="سال انتشار" required>
+        <button type="submit">افزودن کتاب</button>
+    </form>
+    <p id="response-msg"></p>
+
+    <script>
+        document.getElementById("add-book-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById("title").value;
+            const author = document.getElementById("author").value;
+            const year = document.getElementById("year").value;
+
+            fetch("https://books-api.immohammaddavoodi.workers.dev/add-book", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, author, year })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response-msg").textContent = data.success 
+                    ? "✅ کتاب با موفقیت اضافه شد!" 
+                    : "❌ خطایی رخ داده است!";
+            })
+            .catch(error => console.error("خطا در ارسال داده:", error));
+        });
+    </script>
+</body>
+</html>
