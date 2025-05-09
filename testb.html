@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست کتاب‌ها</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 10px; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <h1>لیست کتاب‌ها</h1>
+    <table id="books-table">
+        <tr>
+            <th>شناسه</th>
+            <th>عنوان</th>
+            <th>نویسنده</th>
+            <th>سال انتشار</th>
+        </tr>
+    </table>
+
+    <script>
+        fetch("https://books-api.immohammaddavoodi.workers.dev/")
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById("books-table");
+                data.forEach(book => {
+                    let row = table.insertRow();
+                    row.insertCell().textContent = book.id;
+                    row.insertCell().textContent = book.title;
+                    row.insertCell().textContent = book.author;
+                    row.insertCell().textContent = book.year;
+                });
+            })
+            .catch(error => console.error("خطا در دریافت داده‌ها:", error));
+    </script>
+</body>
+</html>
