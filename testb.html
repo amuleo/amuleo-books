@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-    <h1>لیست کتاب‌ها</h1>
+    <h1>📚 لیست کتاب‌ها</h1>
     <table id="books-table">
         <tr>
             <th>شناسه</th>
@@ -25,8 +25,11 @@
         fetch("https://books-api.immohammaddavoodi.workers.dev/")
             .then(response => response.json())
             .then(data => {
+                if (!data.results || !data.results.results || !Array.isArray(data.results.results)) {
+                    throw new Error("❌ داده‌های نامعتبر دریافت شد!");
+                }
                 const table = document.getElementById("books-table");
-                data.results.forEach(book => {  // استفاده از data.results
+                data.results.results.forEach(book => {  // اصلاح ساختار داده‌ها
                     let row = table.insertRow();
                     row.insertCell().textContent = book.id;
                     row.insertCell().textContent = book.title;
@@ -34,7 +37,7 @@
                     row.insertCell().textContent = book.year;
                 });
             })
-            .catch(error => console.error("خطا در دریافت داده‌ها:", error));
+            .catch(error => console.error("⚠️ خطا در دریافت داده‌ها:", error));
     </script>
 </body>
 </html>
