@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>افزودن کتاب</title>
+  <title>افزودن کتاب2</title>
   <style>
     /* استفاده از :root برای تنظیمات نوشتاری کل سند */
     :root {
@@ -71,6 +71,7 @@
 
       // آماده سازی داده‌ها جهت ارسال به API
       const payload = { title, author, year };
+      console.log("Sending payload to add-book:", payload);
 
       try {
         // ارسال درخواست POST به API جهت افزودن کتاب
