@@ -277,7 +277,7 @@
         // تابع نمایش کتاب‌ها در قالب کارت
         function displayBooks(books, count) {
           bookContainer.innerHTML = ''; // پاکسازی محتوای قبلی
-          books.slice(0, count).forEach((book, index) => {
+          books.slice(0, count).reverse().forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'card';
   
