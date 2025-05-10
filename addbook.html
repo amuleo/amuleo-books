@@ -48,7 +48,8 @@
     <!-- فیلدهای ورودی برای اطلاعات کتاب -->
     <input type="text" id="title" placeholder="عنوان کتاب" required>
     <input type="text" id="author" placeholder="نویسنده" required>
-    <input type="number" id="year" placeholder="سال انتشار" required>
+    <input type="number" id="year" placeholder="تاریخ مطالعه" required>
+    <input type="number" id="page" placeholder="تعداد صفحات کتاب" required>
     <button type="submit">افزودن کتاب</button>
   </form>
   <!-- محلی برای نمایش پیام‌های موفقیت یا ارور -->
@@ -62,15 +63,16 @@
       const title = document.getElementById('title').value.trim();
       const author = document.getElementById('author').value.trim();
       const year = document.getElementById('year').value.trim();
+      const page = document.getElementById('page').value.trim();
 
       // در صورتی که هر کدام از فیلدها خالی باشند، پیام مناسب نمایش داده می‌شود
-      if (!title || !author || !year) {
+      if (!title || !author || !year || !page) {
         document.getElementById('message').textContent = 'لطفا همه فیلدها را پر کنید.';
         return;
       }
 
       // آماده سازی داده‌ها جهت ارسال به API
-      const payload = { title, author, year };
+      const payload = { title, author, year, page };
       console.log("Sending payload to add-book:", payload);
 
       try {
