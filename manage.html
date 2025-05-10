@@ -75,6 +75,7 @@
       border: none;
     }
   </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
   <!-- بخش ورود: تنها یک فرم رمز عبور -->
@@ -144,9 +145,7 @@
     </div>
   </div>
 
-  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
-  <script>
+ <script>
   /* ------------------ جلوگیری از inspect ------------------ */
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
@@ -184,7 +183,7 @@
   // ------------------ تابع ارسال درخواست ورود به سرور ------------------
   function loginRequest(turnstileToken) {
     const inputPass = document.getElementById("loginPassword").value;
-    const loginMsg   = document.getElementById("loginMessage");
+    const loginMsg  = document.getElementById("loginMessage");
     
     fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/check-password", {
       method: "POST",
@@ -198,7 +197,14 @@
         document.getElementById("login-container").classList.add("hidden");
         document.getElementById("manage-container").classList.remove("hidden");
       } else {
+        // نمایش پیام خطا در صورت عدم موفقیت ورود
         loginMsg.textContent = result.error || "رمز عبور اشتباه است.";
+        // ------------------ تغییر اضافه شده ------------------
+        // ریست کردن ویجت Turnstile برای دریافت توکن تازه
+        if (window.turnstile && document.getElementById("cf-turnstile")) {
+          turnstile.reset("#cf-turnstile");
+        }
+        // --------------------------------------------------------
       }
     })
     .catch(error => {
