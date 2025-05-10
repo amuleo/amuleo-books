@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لیست کتاب‌ها</title>
+    <title>2لیست کتاب‌ها</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,32 +39,34 @@
     </table>
 
     <script>
-        async function fetchBooks() {
-            try {
-                const response = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/list-books");
-                const data = await response.json();
-                if (data.success) {
-                    const tableBody = document.querySelector("#booksTable tbody");
-                    tableBody.innerHTML = "";
-                    data.results.forEach(book => {
-                        const row = document.createElement("tr");
-                        row.innerHTML = `
-                            <td>${book.title}</td>
-                            <td>${book.author}</td>
-                            <td>${book.year}</td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
-                } else {
-                    console.error("خطا در دریافت داده‌ها:", data.error);
-                }
-            } catch (error) {
-                console.error("مشکل در ارتباط با سرور:", error);
-            }
-        }
+  async function fetchBooks() {
+      try {
+          const response = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/list-books");
+          const data = await response.json();
+          console.log("Received Data:", data); // افزودن این خط برای بررسی داده‌ها
 
-        document.addEventListener("DOMContentLoaded", fetchBooks);
-    </script>
+          if (data.success && Array.isArray(data.results)) {
+              const tableBody = document.querySelector("#booksTable tbody");
+              tableBody.innerHTML = "";
+              data.results.forEach(book => {
+                  const row = document.createElement("tr");
+                  row.innerHTML = `
+                      <td>${book.title}</td>
+                      <td>${book.author}</td>
+                      <td>${book.year}</td>
+                  `;
+                  tableBody.appendChild(row);
+              });
+          } else {
+              console.error("داده‌های دریافتی معتبر نیستند:", data);
+          }
+      } catch (error) {
+          console.error("مشکل در ارتباط با سرور:", error);
+      }
+  }
+
+  document.addEventListener("DOMContentLoaded", fetchBooks);
+</script>
 
 </body>
 </html>
