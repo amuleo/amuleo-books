@@ -23,6 +23,21 @@
       --span: #9e8e71;
     }
 
+     /* برای مرورگرهای مبتنی بر WebKit (مثل کروم، سافاری، جدیدترین نسخه‌های اپرا) */
+::-webkit-scrollbar {
+  width: 5px;    /* اگر عرض اولیه مثلاً 10px است، 5px همان نصف آن است */
+  height: 5px;   /* برای اسکرول بار افقی (در صورت نیاز) */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);  /* رنگ پس‌زمینه ریل اسکرول بار */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text); /* رنگ نوار اسکرول (thumb) */
+  border-radius: 5px;       /* انحنای لبه‌ها به دلخواه */
+}
+
     body {
       margin: 0;
       padding: 0;
@@ -421,7 +436,7 @@
             loadingScreen.remove();
           }, 500);
         }
-      }, 1000);
+      }, 800);
     });
   </script>
 </body>
