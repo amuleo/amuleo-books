@@ -231,7 +231,7 @@
         summaryBox.className = 'summary-box';
         
         const totalBooks = books.length;
-        const totalPages = books.reduce((sum, book) => sum + (book.pages || 0), 0);
+        const totalPages = books.reduce((sum, book) => sum + (book.page || 0), 0);
         const currentYear = 1404; // سال مورد نظر
         const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
         
