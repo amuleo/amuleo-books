@@ -182,6 +182,12 @@
     .summary-box p {
       text-align: justify !important;
     }
+
+    .label{
+      font-weight: bold;
+      color: var(--span);
+    }
+    
   </style>
 </head>
 <body>
@@ -238,9 +244,9 @@
         
         summaryBox.innerHTML = `
           <p>
-            تا کنون <span style="color: var(--span);">${totalBooks}</span> کتاب خوانده ام و 
-            <span style="color: var(--span);">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
-            در سال جاری <span style="color: var(--span);">${booksThisYear}</span> کتاب خوانده‌ام.
+            تا کنون <span class="label"">${totalBooks}</span> کتاب خوانده ام و 
+            <span class="label">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
+            در سال جاری <span class="label">${booksThisYear}</span> کتاب خوانده‌ام.
           </p>
         `;
         
@@ -282,13 +288,13 @@
             const content = document.createElement('div');
             content.className = 'card-content';
             content.innerHTML = `
-              <p>نام کتاب: ${book.name || book.title}</p>
+              <p><span class="label">نام کتاب:</span> ${book.name || book.title}</p>
               <hr>
-              <p>نویسنده: ${book.author}</p>
+              <p><span class="label">نویسنده:</span> ${book.author}</p>
               <hr>
-              <p>تعداد صفحات: ${book.pages || book.page}</p>
+              <p><span class="label">تعداد صفحات:</span> ${book.pages || book.page}</p>
               <hr>
-              <p>تاریخ مطالعه: ${book.year}</p>
+              <p><span class="label">تاریخ مطالعه:</span> ${book.year}</p>
             `;
   
             card.appendChild(backgroundText);
