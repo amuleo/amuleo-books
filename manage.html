@@ -32,7 +32,6 @@
       margin: 10px 0;
       font-size: 1rem;
     }
-    /* استایل پیام‌ها */
     .alert {
       margin-top: 20px;
       padding: 10px;
@@ -138,17 +137,31 @@
   </div>
   
   <script>
-    /* ------------------ ورود به پنل مدیریت ------------------ */
-    const CORRECT_PASSWORD = "1234"; // عوضش کنید به رمز دلخواه شما
-    document.getElementById("loginButton").addEventListener("click", function() {
+    /* ------------------ ورود به پنل مدیریت (با چک کردن سمت سرور) ------------------ */
+    document.getElementById("loginButton").addEventListener("click", async function() {
       const inputPass = document.getElementById("loginPassword").value;
       const loginMsg = document.getElementById("loginMessage");
-      if (inputPass === CORRECT_PASSWORD) {
-        // رمز درست؛ فرم ورود پنهان و پنل مدیریت نمایش داده شود
-        document.getElementById("login-container").classList.add("hidden");
-        document.getElementById("manage-container").classList.remove("hidden");
-      } else {
-        loginMsg.textContent = "رمز عبور اشتباه است.";
+      
+      try {
+        // ارسال رمز عبور به endpoint /check-password
+        const response = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/check-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ password: inputPass })
+        });
+        const result = await response.json();
+        console.log("Response from check-password:", result);
+        
+        if (result.success) {
+          // در صورت صحت رمز، فرم ورود پنهان و پنل مدیریت نمایش داده شود
+          document.getElementById("login-container").classList.add("hidden");
+          document.getElementById("manage-container").classList.remove("hidden");
+        } else {
+          loginMsg.textContent = result.error || "رمز عبور اشتباه است.";
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+        loginMsg.textContent = "خطا در ارتباط با سرور.";
       }
     });
     
