@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3لیست کتاب‌ها</title>
+  <title>4لیست کتاب‌ها</title>
   <style>
     /* اضافه کردن ریشه CSS به عنوان :root 
        این بلوک را در ابتدای استایل قرار می‌دهیم تا تنظیمات نوشتاری به 
@@ -45,6 +45,7 @@
         <th>عنوان</th>
         <th>نویسنده</th>
         <th>سال انتشار</th>
+        <th>تعداد صفحه</th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -90,6 +91,7 @@
             <td>${book.title}</td>
             <td>${book.author}</td>
             <td>${book.year}</td>
+            <td>${book.page}</td>
           `;
           tableBody.appendChild(row);
         });
