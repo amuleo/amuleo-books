@@ -53,21 +53,18 @@
       font-size: 0.95rem;
       margin: 0;
     }
-    /* ظرف وضعیت کتاب با دو ستون؛ اکنون طبق خواسته وضعیت در سمت چپ و تعداد صفحات در سمت راست قرار می‌گیرند */
+    /* ظرف وضعیت کتاب با دو ستون: در این نسخه، وضعیت (متن وضعیت خواندن) در ستون سمت چپ و تعداد صفحات در ستون سمت راست قرار می‌گیرد */
     .status-container {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
     }
-    /* در این نسخه، ستون سمت چپ شامل متن وضعیت (reading status) است؛ در داخل آن متن به صورت راست‌چین قرار می‌گیرد */
     .status-left {
       text-align: right;
     }
-    /* ستون سمت راست شامل تعداد صفحات است؛ در داخل آن متن به صورت چپ‌چین تنظیم می‌شود */
     .status-right {
       text-align: left;
     }
-    /* در صورت نیاز برای اطمینان از چینش دقیق داخل هر ستون */
     .status-left p {
       margin: 0;
       text-align: right !important;
@@ -150,6 +147,8 @@
       position: relative;
       overflow: hidden;
       min-height: 250px;
+      /* برای نشان دادن قابلیت کلیک */
+      cursor: pointer;
     }
     .card-content {
       position: relative;
@@ -158,17 +157,8 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
-    .card-background-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 12vw;
-      font-weight: bold;
-      color: rgba(0, 0, 0, 0.1);
-      z-index: 0;
-      pointer-events: none;
-    }
+    /* حذف شده: المان مربوط به نمایش شناسه به‌صورت پس‌زموند */
+    /* .card-background-text { ... } */
     .card hr {
       border: none;
       border-top: 1px solid var(--border);
@@ -232,6 +222,41 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    /* استایل پاپ‌آپ */
+    #popupModal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    .modal-content {
+      background: var(--card);
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 500px;
+      width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+      text-align: justify;
+      direction: rtl;
+    }
+    /* استایل دکمه بستن پاپ‌آپ */
+    #closePopup {
+      background-color: var(--hover);
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-family: 'Mikhak', sans-serif;
+      color: var(--text);
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -249,6 +274,13 @@
     </div>
     <!-- محل نمایش کتاب‌ها -->
     <div id="bookContainer"></div>
+  </div>
+  <!-- پاپ‌آپ رسپانسیو -->
+  <div id="popupModal">
+    <div class="modal-content">
+      <p id="popupText"></p>
+      <button id="closePopup">بستن</button>
+    </div>
   </div>
   <script>
     // تابع برای بارگذاری و نمایش کتاب‌ها از Cloudflare Worker
@@ -310,16 +342,24 @@
           }
         });
         
-        // تابع نمایش کتاب‌ها در قالب کارت
+        // تابع نمایش کتاب‌ها به صورت کارت
         function displayBooks(books, count) {
           bookContainer.innerHTML = '';
           books.slice(-count).reverse().forEach((book) => {
             const card = document.createElement('div');
             card.className = 'card';
-  
-            const backgroundText = document.createElement('div');
-            backgroundText.className = 'card-background-text';
-            backgroundText.textContent = book.id;
+
+            // حذف المان سابق مربوط به شناسه به‌صورت بک‌گراند (backgroundText)
+            // اضافه کردن قابلیت کلیک روی کارت برای نمایش پاپ‌آپ
+            card.addEventListener('click', function() {
+              let bookId = book.id;
+              let bookIntro = book.intro;
+              if(bookIntro === null || bookIntro === "null" || bookIntro.trim() === "") {
+                bookIntro = "هنوز درآمدی بر این کتاب نوشته نشده!!";
+              }
+              document.getElementById("popupText").innerHTML = "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
+              document.getElementById("popupModal").style.display = "flex";
+            });
   
             const content = document.createElement('div');
             content.className = 'card-content';
@@ -329,13 +369,10 @@
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${book.year}</p>
             `;
   
-            card.appendChild(backgroundText);
             card.appendChild(content);
   
             // افزودن بخش وضعیت کتاب:
-            // در این نسخه — با توجه به درخواست جدید —
-            // متن وضعیت (مانند "در حال خواندن"، "خواهم خواند" و ...) در ستون سمت چپ
-            // و تعداد صفحات (همیشه به صورت کامل یا فرمت x/y در صورت در حال خواندن) در ستون سمت راست قرار می‌گیرند.
+            // طبق درخواست: ستون سمت چپ (status-left) شامل متن وضعیت و ستون سمت راست (status-right) شامل تعداد صفحات
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
@@ -349,7 +386,7 @@
             let statusText = "";
   
             if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
-              // در حال خواندن: نمایش به صورت x/y صفحه
+              // در حال خواندن: x/y صفحه
               pagesText = `${book.stat}/${totalPagesCount} صفحه`;
               statusText = "در حال خواندن";
             } else if (book.stat === "fe") {
@@ -363,9 +400,7 @@
               statusText = "نامشخص";
             }
   
-            // طبق درخواست جدید:
-            // دیو سمت چپ دریافت‌کننده وضعیت (statusText) باشد
-            // و دیو سمت راست دریافت‌کننده تعداد صفحات (pagesText)
+            // طبق تغییر جدید، وضعیت در ستون سمت چپ و تعداد صفحات در ستون سمت راست قرار می‌گیرند
             const leftPara = document.createElement('p');
             leftPara.className = 'sitem';
             leftPara.textContent = statusText;
@@ -383,12 +418,12 @@
             bookContainer.appendChild(card);
           });
         }
-        
+  
       } catch (error) {
         console.error(error.message);
       }
     }
-    
+  
     // توابع مدیریت تم و کوکی‌ها
     function setCookie(name, value, days) {
       const d = new Date();
@@ -396,6 +431,7 @@
       let expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
+  
     function getCookie(name) {
       let nameEq = name + "=";
       let ca = document.cookie.split(';');
@@ -405,6 +441,7 @@
       }
       return "";
     }
+  
     function updateThemeColor(color) {
       let themeMetaTag = document.querySelector('meta[name="theme-color"]');
       if (!themeMetaTag) {
@@ -414,10 +451,12 @@
       }
       themeMetaTag.setAttribute('content', color);
     }
+  
     function updateThemeIcon(isDark) {
       const icon = document.getElementById('themeIcon');
       icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
     }
+  
     function applyStoredTheme() {
       const storedTheme = getCookie('theme');
       const isDark = storedTheme === 'dark';
@@ -425,10 +464,12 @@
       updateThemeIcon(isDark);
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     }
+  
     document.addEventListener('DOMContentLoaded', () => {
       applyStoredTheme();
       loadBooks();
     });
+  
     const themeToggle = document.getElementById('themeToggle');
     themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark');
@@ -437,6 +478,7 @@
       setCookie('theme', isDark ? 'dark' : 'light', 365);
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
+  
     document.addEventListener("DOMContentLoaded", () => {
       const saved = getCookie("theme");
       const isDark = saved === "dark";
@@ -444,6 +486,12 @@
       document.getElementById('themeIcon').className = isDark ? "fas fa-moon" : "fas fa-sun";
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
+  
+    // دکمه بستن پاپ‌آپ
+    document.getElementById("closePopup").addEventListener('click', function() {
+      document.getElementById("popupModal").style.display = "none";
+    });
+  
     // نمایش صفحه پروگرس و محو شدن آن پس از بارگذاری
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
