@@ -419,25 +419,30 @@
             });
 
             // پاراگراف یرسی من (بالای بخش وضعیت)
-            if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
-              let baresi-it = "مروری بر این کتاب ثبت نشده است";
-              let baresi = "مروری بر این کتاب ثبت نشده است";
-            } else {
-              let baresi-it = "اینجا کلیک کنید"
-              let baresi = book.intro;
-            }
-            const content = document.createElement('div');
-            content.className = 'card-content';
-            content.innerHTML = `
-              <p class="pitem"><span class="label">نام کتاب</span> │ ${book.name || book.title}</p>
-              <p class="pitem"><span class="label">نویسنده</span> │ ${book.author}</p>
-              <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${book.year}</p>
-              <p class="pitem"><span class="label">برسی</span> │ ${baresi-it}</p>
-            `;
-            card.appendChild(content);
-  
-          
-            card.appendChild(incomePara);
+            // تعریف متغیرها در سطح بالاتر، خارج از if-else
+let baresiIt = "";
+let baresi = "";
+
+if (book.intro === null || book.intro === "null" || book.intro.trim() === "") {
+  baresiIt = "مروری بر این کتاب ثبت نشده است";
+  baresi = "مروری بر این کتاب ثبت نشده است";
+} else {
+  baresiIt = "اینجا کلیک کنید";
+  baresi = book.intro;
+}
+
+// حالا مقدارهای متغیرها مشخص‌اند و می‌توان آن‌ها را درون `innerHTML` استفاده کرد:
+const content = document.createElement('div');
+content.className = 'card-content';
+content.innerHTML = `
+  <p class="pitem"><span class="label">نام کتاب</span> │ ${book.name || book.title}</p>
+  <p class="pitem"><span class="label">نویسنده</span> │ ${book.author}</p>
+  <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${book.year}</p>
+  <p class="pitem"><span class="label">بررسی</span> │ ${baresiIt}</p>
+`;
+card.appendChild(content);
+card.appendChild(incomePara);
+
   
             // بخش وضعیت کتاب: ستون سمت چپ وضعیت و ستون سمت راست تعداد صفحات
             const statusContainer = document.createElement('div');
