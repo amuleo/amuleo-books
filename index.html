@@ -423,9 +423,9 @@
             const incomePara = document.createElement('p');
             incomePara.className = 'pitem';
             if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
-              incomePara.textContent = "برسی: مروری بر این کتاب ثبت نشده است";
+              incomePara.textContent = "برسی │  مروری بر این کتاب ثبت نشده است";
             } else {
-              incomePara.textContent = "برسی: اینجا کلیک کنید";
+              incomePara.textContent = "برسی │  اینجا کلیک کنید";
               incomePara.style.cursor = "pointer";
               incomePara.addEventListener('click', function(e) {
                 // جلوگیری از انتقال رویداد به کارت
