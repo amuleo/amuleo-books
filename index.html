@@ -72,6 +72,22 @@
       background: var(--bg);
       padding: 15px;
       border-radius: 15px;
+      white-space: nowrap;  
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+     
+    .pitem::-webkit-scrollbar {
+      height:1px; /* ضخامت نازک‌تر */
+    }
+
+    .pitem::-webkit-scrollbar-thumb {
+      background: var(--bg); /* رنگ دسته اسکرول */
+      border-radius: 2px;
+    }
+
+    .pitem::-webkit-scrollbar-track {
+      background: transparent; /* پس‌زمینه مسیر اسکرول */
     }
     /* استایل مشابه pitem برای المان‌های متنی کوچک */
     .sitem {
