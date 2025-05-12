@@ -13,7 +13,6 @@
       font-family: 'Mikhak';
       src: url('fonts/Mikhak.woff2') format('truetype');
     }
-
     :root {
       --bg: #eef1f6;
       --card: #ffffff;
@@ -22,7 +21,6 @@
       --hover: #dbdce0;
       --span: #9e8e71;
     }
-
     /* استایل اسکرول برای مرورگرهای WebKit */
     ::-webkit-scrollbar {
       width: 5px;
@@ -39,14 +37,12 @@
       scrollbar-width: thin;
       scrollbar-color: var(--bg);
     }
-
     .pitem {
       background: var(--bg);
       padding: 15px;
       border-radius: 15px;
     }
-
-    /* استایل جدید برای المان‌های وضعیت کتاب (مشابه pitem ولی با پس‌زمینه متفاوت) */
+    /* استایل مشابه pitem برای المان‌های اضافه شده */
     .sitem {
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
@@ -57,31 +53,29 @@
       font-size: 0.95rem;
       margin: 0;
     }
-
-    /* ظرف نمایش وضعیت کتاب؛ دوتا دیو برای تعداد صفحات و وضعیت خواندن داخل آن قرار می‌گیرند */
+    /* ظرف وضعیت کتاب با دو ستون؛ اکنون طبق خواسته وضعیت در سمت چپ و تعداد صفحات در سمت راست قرار می‌گیرند */
     .status-container {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
     }
+    /* در این نسخه، ستون سمت چپ شامل متن وضعیت (reading status) است؛ در داخل آن متن به صورت راست‌چین قرار می‌گیرد */
     .status-left {
-      /* قرار گرفتن تعداد صفحات در سمت چپ */
-      text-align: left;
-    }
-    .status-right {
-      /* قرار گرفتن وضعیت خواندن در سمت راست */
       text-align: right;
     }
-    /* تنظیم تراز دقیق متن داخل هر کدام از دیوهای وضعیت */
+    /* ستون سمت راست شامل تعداد صفحات است؛ در داخل آن متن به صورت چپ‌چین تنظیم می‌شود */
+    .status-right {
+      text-align: left;
+    }
+    /* در صورت نیاز برای اطمینان از چینش دقیق داخل هر ستون */
     .status-left p {
-      text-align: left !important;
       margin: 0;
+      text-align: right !important;
     }
     .status-right p {
-      text-align: right !important;
       margin: 0;
+      text-align: left !important;
     }
-
     body {
       margin: 0;
       padding: 0;
@@ -93,13 +87,11 @@
       text-align: center;
       transition: background-color 0.3s, color 0.3s;
     }
-
     .container {
       max-width: 800px;
       margin: auto;
       padding: 100px 10px;
     }
-
     /* استایل Header */
     .header {
       display: flex;
@@ -136,7 +128,6 @@
       font-size: 18px;
       color: var(--text);
     }
-
     .summary-box {
       background-color: var(--card);
       border: none;
@@ -147,7 +138,6 @@
       width: 100%;
       box-sizing: border-box;
     }
-
     .card {
       background-color: var(--card);
       border: none;
@@ -185,22 +175,12 @@
       margin: 8px 0;
       opacity: 0.5;
     }
-
     @media (max-width: 480px) {
-      body {
-        font-size: 1rem;
-      }
-      .card-content {
-        font-size: 0.9rem;
-      }
-      .container {
-        padding: 80px 20px;
-      }
-      .header {
-        height: 40px;
-      }
+      body { font-size: 1rem; }
+      .card-content { font-size: 0.9rem; }
+      .container { padding: 80px 20px; }
+      .header { height: 40px; }
     }
-
     body.dark {
       --bg: #212121;
       --card: #303030;
@@ -208,7 +188,6 @@
       --text: #f0f0f0;
       --hover: #1a1a1c;
     }
-
     .load-more-btn {
       background-color: var(--card);
       font-family: 'Mikhak', sans-serif;
@@ -220,27 +199,14 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .load-more-btn:hover {
-      background-color: var(--hover);
-    }
-    .load-more-btn.bottom {
-      display: block;
-      margin: 20px auto;
-    }
-
-    .summary-box p {
-      text-align: justify !important;
-    }
-    .label {
-      font-weight: bold;
-      color: var(--span);
-    }
-
+    .load-more-btn:hover { background-color: var(--hover); }
+    .load-more-btn.bottom { display: block; margin: 20px auto; }
+    .summary-box p { text-align: justify !important; }
+    .label { font-weight: bold; color: var(--span); }
     /* استایل صفحه پروگرس */
     #loadingScreen {
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       width: 100%;
       height: 100%;
       background-color: var(--bg);
@@ -273,7 +239,6 @@
   <div id="loadingScreen">
     <div class="spinner"></div>
   </div>
-
   <div class="container">
     <!-- بخش Header -->
     <div class="header">
@@ -282,7 +247,6 @@
         <i id="themeIcon" class="fas"></i>
       </button>
     </div>
-
     <!-- محل نمایش کتاب‌ها -->
     <div id="bookContainer"></div>
   </div>
@@ -346,7 +310,7 @@
           }
         });
         
-        // تابع نمایش کتاب‌ها به صورت کارت
+        // تابع نمایش کتاب‌ها در قالب کارت
         function displayBooks(books, count) {
           bookContainer.innerHTML = '';
           books.slice(-count).reverse().forEach((book) => {
@@ -369,8 +333,9 @@
             card.appendChild(content);
   
             // افزودن بخش وضعیت کتاب:
-            // طبق نیاز، تعداد صفحات (همیشه نمایش کل صفحات) در کانتینر سمت چپ
-            // و وضعیت خواندن طبق مقدار stat در کانتینر سمت راست
+            // در این نسخه — با توجه به درخواست جدید —
+            // متن وضعیت (مانند "در حال خواندن"، "خواهم خواند" و ...) در ستون سمت چپ
+            // و تعداد صفحات (همیشه به صورت کامل یا فرمت x/y در صورت در حال خواندن) در ستون سمت راست قرار می‌گیرند.
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
@@ -383,8 +348,8 @@
             let pagesText = "";
             let statusText = "";
   
-            // اگر stat عددی باشد (و نامشخص نباشد) → در حال خواندن: نمایش به صورت x/y صفحه
             if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
+              // در حال خواندن: نمایش به صورت x/y صفحه
               pagesText = `${book.stat}/${totalPagesCount} صفحه`;
               statusText = "در حال خواندن";
             } else if (book.stat === "fe") {
@@ -398,16 +363,17 @@
               statusText = "نامشخص";
             }
   
-            // قرار دادن تعداد صفحات در کانتینر سمت چپ
+            // طبق درخواست جدید:
+            // دیو سمت چپ دریافت‌کننده وضعیت (statusText) باشد
+            // و دیو سمت راست دریافت‌کننده تعداد صفحات (pagesText)
             const leftPara = document.createElement('p');
             leftPara.className = 'sitem';
-            leftPara.textContent = pagesText;
+            leftPara.textContent = statusText;
             leftDiv.appendChild(leftPara);
   
-            // قرار دادن وضعیت خواندن در کانتینر سمت راست
             const rightPara = document.createElement('p');
             rightPara.className = 'sitem';
-            rightPara.textContent = statusText;
+            rightPara.textContent = pagesText;
             rightDiv.appendChild(rightPara);
   
             statusContainer.appendChild(leftDiv);
@@ -417,7 +383,7 @@
             bookContainer.appendChild(card);
           });
         }
-  
+        
       } catch (error) {
         console.error(error.message);
       }
@@ -430,7 +396,6 @@
       let expires = "expires=" + d.toUTCString();
       document.cookie = name + "=" + value + ";" + expires + ";path=/";
     }
-    
     function getCookie(name) {
       let nameEq = name + "=";
       let ca = document.cookie.split(';');
@@ -440,7 +405,6 @@
       }
       return "";
     }
-    
     function updateThemeColor(color) {
       let themeMetaTag = document.querySelector('meta[name="theme-color"]');
       if (!themeMetaTag) {
@@ -450,12 +414,10 @@
       }
       themeMetaTag.setAttribute('content', color);
     }
-    
     function updateThemeIcon(isDark) {
       const icon = document.getElementById('themeIcon');
       icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
     }
-    
     function applyStoredTheme() {
       const storedTheme = getCookie('theme');
       const isDark = storedTheme === 'dark';
@@ -463,12 +425,10 @@
       updateThemeIcon(isDark);
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     }
-    
     document.addEventListener('DOMContentLoaded', () => {
       applyStoredTheme();
       loadBooks();
     });
-    
     const themeToggle = document.getElementById('themeToggle');
     themeToggle.addEventListener('click', () => {
       document.body.classList.toggle('dark');
@@ -477,7 +437,6 @@
       setCookie('theme', isDark ? 'dark' : 'light', 365);
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
-    
     document.addEventListener("DOMContentLoaded", () => {
       const saved = getCookie("theme");
       const isDark = saved === "dark";
@@ -485,7 +444,6 @@
       document.getElementById('themeIcon').className = isDark ? "fas fa-moon" : "fas fa-sun";
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
-    
     // نمایش صفحه پروگرس و محو شدن آن پس از بارگذاری
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
