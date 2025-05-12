@@ -46,7 +46,7 @@
       border-radius: 15px;
     }
 
-    /* استایل جدید برای المان‌های وضعیت کتاب (مشابه pitem اما با پس‌زمینه متفاوت) */
+    /* استایل جدید برای المان‌های وضعیت کتاب (مشابه pitem ولی با پس‌زمینه متفاوت) */
     .sitem {
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
@@ -58,17 +58,28 @@
       margin: 0;
     }
 
-    /* ظرف نمایش وضعیت کتاب؛ بدون تنظیم عرض مشخص، به صورت طبیعی اندازه می‌گیرد */
+    /* ظرف نمایش وضعیت کتاب؛ دوتا دیو برای تعداد صفحات و وضعیت خواندن داخل آن قرار می‌گیرند */
     .status-container {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
     }
     .status-left {
+      /* قرار گرفتن تعداد صفحات در سمت چپ */
       text-align: left;
     }
     .status-right {
+      /* قرار گرفتن وضعیت خواندن در سمت راست */
       text-align: right;
+    }
+    /* تنظیم تراز دقیق متن داخل هر کدام از دیوهای وضعیت */
+    .status-left p {
+      text-align: left !important;
+      margin: 0;
+    }
+    .status-right p {
+      text-align: right !important;
+      margin: 0;
     }
 
     body {
@@ -358,8 +369,8 @@
             card.appendChild(content);
   
             // افزودن بخش وضعیت کتاب:
-            // - سمت چپ: نمایش تعداد صفحات (در حالت "در حال خواندن" به صورت x/y صفحه، در سایر موارد تعداد صفحات کل)
-            // - سمت راست: نمایش متن وضعیت (در حال خواندن / خواهم خواند / خوانده ام / نامشخص)
+            // طبق نیاز، تعداد صفحات (همیشه نمایش کل صفحات) در کانتینر سمت چپ
+            // و وضعیت خواندن طبق مقدار stat در کانتینر سمت راست
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
@@ -372,34 +383,28 @@
             let pagesText = "";
             let statusText = "";
   
-            // اگر مقدار stat عددی باشد (و null نباشد) → در حال خواندن → فرمت x/y صفحه
+            // اگر stat عددی باشد (و نامشخص نباشد) → در حال خواندن: نمایش به صورت x/y صفحه
             if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
               pagesText = `${book.stat}/${totalPagesCount} صفحه`;
               statusText = "در حال خواندن";
-            }
-            // اگر stat برابر "fe" باشد
-            else if (book.stat === "fe") {
+            } else if (book.stat === "fe") {
               pagesText = `${totalPagesCount} صفحه`;
               statusText = "خواهم خواند";
-            }
-            // اگر stat برابر "re" باشد
-            else if (book.stat === "re") {
+            } else if (book.stat === "re") {
               pagesText = `${totalPagesCount} صفحه`;
               statusText = "خوانده ام";
-            }
-            // برای حالت نامشخص (null یا "null")
-            else {
+            } else {
               pagesText = `${totalPagesCount} صفحه`;
               statusText = "نامشخص";
             }
   
-            // قرار دادن تعداد صفحات در سمت چپ
+            // قرار دادن تعداد صفحات در کانتینر سمت چپ
             const leftPara = document.createElement('p');
             leftPara.className = 'sitem';
             leftPara.textContent = pagesText;
             leftDiv.appendChild(leftPara);
   
-            // قرار دادن متن وضعیت کتاب در سمت راست
+            // قرار دادن وضعیت خواندن در کانتینر سمت راست
             const rightPara = document.createElement('p');
             rightPara.className = 'sitem';
             rightPara.textContent = statusText;
@@ -412,7 +417,7 @@
             bookContainer.appendChild(card);
           });
         }
-        
+  
       } catch (error) {
         console.error(error.message);
       }
