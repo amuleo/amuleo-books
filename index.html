@@ -43,6 +43,25 @@
     ::-webkit-scrollbar-thumb {
       background: var(--text);
       border-radius: 5px;
+
+      #popupText {
+        scrollbar-width: thin; /* برای فایرفاکس */
+      }
+      
+      #popupText::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+      }
+      
+      #popupText::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      
+      #popupText::-webkit-scrollbar-thumb {
+        background: var(--text);
+        border-radius: 5px;
+      }
+
     }
     html {
       scrollbar-width: thin;
