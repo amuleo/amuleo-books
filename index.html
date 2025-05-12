@@ -438,20 +438,32 @@
       // ایجاد خلاصه آمار کتاب‌ها
       const summaryBox = document.createElement('div');
       summaryBox.className = 'summary-box';
-      const totalBooks = books.length;
-      const totalPages = books.reduce((sum, book) => sum + (Number(book.pages) || Number(book.page) || 0), 0);
-      const currentYear = 1404;  // (این مقدار قابل تغییر و یا داینامیک شود)
-      const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
+      
+      // فیلتر کردن کتاب‌هایی که وضعیت "خوانده ام" (re) دارند
+      const readBooks = books.filter(book => book.stat === "re");
+      
+      // محاسبه تعداد کتاب‌های خوانده شده و جمع تعداد صفحات آنها
+      const totalReadBooks = readBooks.length;
+      const totalReadPages = readBooks.reduce((sum, book) => sum + (Number(book.pages) || Number(book.page) || 0), 0);
+      
+      // محاسبه تعداد کتاب‌های خوانده شده در سال جاری (مثلاً ۱۴۰۴)
+      const currentYear = 1404; // مقدار سال جاری، قابل تغییر به صورت داینامیک
+      const readBooksThisYear = readBooks.filter(book => parseInt(book.year) === currentYear).length;
+      
+      // اگر تعداد کتاب‌های سال جاری صفر باشد، مقدار "صفر" جایگزین شود
+      const zerobook = readBooksThisYear === 0 ? "صفر" : readBooksThisYear;
       
       summaryBox.innerHTML = `
         <p>
-          تا کنون <span class="label">${totalBooks}</span> کتاب خوانده ام و 
-          <span class="label">${totalPages}</span> صفحه را پشت سر گذاشته‌ام،
-          در سال جاری <span class="label">${booksThisYear}</span> کتاب خوانده‌ام.
+          تا کنون <span class="label">${totalReadBooks}</span> کتاب خوانده ام و 
+          <span class="label">${totalReadPages}</span> صفحه را پشت سر گذاشته‌ام،
+          در سال جاری <span class="label">${zerobook}</span> کتاب خوانده‌ام.
         </p>
       `;
-      // درج خلاصه درست بعد از هدر صفحه
+      
+      // درج باکس خلاصه درست بعد از هدر صفحه
       document.querySelector('.header').insertAdjacentElement('afterend', summaryBox);
+
       
       // تعداد اولیه نمایش کتاب‌ها
       let displayedBooks = 10;
