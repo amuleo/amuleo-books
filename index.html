@@ -479,21 +479,21 @@
        * تابع نمایش کتاب‌ها به صورت کارد.
        *
        * در این تابع:
-       * 1- وضعیت خواندن کتاب بر اساس book.stat به شیوه قبلی (دو ستون) نمایش داده می‌شود.
-       * 2- اطلاعات کتاب (نام، نویسنده، تاریخ مطالعه و بررسی) به‌صورت یک‌دست در داخل card.innerHTML تعریف می‌شوند.
-       *    - بررسی کتاب (اینتر) در صورتی که مقدار معتبر باشد نمایش داده می‌شود؛ در غیر این صورت از مقدار پیش‌فرض استفاده می‌کند.
-       *    - هر فیلد با یک جداکننده عمودی (│) نمایش داده می‌شود.
-       * 3- رویداد کلیک به کل کارد اضافه می‌شود؛ همچنین، اگر روی متن بررسی (داخل یک اسپن) کلیک شود،
-       *    رویداد متفاوتی (با توقف انتشار رویداد) اجرا می‌شود.
+       * 1- اطلاعات کتاب مانند نام، نویسنده و تاریخ مطالعه استخراج می‌شود.
+       * 2- دو متغیر برای متن بررسی (بررسی در کارد و بررسی در پاپ‌آپ) تعریف می‌شود:
+       *    - برای کارد: اگر مقدار intro موجود باشد، "اینجا کلیک کنید" نمایش داده شود؛
+       *      در غیر این صورت "مروری ثبت نشده".
+       *    - برای پاپ‌آپ: اگر مقدار intro موجود باشد، همان مقدار نمایش داده شود؛
+       *      در غیر این صورت "مروری بر این کتاب ثبت نشده است".
+       * 3- اطلاعات کتاب (نام، نویسنده، تاریخ مطالعه و بررسی) به‌صورت یکپارچه در داخل card.innerHTML تعریف می‌شوند.
+       * 4- در انتهای card.innerHTML، بخش وضعیت (وضعیت خواندن و تعداد صفحات) قرار می‌گیرد.
+       * 5- رویداد کلیک روی کل کارد فعال است؛ همچنین، اگر روی متن بررسی کلیک شود، رویداد متفاوتی به همراه توقف انتشار رویداد اجرا می‌شود.
        *
        * @param {Array} books - آرایه‌ای از اشیاء کتاب
        * @param {number} count - تعداد کتاب‌هایی که باید نمایش داده شوند
        */
       function displayBooks(books, count) {
         bookContainer.innerHTML = '';
-        // متغیر تعریف مقدار پیش‌فرض بررسی کتاب
-        const defaultIntro = "مروری بر این کتاب ثبت نشده است";
-        
         // نمایش کتاب‌ها به ترتیب معکوس (جدیدترین در ابتدای لیست)
         books.slice(-count).reverse().forEach((book) => {
           // استخراج اطلاعات کتاب با در نظر گرفتن مقدار پیش‌فرض در صورت عدم وجود
@@ -501,12 +501,15 @@
           const author = book.author || "ناشناس";
           const year = book.year || "نامشخص";
           
-          // تعیین متن بررسی (اینتر)؛ اگر مقدار معتبر نیست از مقدار پیش‌فرض استفاده می‌شود
-          const introText = (book.intro && book.intro.trim() && book.intro.trim().toLowerCase() !== "null")
-            ? book.intro
-            : defaultIntro;
+          // تعریف دو متغیر برای متن بررسی:
+          // reviewCardText: برای نمایش در کارد (اگر intro معتبر باشد "اینجا کلیک کنید"، در غیر این صورت "مروری ثبت نشده")
+          // reviewPopupText: برای نمایش در پاپ‌آپ (اگر intro معتبر باشد همان مقدار، در غیر این صورت مقدار پیش‌فرض)
+          const reviewCardText = (book.intro && book.intro.trim() && book.intro.trim().toLowerCase() !== "null")
+            ? "اینجا کلیک کنید" : "مروری ثبت نشده";
+          const reviewPopupText = (book.intro && book.intro.trim() && book.intro.trim().toLowerCase() !== "null")
+            ? book.intro : "مروری بر این کتاب ثبت نشده است";
           
-          // محاسبه تعداد صفحات و تعیین وضعیت خواندن به شیوه قبلی
+          // محاسبه تعداد صفحات و تعیین وضعیت خواندن کتاب به شیوه قبلی
           const totalPagesCount = book.pages || book.page || 0;
           let statusText, pagesText;
           if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
@@ -523,41 +526,42 @@
             pagesText = `${totalPagesCount} صفحه`;
           }
           
-          // ایجاد المان کارد و تعریف ساختار داخلی آن
+          // ایجاد المان کارد و تعریف ساختار داخلی آن:
+          // - اطلاعات کتاب (نام کتاب، نویسنده، تاریخ مطالعه و بررسی) به صورت منسجم نمایش داده می‌شود.
+          // - بخش بررسی (بررسی) در قالب یک <span> جهت ثبت رویداد کلیک جداگانه تعریف شده است.
+          // - بخش وضعیت (وضعیت خواندن و تعداد صفحات) در انتهای کارد قرار گرفته است.
           const card = document.createElement('div');
           card.className = 'card';
           card.innerHTML = `
             <div class="card-content">
-              <!-- بخش وضعیت کتاب (ساختار پیشین با دو ستون) -->
+              <p class="pitem"><span class="label">نام کتاب</span> │ ${title}</p>
+              <p class="pitem"><span class="label">نویسنده</span> │ ${author}</p>
+              <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
+              <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${reviewCardText}</span></p>
               <div class="status-container">
                 <div class="status-left"><p class="sitem">${statusText}</p></div>
                 <div class="status-right"><p class="sitem">${pagesText}</p></div>
               </div>
-              <!-- اطلاعات اصلی کتاب به صورت یکپارچه -->
-              <p class="pitem"><span class="label">نام کتاب</span> │ ${title}</p>
-              <p class="pitem"><span class="label">نویسنده</span> │ ${author}</p>
-              <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
-              <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${introText}</span></p>
             </div>
           `;
           
-          // رویداد کلیک روی کل کارد: نمایش پاپ‌آپ با متن "برسی"
+          // رویداد کلیک روی کل کارد: نمایش پاپ‌آپ با متن بررسی (بر اساس reviewPopupText)
           card.addEventListener('click', () => {
             document.getElementById("popupText").innerHTML = `
               <strong>شناسه کتاب:</strong> ${book.id}<br>
-              <strong>برسی:</strong> ${introText}
+              <strong>برسی:</strong> ${reviewPopupText}
             `;
             document.getElementById("popupModal").style.display = "flex";
           });
           
-          // رویداد کلیک روی متن بررسی (داخل اسپن)؛ اجرای نسخه متفاوت (برسی من)
+          // رویداد کلیک روی متن بررسی (داخل اسپن)؛ اجرای نسخه متفاوت (با توقف انتشار رویداد)
           const reviewSpan = card.querySelector('.review-text');
           if (reviewSpan) {
             reviewSpan.addEventListener('click', (e) => {
-              e.stopPropagation(); // جلوگیری از فراخوانی رویداد والد (card)
+              e.stopPropagation(); // جلوگیری از فراخوانی رویداد کلیک روی کل کارد
               document.getElementById("popupText").innerHTML = `
                 <strong>شناسه کتاب:</strong> ${book.id}<br>
-                <strong>برسی من:</strong> ${introText}
+                <strong>برسی من:</strong> ${reviewPopupText}
               `;
               document.getElementById("popupModal").style.display = "flex";
             });
@@ -608,6 +612,5 @@
     document.getElementById("popupModal").style.display = "none";
   });
 </script>
-
 </body>
 </html>
