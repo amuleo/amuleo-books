@@ -335,7 +335,7 @@
       <button id="closePopup">بستن</button>
     </div>
   </div>
-  <script>
+<script>
   // =========================== Utility Functions ===========================
 
   /**
@@ -435,12 +435,12 @@
       // پیدا کردن المان ظرف کتاب‌ها
       const bookContainer = document.getElementById('bookContainer');
       
-      // ایجاد خلاصه برای نمایش آماری از کتاب‌ها
+      // ایجاد خلاصه آمار کتاب‌ها
       const summaryBox = document.createElement('div');
       summaryBox.className = 'summary-box';
       const totalBooks = books.length;
       const totalPages = books.reduce((sum, book) => sum + (Number(book.pages) || Number(book.page) || 0), 0);
-      const currentYear = 1404;  // قابل تغییر به صورت داینامیک در آینده
+      const currentYear = 1404;  // (این مقدار قابل تغییر و یا داینامیک شود)
       const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
       
       summaryBox.innerHTML = `
@@ -453,7 +453,7 @@
       // درج خلاصه درست بعد از هدر صفحه
       document.querySelector('.header').insertAdjacentElement('afterend', summaryBox);
       
-      // تعداد کتاب‌های اولیه‌ای که نمایش داده می‌شوند
+      // تعداد اولیه نمایش کتاب‌ها
       let displayedBooks = 10;
       displayBooks(books, displayedBooks);
       
@@ -476,32 +476,37 @@
       });
       
       /**
-       * تابع نمایش کتاب‌ها به صورت کارد. در این تابع:
-       * - اطلاعات کتاب مانند نام، نویسنده و تاریخ مطالعه استخراج می‌شود.
-       * - وضعیت خواندن (مثلاً در حال خواندن، خوانده‌ام، خواهم خواند یا نامشخص) همراه
-       *   با تعداد صفحات محاسبه می‌شود.
-       * - در صورت وجود معرفی کتاب، متن پاپ‌آپ (با پیوند کلیکی) نیز نمایش داده می‌شود.
-       * - رویدادهای مربوط به بازکردن پاپ‌آپ (از طریق کلیک روی کل کارد یا روی متن داخل آن)
-       *   نیز ثبت می‌شوند.
+       * تابع نمایش کتاب‌ها به صورت کارد.
+       *
+       * در این تابع:
+       * 1- وضعیت خواندن کتاب بر اساس book.stat به شیوه قبلی (دو ستون) نمایش داده می‌شود.
+       * 2- اطلاعات کتاب (نام، نویسنده، تاریخ مطالعه و بررسی) به‌صورت یک‌دست در داخل card.innerHTML تعریف می‌شوند.
+       *    - بررسی کتاب (اینتر) در صورتی که مقدار معتبر باشد نمایش داده می‌شود؛ در غیر این صورت از مقدار پیش‌فرض استفاده می‌کند.
+       *    - هر فیلد با یک جداکننده عمودی (│) نمایش داده می‌شود.
+       * 3- رویداد کلیک به کل کارد اضافه می‌شود؛ همچنین، اگر روی متن بررسی (داخل یک اسپن) کلیک شود،
+       *    رویداد متفاوتی (با توقف انتشار رویداد) اجرا می‌شود.
        *
        * @param {Array} books - آرایه‌ای از اشیاء کتاب
        * @param {number} count - تعداد کتاب‌هایی که باید نمایش داده شوند
        */
       function displayBooks(books, count) {
         bookContainer.innerHTML = '';
-        // نمایش کتاب‌ها به ترتیب معکوس (جدیدترین کتاب‌ها در ابتدای لیست)
+        // متغیر تعریف مقدار پیش‌فرض بررسی کتاب
+        const defaultIntro = "مروری بر این کتاب ثبت نشده است";
+        
+        // نمایش کتاب‌ها به ترتیب معکوس (جدیدترین در ابتدای لیست)
         books.slice(-count).reverse().forEach((book) => {
-          // استخراج اطلاعات کتاب با مقدار پیش‌فرض در صورت عدم وجود اطلاعات
+          // استخراج اطلاعات کتاب با در نظر گرفتن مقدار پیش‌فرض در صورت عدم وجود
           const title = book.name || book.title || "نامشخص";
           const author = book.author || "ناشناس";
           const year = book.year || "نامشخص";
           
-          // تعیین متن معرفی کتاب جهت نمایش در پاپ‌آپ (در صورت خالی بودن، از پیام پیش‌فرض استفاده می‌شود)
-          const introForPopup = (book.intro && book.intro.trim() && book.intro.trim().toLowerCase() !== "null") 
-            ? book.intro 
-            : "مروری بر این کتاب ثبت نشده است";
+          // تعیین متن بررسی (اینتر)؛ اگر مقدار معتبر نیست از مقدار پیش‌فرض استفاده می‌شود
+          const introText = (book.intro && book.intro.trim() && book.intro.trim().toLowerCase() !== "null")
+            ? book.intro
+            : defaultIntro;
           
-          // محاسبه تعداد صفحات و تعیین وضعیت خواندن کتاب
+          // محاسبه تعداد صفحات و تعیین وضعیت خواندن به شیوه قبلی
           const totalPagesCount = book.pages || book.page || 0;
           let statusText, pagesText;
           if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
@@ -518,54 +523,47 @@
             pagesText = `${totalPagesCount} صفحه`;
           }
           
-          // ساخت المان کارد با استفاده از Template Literal جهت درج یکنواخت تمامی اطلاعات
+          // ایجاد المان کارد و تعریف ساختار داخلی آن
           const card = document.createElement('div');
           card.className = 'card';
           card.innerHTML = `
             <div class="card-content">
-              <!-- بخش وضعیت خواندن (اولویت اول) -->
-              <p class="pitem">
-                <span class="label">وضعیت خواندن</span> │ ${statusText} (${pagesText})
-              </p>
-              <!-- اطلاعات اصلی کتاب -->
+              <!-- بخش وضعیت کتاب (ساختار پیشین با دو ستون) -->
+              <div class="status-container">
+                <div class="status-left"><p class="sitem">${statusText}</p></div>
+                <div class="status-right"><p class="sitem">${pagesText}</p></div>
+              </div>
+              <!-- اطلاعات اصلی کتاب به صورت یکپارچه -->
               <p class="pitem"><span class="label">نام کتاب</span> │ ${title}</p>
               <p class="pitem"><span class="label">نویسنده</span> │ ${author}</p>
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
-              <!-- بخش پاپ‌آپ: اگر اطلاعات معرفی وجود داشته باشد، متن قابل کلیک نمایش داده می‌شود -->
-              <p class="pitem popup-text">
-                ${
-                  (book.intro && book.intro.trim() && book.intro.trim().toLowerCase() !== "null")
-                    ? '<span style="cursor:pointer; text-decoration:underline;">اینجا کلیک کنید</span>'
-                    : 'مروری بر این کتاب ثبت نشده است'
-                }
-              </p>
+              <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${introText}</span></p>
             </div>
           `;
           
-          // رویداد کلیک روی کل کارد: نمایش پاپ‌آپ اصلی با اطلاعات کتاب
+          // رویداد کلیک روی کل کارد: نمایش پاپ‌آپ با متن "برسی"
           card.addEventListener('click', () => {
             document.getElementById("popupText").innerHTML = `
               <strong>شناسه کتاب:</strong> ${book.id}<br>
-              <strong>برسی:</strong> ${introForPopup}
+              <strong>برسی:</strong> ${introText}
             `;
             document.getElementById("popupModal").style.display = "flex";
           });
           
-          // رویداد کلیک روی متن قابل کلیک پاپ‌آپ جهت نمایش نسخه‌ای جایگزین
-          const popupTextElem = card.querySelector('.popup-text span');
-          if (popupTextElem) {
-            popupTextElem.addEventListener('click', (e) => {
-              // جلوگیری از فراخوانی رویداد کلیک کارد
-              e.stopPropagation();
+          // رویداد کلیک روی متن بررسی (داخل اسپن)؛ اجرای نسخه متفاوت (برسی من)
+          const reviewSpan = card.querySelector('.review-text');
+          if (reviewSpan) {
+            reviewSpan.addEventListener('click', (e) => {
+              e.stopPropagation(); // جلوگیری از فراخوانی رویداد والد (card)
               document.getElementById("popupText").innerHTML = `
                 <strong>شناسه کتاب:</strong> ${book.id}<br>
-                <strong>برسی من:</strong> ${introForPopup}
+                <strong>برسی من:</strong> ${introText}
               `;
               document.getElementById("popupModal").style.display = "flex";
             });
           }
           
-          // اضافه کردن کارد به المان ظرف کتاب‌ها
+          // اضافه کردن کارد ساخته شده به ظرف کتاب‌ها
           bookContainer.appendChild(card);
         });
       }
@@ -580,10 +578,10 @@
   document.addEventListener('DOMContentLoaded', () => {
     // اعمال تم ذخیره‌شده از کوکی‌ها
     applyStoredTheme();
-    // بارگذاری و نمایش کتاب‌ها
+    // بارگذاری کتاب‌ها
     loadBooks();
     
-    // انیمیشن محو شدن صفحه پروگرس پس از 800 میلی‌ثانیه
+    // انیمیشن محو شدن صفحه لودینگ پس از 800 میلی‌ثانیه
     setTimeout(() => {
       const loadingScreen = document.getElementById('loadingScreen');
       if (loadingScreen) {
@@ -592,7 +590,7 @@
       }
     }, 800);
     
-    // تنظیم رویداد دکمه تغییر تم (شب/روز)
+    // تنظیم رویداد تغییر تم (شب/روز)
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
       themeToggle.addEventListener('click', () => {
@@ -605,10 +603,11 @@
     }
   });
 
-  // رویداد بستن پاپ‌آپ
+  // =========================== Popup Close Event ==========================
   document.getElementById("closePopup").addEventListener('click', function() {
     document.getElementById("popupModal").style.display = "none";
   });
 </script>
+
 </body>
 </html>
