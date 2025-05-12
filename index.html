@@ -53,7 +53,7 @@
       font-size: 0.95rem;
       margin: 0;
     }
-    /* ظرف وضعیت کتاب با دو ستون: در این نسخه، وضعیت (متن وضعیت خواندن) در ستون سمت چپ و تعداد صفحات در ستون سمت راست قرار می‌گیرد */
+    /* ظرف وضعیت کتاب با دو ستون: در این نسخه، ستون سمت چپ شامل متن وضعیت و ستون سمت راست شامل تعداد صفحات است */
     .status-container {
       display: flex;
       justify-content: space-between;
@@ -147,7 +147,7 @@
       position: relative;
       overflow: hidden;
       min-height: 250px;
-      /* برای نشان دادن قابلیت کلیک */
+      /* نشانگر کلیک */
       cursor: pointer;
     }
     .card-content {
@@ -157,7 +157,7 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
-    /* حذف شده: المان مربوط به نمایش شناسه به‌صورت پس‌زموند */
+    /* حذف المان مربوط به نمایش شناسه به‌صورت پس‌زمینه */
     /* .card-background-text { ... } */
     .card hr {
       border: none;
@@ -166,10 +166,18 @@
       opacity: 0.5;
     }
     @media (max-width: 480px) {
-      body { font-size: 1rem; }
-      .card-content { font-size: 0.9rem; }
-      .container { padding: 80px 20px; }
-      .header { height: 40px; }
+      body {
+        font-size: 1rem;
+      }
+      .card-content {
+        font-size: 0.9rem;
+      }
+      .container {
+        padding: 80px 20px;
+      }
+      .header {
+        height: 40px;
+      }
     }
     body.dark {
       --bg: #212121;
@@ -189,14 +197,25 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .load-more-btn:hover { background-color: var(--hover); }
-    .load-more-btn.bottom { display: block; margin: 20px auto; }
-    .summary-box p { text-align: justify !important; }
-    .label { font-weight: bold; color: var(--span); }
+    .load-more-btn:hover {
+      background-color: var(--hover);
+    }
+    .load-more-btn.bottom {
+      display: block;
+      margin: 20px auto;
+    }
+    .summary-box p {
+      text-align: justify !important;
+    }
+    .label {
+      font-weight: bold;
+      color: var(--span);
+    }
     /* استایل صفحه پروگرس */
     #loadingScreen {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       background-color: var(--bg);
@@ -238,9 +257,10 @@
     .modal-content {
       background: var(--card);
       border-radius: 10px;
-      padding: 20px;
+      padding: 15px;
+      margin: 0 15px;
       max-width: 500px;
-      width: 90%;
+      width: calc(100% - 30px);
       max-height: 80%;
       overflow-y: auto;
       text-align: justify;
@@ -348,9 +368,8 @@
           books.slice(-count).reverse().forEach((book) => {
             const card = document.createElement('div');
             card.className = 'card';
-
-            // حذف المان سابق مربوط به شناسه به‌صورت بک‌گراند (backgroundText)
-            // اضافه کردن قابلیت کلیک روی کارت برای نمایش پاپ‌آپ
+  
+            // کلیک روی کل کارت پاپ‌آپ را فعال می‌کند
             card.addEventListener('click', function() {
               let bookId = book.id;
               let bookIntro = book.intro;
@@ -371,8 +390,26 @@
   
             card.appendChild(content);
   
-            // افزودن بخش وضعیت کتاب:
-            // طبق درخواست: ستون سمت چپ (status-left) شامل متن وضعیت و ستون سمت راست (status-right) شامل تعداد صفحات
+            // پاراگراف درآمد من بر کتاب (بالای بخش وضعیت)
+            const incomePara = document.createElement('p');
+            incomePara.className = 'pitem';
+            if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
+              incomePara.textContent = "درآمد من بر کتاب: درآمدی برای این کتاب نوشته نشده";
+            } else {
+              incomePara.textContent = "درآمد من بر کتاب: اینجا کلیک کنید";
+              incomePara.style.cursor = "pointer";
+              incomePara.addEventListener('click', function(e) {
+                // جلوگیری از propagation به کارت
+                e.stopPropagation();
+                let bookId = book.id;
+                let bookIntro = book.intro;
+                document.getElementById("popupText").innerHTML = "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
+                document.getElementById("popupModal").style.display = "flex";
+              });
+            }
+            card.appendChild(incomePara);
+  
+            // بخش وضعیت کتاب: ستون سمت چپ وضعیت (متن) و ستون سمت راست تعداد صفحات
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
@@ -386,7 +423,6 @@
             let statusText = "";
   
             if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
-              // در حال خواندن: x/y صفحه
               pagesText = `${book.stat}/${totalPagesCount} صفحه`;
               statusText = "در حال خواندن";
             } else if (book.stat === "fe") {
@@ -400,7 +436,6 @@
               statusText = "نامشخص";
             }
   
-            // طبق تغییر جدید، وضعیت در ستون سمت چپ و تعداد صفحات در ستون سمت راست قرار می‌گیرند
             const leftPara = document.createElement('p');
             leftPara.className = 'sitem';
             leftPara.textContent = statusText;
