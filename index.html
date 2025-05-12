@@ -402,10 +402,10 @@
               let bookId = book.id;
               let bookIntro = book.intro;
               if(bookIntro === null || bookIntro === "null" || bookIntro.trim() === "") {
-                bookIntro = "هنوز درآمدی بر این کتاب نوشته نشده!!";
+                bookIntro = "مروری بر این کتاب ثیت نشده است!!";
               }
               document.getElementById("popupText").innerHTML =
-                "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
+                "شناسه کتاب: " + bookId + "<br>برسی: " + bookIntro;
               document.getElementById("popupModal").style.display = "flex";
             });
   
@@ -419,13 +419,13 @@
   
             card.appendChild(content);
   
-            // پاراگراف درآمد من بر کتاب (بالای بخش وضعیت)
+            // پاراگراف یرسی من (بالای بخش وضعیت)
             const incomePara = document.createElement('p');
             incomePara.className = 'pitem';
             if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
-              incomePara.textContent = "درآمد من بر کتاب: درآمدی برای این کتاب نوشته نشده";
+              incomePara.textContent = "برسی: مروری بر این کتاب ثبت نشده است";
             } else {
-              incomePara.textContent = "درآمد من بر کتاب: اینجا کلیک کنید";
+              incomePara.textContent = "برسی: اینجا کلیک کنید";
               incomePara.style.cursor = "pointer";
               incomePara.addEventListener('click', function(e) {
                 // جلوگیری از انتقال رویداد به کارت
@@ -433,7 +433,7 @@
                 let bookId = book.id;
                 let bookIntro = book.intro;
                 document.getElementById("popupText").innerHTML =
-                  "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
+                  "شناسه کتاب: " + bookId + "<br>دبرسی من:: " + bookIntro;
                 document.getElementById("popupModal").style.display = "flex";
               });
             }
