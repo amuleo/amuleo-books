@@ -265,7 +265,7 @@
     }
     /* دکمه بستن پاپ‌آپ (تمام عرض) با استایل هاور */
     #closePopup {
-      background-color: var(--hover);
+      background: var(--bg);
       border: none;
       border-radius: 5px;
       padding: 10px 20px;
@@ -278,6 +278,23 @@
     #closePopup:hover {
       background-color: var(--hover);
     }
+
+    .load-more-btn {
+      background-color: var(--card);
+      font-family: 'Mikhak', sans-serif;
+      color: var(--text);
+      border: none;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .load-more-btn:hover {
+      background-color: var(--hover);
+    }
+    
   </style>
 </head>
 <body>
