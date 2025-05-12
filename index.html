@@ -46,7 +46,7 @@
       border-radius: 15px;
     }
 
-    /* استایل جدید برای المان‌های وضعیت کتاب (شبیه pitem اما با تغییر در پس‌زمینه) */
+    /* استایل جدید برای المان‌های وضعیت کتاب (مشابه pitem اما با پس‌زمینه متفاوت) */
     .sitem {
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
@@ -58,7 +58,7 @@
       margin: 0;
     }
 
-    /* ظرف نمایش وضعیت کتاب؛ نگران عرض ندلیم، عرض به صورت طبیعی تنظیم می‌شود */
+    /* ظرف نمایش وضعیت کتاب؛ بدون تنظیم عرض مشخص، به صورت طبیعی اندازه می‌گیرد */
     .status-container {
       display: flex;
       justify-content: space-between;
@@ -335,10 +335,10 @@
           }
         });
         
-        // تابع نمایش کتاب‌ها در قالب کارت
+        // تابع نمایش کتاب‌ها به صورت کارت
         function displayBooks(books, count) {
           bookContainer.innerHTML = '';
-          books.slice(-count).reverse().forEach((book, index) => {
+          books.slice(-count).reverse().forEach((book) => {
             const card = document.createElement('div');
             card.className = 'card';
   
@@ -357,9 +357,9 @@
             card.appendChild(backgroundText);
             card.appendChild(content);
   
-            // افزودن بخش وضعیت کتاب:  
-            // - سمت چپ: نمایش تعداد صفحات (برای حالت "در حال خواندن" به صورت X/Y صفحه و در سایر حالت به صورت Y صفحه)  
-            // - سمت راست: نمایش وضعیت (نامشخص / خواهم خواند / خوانده ام / در حال خواندن)
+            // افزودن بخش وضعیت کتاب:
+            // - سمت چپ: نمایش تعداد صفحات (در حالت "در حال خواندن" به صورت x/y صفحه، در سایر موارد تعداد صفحات کل)
+            // - سمت راست: نمایش متن وضعیت (در حال خواندن / خواهم خواند / خوانده ام / نامشخص)
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
@@ -370,30 +370,36 @@
   
             const totalPagesCount = book.pages || book.page;
             let pagesText = "";
-            if (!isNaN(Number(book.stat))) {
-              // اگر stat عددی باشد، به صورت X/Y صفحه نشان بده
-              pagesText = `${book.stat}/${totalPagesCount} صفحه`;
-            } else {
-              // در سایر حالت، تنها تعداد صفحات کل را نشان بده
-              pagesText = `${totalPagesCount} صفحه`;
-            }
-  
             let statusText = "";
-            if (book.stat === null || book.stat === "null") {
-              statusText = "نامشخص";
-            } else if (book.stat === "fe") {
-              statusText = "خواهم خواند";
-            } else if (book.stat === "re") {
-              statusText = "خوانده ام";
-            } else if (!isNaN(Number(book.stat))) {
+  
+            // اگر مقدار stat عددی باشد (و null نباشد) → در حال خواندن → فرمت x/y صفحه
+            if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
+              pagesText = `${book.stat}/${totalPagesCount} صفحه`;
               statusText = "در حال خواندن";
             }
+            // اگر stat برابر "fe" باشد
+            else if (book.stat === "fe") {
+              pagesText = `${totalPagesCount} صفحه`;
+              statusText = "خواهم خواند";
+            }
+            // اگر stat برابر "re" باشد
+            else if (book.stat === "re") {
+              pagesText = `${totalPagesCount} صفحه`;
+              statusText = "خوانده ام";
+            }
+            // برای حالت نامشخص (null یا "null")
+            else {
+              pagesText = `${totalPagesCount} صفحه`;
+              statusText = "نامشخص";
+            }
   
+            // قرار دادن تعداد صفحات در سمت چپ
             const leftPara = document.createElement('p');
             leftPara.className = 'sitem';
             leftPara.textContent = pagesText;
             leftDiv.appendChild(leftPara);
   
+            // قرار دادن متن وضعیت کتاب در سمت راست
             const rightPara = document.createElement('p');
             rightPara.className = 'sitem';
             rightPara.textContent = statusText;
@@ -412,7 +418,7 @@
       }
     }
     
-    // توابع مربوط به مدیریت تم و کوکی‌ها
+    // توابع مدیریت تم و کوکی‌ها
     function setCookie(name, value, days) {
       const d = new Date();
       d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -475,7 +481,7 @@
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
     
-    // نمایش صفحه پروگرس و محو شدن آن
+    // نمایش صفحه پروگرس و محو شدن آن پس از بارگذاری
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
