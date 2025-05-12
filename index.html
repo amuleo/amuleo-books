@@ -359,6 +359,8 @@
         }
         
         const bookContainer = document.getElementById('bookContainer');
+
+        // کد های باکس خلاصۀ کتاب ها
         const summaryBox = document.createElement('div');
         summaryBox.className = 'summary-box';
         
@@ -375,7 +377,9 @@
           </p>
         `;
         document.querySelector('.header').insertAdjacentElement('afterend', summaryBox);
-        
+
+
+        // کد های مربوط به نمایش کتاب ها
         let displayedBooks = 10;
         displayBooks(books, displayedBooks);
         
@@ -413,35 +417,26 @@
                 "شناسه کتاب: " + bookId + "<br>برسی: " + bookIntro;
               document.getElementById("popupModal").style.display = "flex";
             });
-  
+
+            // پاراگراف یرسی من (بالای بخش وضعیت)
+            if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
+              let baresi-it = "مروری بر این کتاب ثبت نشده است";
+              let baresi = "مروری بر این کتاب ثبت نشده است";
+            } else {
+              let baresi-it = "اینجا کلیک کنید"
+              let baresi = book.intro;
+            }
             const content = document.createElement('div');
             content.className = 'card-content';
             content.innerHTML = `
               <p class="pitem"><span class="label">نام کتاب</span> │ ${book.name || book.title}</p>
               <p class="pitem"><span class="label">نویسنده</span> │ ${book.author}</p>
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${book.year}</p>
+              <p class="pitem"><span class="label">برسی</span> │ ${baresi-it}</p>
             `;
-  
             card.appendChild(content);
   
-            // پاراگراف یرسی من (بالای بخش وضعیت)
-            const incomePara = document.createElement('p');
-            incomePara.className = 'pitem';
-            if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
-              incomePara.textContent = "مروری بر این کتاب ثبت نشده است";
-            } else {
-              incomePara.textContent = "اینجا کلیک کنید";
-              incomePara.style.cursor = "pointer";
-              incomePara.addEventListener('click', function(e) {
-                // جلوگیری از انتقال رویداد به کارت
-                e.stopPropagation();
-                let bookId = book.id;
-                let bookIntro = book.intro;
-                document.getElementById("popupText").innerHTML =
-                  "شناسه کتاب: " + bookId + "<br>دبرسی من:: " + bookIntro;
-                document.getElementById("popupModal").style.display = "flex";
-              });
-            }
+          
             card.appendChild(incomePara);
   
             // بخش وضعیت کتاب: ستون سمت چپ وضعیت و ستون سمت راست تعداد صفحات
@@ -496,8 +491,9 @@
         console.error(error.message);
       }
     }
-  
-    // توابع مدیریت تم و کوکی‌ها
+
+    
+    ////  توابع مدیریت تم و کوکی‌ها
     function setCookie(name, value, days) {
       const d = new Date();
       d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
