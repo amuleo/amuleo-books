@@ -410,7 +410,7 @@
                 bookIntro = "مروری بر این کتاب ثیت نشده است!!";
               }
               document.getElementById("popupText").innerHTML =
-                "شناسه کتاب: " + bookId + "<br><span class="label">برسی</span>: " + bookIntro;
+                "شناسه کتاب: " + bookId + "<br>برسی: " + bookIntro;
               document.getElementById("popupModal").style.display = "flex";
             });
   
@@ -428,9 +428,9 @@
             const incomePara = document.createElement('p');
             incomePara.className = 'pitem';
             if(book.intro === null || book.intro === "null" || book.intro.trim() === "") {
-              incomePara.textContent = "<span class="label">برسی</span> │  مروری بر این کتاب ثبت نشده است";
+              incomePara.textContent = "برسی │  مروری بر این کتاب ثبت نشده است";
             } else {
-              incomePara.textContent = "<span class="label">برسی</span> │  اینجا کلیک کنید";
+              incomePara.textContent = "برسی │  اینجا کلیک کنید";
               incomePara.style.cursor = "pointer";
               incomePara.addEventListener('click', function(e) {
                 // جلوگیری از انتقال رویداد به کارت
@@ -438,7 +438,7 @@
                 let bookId = book.id;
                 let bookIntro = book.intro;
                 document.getElementById("popupText").innerHTML =
-                  "شناسه کتاب: " + bookId + "<br>د<span class="label">برسی</span> من:: " + bookIntro;
+                  "شناسه کتاب: " + bookId + "<br>دبرسی من:: " + bookIntro;
                 document.getElementById("popupModal").style.display = "flex";
               });
             }
