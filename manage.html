@@ -269,14 +269,13 @@
     const year   = document.getElementById('year').value.trim();
     const page   = document.getElementById('page').value.trim();
     const stat   = document.getElementById('stat').value.trim();
-    const intro = "no";
   
     if (!title || !author || !year || !page || !stat) {
       document.getElementById('message').textContent = 'لطفا همه فیلدها را پر کنید.';
       return;
     }
   
-    const payload = { title, author, year, page, stat, intro };
+    const payload = { title, author, year, page, stat };
     console.log("Sending payload to add-book:", payload);
   
     try {
