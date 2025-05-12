@@ -9,10 +9,12 @@
   <title>کتابخونه عمو لئو</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+    /* فونت اختصاصی */
     @font-face {
       font-family: 'Mikhak';
       src: url('fonts/Mikhak.woff2') format('truetype');
     }
+    /* متغیرهای ریشه */
     :root {
       --bg: #eef1f6;
       --card: #ffffff;
@@ -20,8 +22,17 @@
       --text: #333;
       --hover: #dbdce0;
       --span: #9e8e71;
+      --popup-btn-hover: #c7c7c7; /* رنگ هاور دکمه پاپ‌آپ در حالت روز */
     }
-    /* استایل اسکرول برای مرورگرهای WebKit */
+    body.dark {
+      --bg: #212121;
+      --card: #303030;
+      --border: #666;
+      --text: #f0f0f0;
+      --hover: #1a1a1c;
+      --popup-btn-hover: #2a2a2a; /* رنگ هاور دکمه پاپ‌آپ در حالت تاریک */
+    }
+    /* استایل اسکرول (WebKit) */
     ::-webkit-scrollbar {
       width: 5px;
       height: 5px;
@@ -37,12 +48,13 @@
       scrollbar-width: thin;
       scrollbar-color: var(--bg);
     }
+    /* استایل کلاس pitem برای المان‌های اصلی */
     .pitem {
       background: var(--bg);
       padding: 15px;
       border-radius: 15px;
     }
-    /* استایل مشابه pitem برای المان‌های اضافه شده */
+    /* استایل مشابه pitem برای المان‌های متنی کوچک */
     .sitem {
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
@@ -53,7 +65,7 @@
       font-size: 0.95rem;
       margin: 0;
     }
-    /* ظرف وضعیت کتاب با دو ستون: در این نسخه، ستون سمت چپ شامل متن وضعیت و ستون سمت راست شامل تعداد صفحات است */
+    /* ظرف وضعیت کتاب با دو ستون */
     .status-container {
       display: flex;
       justify-content: space-between;
@@ -73,6 +85,7 @@
       margin: 0;
       text-align: left !important;
     }
+    /* استایل کلی صفحه */
     body {
       margin: 0;
       padding: 0;
@@ -135,6 +148,7 @@
       width: 100%;
       box-sizing: border-box;
     }
+    /* استایل کارت‌ها */
     .card {
       background-color: var(--card);
       border: none;
@@ -147,7 +161,6 @@
       position: relative;
       overflow: hidden;
       min-height: 250px;
-      /* نشانگر کلیک */
       cursor: pointer;
     }
     .card-content {
@@ -157,7 +170,7 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
-    /* حذف المان مربوط به نمایش شناسه به‌صورت پس‌زمینه */
+    /* حذف المان پس‌زمینه مربوط به شناسه */
     /* .card-background-text { ... } */
     .card hr {
       border: none;
@@ -166,50 +179,10 @@
       opacity: 0.5;
     }
     @media (max-width: 480px) {
-      body {
-        font-size: 1rem;
-      }
-      .card-content {
-        font-size: 0.9rem;
-      }
-      .container {
-        padding: 80px 20px;
-      }
-      .header {
-        height: 40px;
-      }
-    }
-    body.dark {
-      --bg: #212121;
-      --card: #303030;
-      --border: #666;
-      --text: #f0f0f0;
-      --hover: #1a1a1c;
-    }
-    .load-more-btn {
-      background-color: var(--card);
-      font-family: 'Mikhak', sans-serif;
-      color: var(--text);
-      border: none;
-      padding: 10px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .load-more-btn:hover {
-      background-color: var(--hover);
-    }
-    .load-more-btn.bottom {
-      display: block;
-      margin: 20px auto;
-    }
-    .summary-box p {
-      text-align: justify !important;
-    }
-    .label {
-      font-weight: bold;
-      color: var(--span);
+      body { font-size: 1rem; }
+      .card-content { font-size: 0.9rem; }
+      .container { padding: 80px 20px; }
+      .header { height: 40px; }
     }
     /* استایل صفحه پروگرس */
     #loadingScreen {
@@ -261,12 +234,17 @@
       margin: 0 15px;
       max-width: 500px;
       width: calc(100% - 30px);
-      max-height: 80%;
-      overflow-y: auto;
-      text-align: justify;
-      direction: rtl;
+      height: 300px; /* ارتفاع ثابت */
+      display: flex;
+      flex-direction: column;
     }
-    /* استایل دکمه بستن پاپ‌آپ */
+    /* پاراگراف پاپ‌آپ با قابلیت اسکرول؛ از پدینگ و مارجین پایین برای فاصله استفاده شده */
+    .modal-content p#popupText {
+      overflow-y: auto;
+      flex: 1;
+      margin-bottom: 15px;
+    }
+    /* دکمه بستن پاپ‌آپ (تمام عرض) با استایل هاور */
     #closePopup {
       background-color: var(--hover);
       border: none;
@@ -275,7 +253,11 @@
       cursor: pointer;
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
-      margin-top: 10px;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+    #closePopup:hover {
+      background-color: var(--popup-btn-hover);
     }
   </style>
 </head>
@@ -298,12 +280,12 @@
   <!-- پاپ‌آپ رسپانسیو -->
   <div id="popupModal">
     <div class="modal-content">
-      <p id="popupText"></p>
+      <p id="popupText" class="pitem"></p>
       <button id="closePopup">بستن</button>
     </div>
   </div>
   <script>
-    // تابع برای بارگذاری و نمایش کتاب‌ها از Cloudflare Worker
+    // تابع بارگذاری کتاب‌ها از Cloudflare Worker
     async function loadBooks() {
       try {
         const response = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/list-books");
@@ -369,14 +351,15 @@
             const card = document.createElement('div');
             card.className = 'card';
   
-            // کلیک روی کل کارت پاپ‌آپ را فعال می‌کند
+            // با کلیک روی کل کارت پاپ‌آپ فعال می‌شود
             card.addEventListener('click', function() {
               let bookId = book.id;
               let bookIntro = book.intro;
               if(bookIntro === null || bookIntro === "null" || bookIntro.trim() === "") {
                 bookIntro = "هنوز درآمدی بر این کتاب نوشته نشده!!";
               }
-              document.getElementById("popupText").innerHTML = "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
+              document.getElementById("popupText").innerHTML =
+                "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
               document.getElementById("popupModal").style.display = "flex";
             });
   
@@ -399,24 +382,25 @@
               incomePara.textContent = "درآمد من بر کتاب: اینجا کلیک کنید";
               incomePara.style.cursor = "pointer";
               incomePara.addEventListener('click', function(e) {
-                // جلوگیری از propagation به کارت
+                // جلوگیری از انتقال رویداد به کارت
                 e.stopPropagation();
                 let bookId = book.id;
                 let bookIntro = book.intro;
-                document.getElementById("popupText").innerHTML = "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
+                document.getElementById("popupText").innerHTML =
+                  "شناسه کتاب: " + bookId + "<br>درآمدی بر کتاب: " + bookIntro;
                 document.getElementById("popupModal").style.display = "flex";
               });
             }
             card.appendChild(incomePara);
   
-            // بخش وضعیت کتاب: ستون سمت چپ وضعیت (متن) و ستون سمت راست تعداد صفحات
+            // بخش وضعیت کتاب: ستون سمت چپ وضعیت و ستون سمت راست تعداد صفحات
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
             const leftDiv = document.createElement('div');
-            leftDiv.className = 'status-left';
+            leftDiv.className = 'status-left';  // قرارگیری وضعیت (متنی)
             const rightDiv = document.createElement('div');
-            rightDiv.className = 'status-right';
+            rightDiv.className = 'status-right';  // قرارگیری تعداد صفحات
   
             const totalPagesCount = book.pages || book.page;
             let pagesText = "";
@@ -436,11 +420,14 @@
               statusText = "نامشخص";
             }
   
+            // طبق تغییر جدید:
+            // ستون سمت چپ (status-left) شامل وضعیت متنی
             const leftPara = document.createElement('p');
             leftPara.className = 'sitem';
             leftPara.textContent = statusText;
             leftDiv.appendChild(leftPara);
   
+            // ستون سمت راست (status-right) شامل تعداد صفحات
             const rightPara = document.createElement('p');
             rightPara.className = 'sitem';
             rightPara.textContent = pagesText;
