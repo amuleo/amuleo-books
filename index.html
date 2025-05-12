@@ -23,31 +23,57 @@
       --span: #9e8e71;
     }
 
-     /* برای مرورگرهای مبتنی بر WebKit (مثل کروم، سافاری، جدیدترین نسخه‌های اپرا) */
-::-webkit-scrollbar {
-  width: 5px;    /* اگر عرض اولیه مثلاً 10px است، 5px همان نصف آن است */
-  height: 5px;   /* برای اسکرول بار افقی (در صورت نیاز) */
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg);  /* رنگ پس‌زمینه ریل اسکرول بار */
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--text); /* رنگ نوار اسکرول (thumb) */
-  border-radius: 5px;       /* انحنای لبه‌ها به دلخواه */
-}
+    /* استایل اسکرول برای مرورگرهای WebKit */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--text);
+      border-radius: 5px;
+    }
 
     html {
-  scrollbar-width: thin;  /* thin نمایانگر اسکرول باری نازک است */
-  scrollbar-color: var(--bg); /* رنگ نوار و ریل */
-}
+      scrollbar-width: thin;
+      scrollbar-color: var(--bg);
+    }
 
     .pitem{
-  background: var(--bg);
-  padding: 15px;
-  border-radius: 15px;
-}
+      background: var(--bg);
+      padding: 15px;
+      border-radius: 15px;
+    }
+
+    /* استایل جدید برای المان‌های وضعیت کتاب */
+    .sitem {
+      font-family: 'Mikhak', sans-serif;
+      color: var(--text);
+      background-color: var(--span);
+      display: inline-block;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.95rem;
+      margin: 0;
+    }
+
+    /* ظرف نمایش وضعیت کتاب */
+    .status-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .status-left, .status-right {
+      flex: 0;
+    }
+    .status-left {
+      text-align: left;
+    }
+    .status-right {
+      text-align: right;
+    }
 
     body {
       margin: 0;
@@ -67,7 +93,7 @@
       padding: 100px 10px;
     }
 
-    /* Header Style */
+    /* استایل Header */
     .header {
       display: flex;
       position: fixed;
@@ -82,13 +108,11 @@
       z-index: 1000;
       height: 60px;
     }
-
     .header h1 {
       margin-right: 30px;
       color: var(--text);
       font-size: 1.5rem;
     }
-
     .theme-button {
       width: 40px;
       height: 40px;
@@ -101,7 +125,6 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     .theme-button i {
       font-size: 18px;
       color: var(--text);
@@ -131,7 +154,6 @@
       overflow: hidden;
       min-height: 250px;
     }
-
     .card-content {
       position: relative;
       z-index: 1;
@@ -139,7 +161,6 @@
       font-size: 0.95rem;
       line-height: 1.6;
     }
-
     .card-background-text {
       position: absolute;
       top: 50%;
@@ -151,7 +172,6 @@
       z-index: 0;
       pointer-events: none;
     }
-
     .card hr {
       border: none;
       border-top: 1px solid var(--border);
@@ -163,7 +183,6 @@
       body {
         font-size: 1rem;
       }
-
       .card-content {
         font-size: 0.9rem;
       }
@@ -172,7 +191,7 @@
       }
       .header {
         height: 40px;
-      }    
+      }
     }
 
     body.dark {
@@ -183,7 +202,6 @@
       --hover: #1a1a1c;
     }
 
-    /* استایل دکمه نمایش بیشتر */
     .load-more-btn {
       background-color: var(--card);
       font-family: 'Mikhak', sans-serif;
@@ -195,11 +213,9 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-
     .load-more-btn:hover {
       background-color: var(--hover);
     }
-
     .load-more-btn.bottom {
       display: block;
       margin: 20px auto;
@@ -208,12 +224,11 @@
     .summary-box p {
       text-align: justify !important;
     }
-
     .label{
       font-weight: bold;
       color: var(--span);
     }
-    
+
     /* استایل صفحه پروگرس */
     #loadingScreen {
       position: fixed;
@@ -228,12 +243,10 @@
       z-index: 9999;
       transition: opacity 0.5s;
     }
-
     #loadingScreen.fade-out {
       opacity: 0;
       pointer-events: none;
     }
-
     .spinner {
       width: 25px;
       height: 25px;
@@ -242,7 +255,6 @@
       border-radius: 50%;
       animation: spin 1.5s linear infinite;
     }
-
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
@@ -256,7 +268,7 @@
   </div>
 
   <div class="container">
-    <!-- Header Section -->
+    <!-- بخش Header -->
     <div class="header">
       <h1>کتابخونۀ عمو لئو</h1>
       <button class="theme-button" id="themeToggle" title="تغییر حالت">
@@ -267,18 +279,14 @@
     <!-- محل نمایش کتاب‌ها -->
     <div id="bookContainer"></div>
   </div>
-
   <script>
     // تابع برای بارگذاری و نمایش کتاب‌ها از Cloudflare Worker
     async function loadBooks() {
       try {
-        // استفاده از Cloudflare Worker به جای فایل محلی JSON
         const response = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/list-books");
         if (!response.ok) throw new Error('خطا در دریافت اطلاعات از Worker');
         
         const data = await response.json();
-        
-        // استخراج آرایه کتاب‌ها؛ در صورتی که داده به صورت مستقیم آرایه نباشد از ساختار پوشیده شده استخراج می‌کنیم
         let books = [];
         if (Array.isArray(data)) {
           books = data;
@@ -295,15 +303,12 @@
         }
         
         const bookContainer = document.getElementById('bookContainer');
-        
-        // ایجاد بخش Summary
         const summaryBox = document.createElement('div');
         summaryBox.className = 'summary-box';
         
         const totalBooks = books.length;
         const totalPages = books.reduce((sum, book) => sum + (Number(book.pages) || Number(book.page) || 0), 0);
-
-        const currentYear = 1404; // سال مورد نظر
+        const currentYear = 1404;
         const booksThisYear = books.filter(book => parseInt(book.year) === currentYear).length;
         
         summaryBox.innerHTML = `
@@ -313,15 +318,11 @@
             در سال جاری <span class="label">${booksThisYear}</span> کتاب خوانده‌ام.
           </p>
         `;
-        
-        // قرار دادن بخش summary بعد از header
         document.querySelector('.header').insertAdjacentElement('afterend', summaryBox);
         
-        // نمایش اولیه ۱۰ کتاب
         let displayedBooks = 10;
         displayBooks(books, displayedBooks);
         
-        // ایجاد دکمه "نمایش بیشتر"
         const loadMoreButton = document.createElement('button');
         loadMoreButton.className = 'load-more-btn';
         loadMoreButton.textContent = 'نمایش بیشتر';
@@ -338,9 +339,8 @@
           }
         });
         
-        // تابع نمایش کتاب‌ها در قالب کارت
         function displayBooks(books, count) {
-          bookContainer.innerHTML = ''; // پاکسازی محتوای قبلی
+          bookContainer.innerHTML = '';
           books.slice(-count).reverse().forEach((book, index) => {
             const card = document.createElement('div');
             card.className = 'card';
@@ -354,12 +354,50 @@
             content.innerHTML = `
               <p class="pitem"><span class="label">نام کتاب</span> │ ${book.name || book.title}</p>
               <p class="pitem"><span class="label">نویسنده</span> │ ${book.author}</p>
-              <p class="pitem"><span class="label">تعداد صفحات</span> │ ${book.pages || book.page}</p>
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${book.year}</p>
             `;
   
             card.appendChild(backgroundText);
             card.appendChild(content);
+  
+            // افزودن بخش وضعیت کتاب بر اساس مقدار stat
+            const statusContainer = document.createElement('div');
+            statusContainer.className = 'status-container';
+  
+            const leftDiv = document.createElement('div');
+            leftDiv.className = 'status-left';
+            const rightDiv = document.createElement('div');
+            rightDiv.className = 'status-right';
+  
+            let statusText = "";
+            let pagesText = "";
+            if (book.stat === null || book.stat === "null") {
+              statusText = "نامشخص";
+            } else if (book.stat === "fe") {
+              statusText = "خواهم خواند";
+            } else if (book.stat === "re") {
+              statusText = "خوانده ام";
+            } else if (!isNaN(Number(book.stat))) {
+              statusText = "در حال خواندن";
+              pagesText = `${book.stat}/${book.pages || book.page} صفحه`;
+            }
+  
+            if (pagesText) {
+              const leftPara = document.createElement('p');
+              leftPara.className = 'sitem';
+              leftPara.textContent = pagesText;
+              leftDiv.appendChild(leftPara);
+            }
+  
+            const rightPara = document.createElement('p');
+            rightPara.className = 'sitem';
+            rightPara.textContent = statusText;
+            rightDiv.appendChild(rightPara);
+  
+            statusContainer.appendChild(leftDiv);
+            statusContainer.appendChild(rightDiv);
+            card.appendChild(statusContainer);
+  
             bookContainer.appendChild(card);
           });
         }
@@ -369,7 +407,7 @@
       }
     }
     
-    // توابع مربوط به مدیریت تم (تاریک/روشن) و کوکی‌ها
+    // توابع مدیریت تم و کوکی‌ها
     function setCookie(name, value, days) {
       const d = new Date();
       d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -381,8 +419,7 @@
       let nameEq = name + "=";
       let ca = document.cookie.split(';');
       for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) === ' ') c = c.substring(1);
+        let c = ca[i].trim();
         if (c.indexOf(nameEq) === 0) return c.substring(nameEq.length, c.length);
       }
       return "";
@@ -425,7 +462,6 @@
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
     
-    // تنظیم مجدد تم در صورت نیاز بعد از بارگذاری
     document.addEventListener("DOMContentLoaded", () => {
       const saved = getCookie("theme");
       const isDark = saved === "dark";
@@ -434,7 +470,7 @@
       updateThemeColor(isDark ? "#333" : "#f9fafd");
     });
     
-    // کد مربوط به صفحه پروگرس: نمایش 1 ثانیه و سپس محو شدن به مدت 0.5 ثانیه
+    // نمایش صفحه پروگرس و محو شدن آن
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         const loadingScreen = document.getElementById('loadingScreen');
