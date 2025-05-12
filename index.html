@@ -456,13 +456,11 @@
       summaryBox.className = 'summary-box';
       
       // فیلتر کردن کتاب‌هایی که وضعیت "خوانده ام" (re) دارند
-      const readBooks = books.filter(book => book.stat === "re" || !isNaN(book.stat));
+      const readBooks = books.filter(book => book.stat === "re");
       
       // محاسبه تعداد کتاب‌های خوانده شده و جمع تعداد صفحات آنها
-      const totalPages = readBooks.reduce((sum, book) => {
-      return isNaN(book.stat) ? sum + (Number(book.page) || 0) : sum + Number(book.stat);
-      }, 0);
-
+      const totalReadBooks = readBooks.length;
+      const totalReadPages = readBooks.reduce((sum, book) => sum + (Number(book.pages) || Number(book.page) || 0), 0);
       
       // محاسبه تعداد کتاب‌های خوانده شده در سال جاری (مثلاً ۱۴۰۴)
       const currentYear = 1404; // مقدار سال جاری، قابل تغییر به صورت داینامیک
