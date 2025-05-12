@@ -110,7 +110,6 @@
         <input type="text" id="author" placeholder="نویسنده" required>
         <input type="number" id="year" placeholder="تاریخ مطالعه" required>
         <input type="number" id="page" placeholder="تعداد صفحات کتاب" required>
-        <input type="number" id="stat" placeholder="وضعیت کتاب required>
         <button type="submit">افزودن کتاب</button>
       </form>
       <div id="message" class="alert"></div>
@@ -139,8 +138,6 @@
           <input type="text" id="updateAuthor" placeholder="نویسنده" required>
           <input type="text" id="updateYear" placeholder="سال انتشار" required>
           <input type="text" id="updatePage" placeholder="تعداد صفحات" required>
-          <input type="text" id="updateStat" placeholder="وضعیت کتاب" required>
-          <input type="text" id="updateIntro" placeholder="برسی کتاب" required>
           <button type="submit">به روزرسانی کتاب</button>
         </form>
         <div id="updateMessage" class="alert"></div>
@@ -150,7 +147,27 @@
 
  <script>
   /* ------------------ جلوگیری از inspect ------------------ */
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
   
+  document.addEventListener('keydown', function(e) {
+    // جلوگیری از کلید F12
+    if (e.keyCode === 123) {
+      e.preventDefault();
+      return false;
+    }
+    // جلوگیری از ترکیب‌های Ctrl+Shift+I و Ctrl+Shift+J
+    if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
+      e.preventDefault();
+      return false;
+    }
+    // جلوگیری از Ctrl+U
+    if (e.ctrlKey && e.keyCode === 85) {
+      e.preventDefault();
+      return false;
+    }
+  });
   /* ------------------ پایان جلوگیری از inspect ------------------ */
   
   // ------------------ تعریف متغیر اختیاری برای ذخیره شناسه‌ی widget ------------------
@@ -248,14 +265,13 @@
     const author = document.getElementById('author').value.trim();
     const year   = document.getElementById('year').value.trim();
     const page   = document.getElementById('page').value.trim();
-    const stat   = document.getElementById('stat').value.trim();
   
-    if (!title || !author || !year || !page || !stat) {
+    if (!title || !author || !year || !page) {
       document.getElementById('message').textContent = 'لطفا همه فیلدها را پر کنید.';
       return;
     }
   
-    const payload = { title, author, year, page, stat };
+    const payload = { title, author, year, page };
     console.log("Sending payload to add-book:", payload);
   
     try {
@@ -304,9 +320,6 @@
         document.getElementById('updateAuthor').value = book.author;
         document.getElementById('updateYear').value = book.year;
         document.getElementById('updatePage').value = book.page || "";
-        document.getElementById('updateStat').value = book.stat;
-        document.getElementById('updateIntro').value = book.intro;
-
         
         document.getElementById('update-section').classList.remove('hidden');
         searchMsg.textContent = '';
@@ -328,15 +341,13 @@
     const author = document.getElementById('updateAuthor').value.trim();
     const year = document.getElementById('updateYear').value.trim();
     const page = document.getElementById('updatePage').value.trim();
-    const stat = document.getElementById('updateStat').value.trim();
-    const intro = document.getElementById('updateIntro').value.trim();
     
-    if (!title || !author || !year || !page || !stat || !intro) {
+    if (!title || !author || !year || !page) {
       updateMsg.textContent = 'همه فیلدها لازم هستند.';
       return;
     }
     
-    const payload = { id, title, author, year, page, stat, intro };
+    const payload = { id, title, author, year, page };
     console.log("Sending update payload:", payload);
     
     try {
