@@ -35,19 +35,18 @@
       background: var(--text);
       border-radius: 5px;
     }
-
     html {
       scrollbar-width: thin;
       scrollbar-color: var(--bg);
     }
 
-    .pitem{
+    .pitem {
       background: var(--bg);
       padding: 15px;
       border-radius: 15px;
     }
 
-    /* استایل جدید برای المان‌های وضعیت کتاب */
+    /* استایل جدید برای المان‌های وضعیت کتاب (شبیه pitem اما با تغییر در پس‌زمینه) */
     .sitem {
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
@@ -59,14 +58,11 @@
       margin: 0;
     }
 
-    /* ظرف نمایش وضعیت کتاب */
+    /* ظرف نمایش وضعیت کتاب؛ نگران عرض ندلیم، عرض به صورت طبیعی تنظیم می‌شود */
     .status-container {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
-    }
-    .status-left, .status-right {
-      flex: 0;
     }
     .status-left {
       text-align: left;
@@ -224,7 +220,7 @@
     .summary-box p {
       text-align: justify !important;
     }
-    .label{
+    .label {
       font-weight: bold;
       color: var(--span);
     }
@@ -339,6 +335,7 @@
           }
         });
         
+        // تابع نمایش کتاب‌ها در قالب کارت
         function displayBooks(books, count) {
           bookContainer.innerHTML = '';
           books.slice(-count).reverse().forEach((book, index) => {
@@ -360,7 +357,9 @@
             card.appendChild(backgroundText);
             card.appendChild(content);
   
-            // افزودن بخش وضعیت کتاب بر اساس مقدار stat
+            // افزودن بخش وضعیت کتاب:  
+            // - سمت چپ: نمایش تعداد صفحات (برای حالت "در حال خواندن" به صورت X/Y صفحه و در سایر حالت به صورت Y صفحه)  
+            // - سمت راست: نمایش وضعیت (نامشخص / خواهم خواند / خوانده ام / در حال خواندن)
             const statusContainer = document.createElement('div');
             statusContainer.className = 'status-container';
   
@@ -369,8 +368,17 @@
             const rightDiv = document.createElement('div');
             rightDiv.className = 'status-right';
   
-            let statusText = "";
+            const totalPagesCount = book.pages || book.page;
             let pagesText = "";
+            if (!isNaN(Number(book.stat))) {
+              // اگر stat عددی باشد، به صورت X/Y صفحه نشان بده
+              pagesText = `${book.stat}/${totalPagesCount} صفحه`;
+            } else {
+              // در سایر حالت، تنها تعداد صفحات کل را نشان بده
+              pagesText = `${totalPagesCount} صفحه`;
+            }
+  
+            let statusText = "";
             if (book.stat === null || book.stat === "null") {
               statusText = "نامشخص";
             } else if (book.stat === "fe") {
@@ -379,15 +387,12 @@
               statusText = "خوانده ام";
             } else if (!isNaN(Number(book.stat))) {
               statusText = "در حال خواندن";
-              pagesText = `${book.stat}/${book.pages || book.page} صفحه`;
             }
   
-            if (pagesText) {
-              const leftPara = document.createElement('p');
-              leftPara.className = 'sitem';
-              leftPara.textContent = pagesText;
-              leftDiv.appendChild(leftPara);
-            }
+            const leftPara = document.createElement('p');
+            leftPara.className = 'sitem';
+            leftPara.textContent = pagesText;
+            leftDiv.appendChild(leftPara);
   
             const rightPara = document.createElement('p');
             rightPara.className = 'sitem';
@@ -396,8 +401,8 @@
   
             statusContainer.appendChild(leftDiv);
             statusContainer.appendChild(rightDiv);
-            card.appendChild(statusContainer);
   
+            card.appendChild(statusContainer);
             bookContainer.appendChild(card);
           });
         }
@@ -407,7 +412,7 @@
       }
     }
     
-    // توابع مدیریت تم و کوکی‌ها
+    // توابع مربوط به مدیریت تم و کوکی‌ها
     function setCookie(name, value, days) {
       const d = new Date();
       d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
@@ -476,9 +481,7 @@
         const loadingScreen = document.getElementById('loadingScreen');
         if (loadingScreen) {
           loadingScreen.classList.add('fade-out');
-          setTimeout(() => {
-            loadingScreen.remove();
-          }, 500);
+          setTimeout(() => { loadingScreen.remove(); }, 500);
         }
       }, 800);
     });
