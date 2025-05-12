@@ -321,6 +321,12 @@
       margin: 0;
     }
 
+    .justi{
+      display: inline-block;
+      text-align: justify;
+      margin: 0;
+    }
+
     .label {
       font-weight: bold;
       color: var(--span);
@@ -509,9 +515,15 @@ summaryBox.innerHTML = `
         displayBooks(books, displayedBooks);
         if (displayedBooks >= books.length) {
           loadMoreButton.remove();
+          const endMessageContainer = document.createElement('div');
+          endMessageContainer.classList.add('justi');
+          
           const endMessage = document.createElement('p');
           endMessage.textContent = 'این آخر لیست است';
-          bookContainer.appendChild(endMessage);
+          
+          endMessageContainer.appendChild(endMessage);
+          bookContainer.appendChild(endMessageContainer);
+
         }
       });
       
