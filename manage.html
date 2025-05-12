@@ -110,6 +110,7 @@
         <input type="text" id="author" placeholder="نویسنده" required>
         <input type="number" id="year" placeholder="تاریخ مطالعه" required>
         <input type="number" id="page" placeholder="تعداد صفحات کتاب" required>
+        <input type="number" id="stat" placeholder="وضعیت کتاب required>
         <button type="submit">افزودن کتاب</button>
       </form>
       <div id="message" class="alert"></div>
@@ -138,6 +139,8 @@
           <input type="text" id="updateAuthor" placeholder="نویسنده" required>
           <input type="text" id="updateYear" placeholder="سال انتشار" required>
           <input type="text" id="updatePage" placeholder="تعداد صفحات" required>
+          <input type="text" id="updateStat" placeholder="وضعیت کتاب" required>
+          <input type="text" id="updateIntro" placeholder="برسی کتاب" required>
           <button type="submit">به روزرسانی کتاب</button>
         </form>
         <div id="updateMessage" class="alert"></div>
@@ -265,13 +268,14 @@
     const author = document.getElementById('author').value.trim();
     const year   = document.getElementById('year').value.trim();
     const page   = document.getElementById('page').value.trim();
+    const stat   = document.getElementById('stat').value.trim();
   
-    if (!title || !author || !year || !page) {
+    if (!title || !author || !year || !page || !stat) {
       document.getElementById('message').textContent = 'لطفا همه فیلدها را پر کنید.';
       return;
     }
   
-    const payload = { title, author, year, page };
+    const payload = { title, author, year, page, stat };
     console.log("Sending payload to add-book:", payload);
   
     try {
@@ -320,6 +324,9 @@
         document.getElementById('updateAuthor').value = book.author;
         document.getElementById('updateYear').value = book.year;
         document.getElementById('updatePage').value = book.page || "";
+        document.getElementById('updateStat').value = book.stat;
+        document.getElementById('updateIntro').value = book.intro;
+
         
         document.getElementById('update-section').classList.remove('hidden');
         searchMsg.textContent = '';
@@ -341,13 +348,15 @@
     const author = document.getElementById('updateAuthor').value.trim();
     const year = document.getElementById('updateYear').value.trim();
     const page = document.getElementById('updatePage').value.trim();
+    const stat = document.getElementById('updateStat').value.trim();
+    const intro = document.getElementById('updateIntro').value.trim();
     
-    if (!title || !author || !year || !page) {
+    if (!title || !author || !year || !page || !stat || !intro) {
       updateMsg.textContent = 'همه فیلدها لازم هستند.';
       return;
     }
     
-    const payload = { id, title, author, year, page };
+    const payload = { id, title, author, year, page, stat, intro };
     console.log("Sending update payload:", payload);
     
     try {
