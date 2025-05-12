@@ -40,7 +40,13 @@
 
     html {
   scrollbar-width: thin;  /* thin نمایانگر اسکرول باری نازک است */
-  scrollbar-color: var(--text) var(--bg); /* رنگ نوار و ریل */
+  scrollbar-color: var(--bg); /* رنگ نوار و ریل */
+}
+
+    .pitem{
+  background: var(--bg);
+  padding: 10px;
+  border-radius: 5px;
 }
 
     body {
@@ -346,13 +352,13 @@
             const content = document.createElement('div');
             content.className = 'card-content';
             content.innerHTML = `
-              <p><span class="label">نام کتاب:</span> ${book.name || book.title}</p>
-              <hr>
-              <p><span class="label">نویسنده:</span> ${book.author}</p>
-              <hr>
-              <p><span class="label">تعداد صفحات:</span> ${book.pages || book.page}</p>
-              <hr>
-              <p><span class="label">تاریخ مطالعه:</span> ${book.year}</p>
+              <p class="pitem"><span class="label">نام کتاب:</span> ${book.name || book.title}</p>
+              <br>
+              <p class="pitem"><span class="label">نویسنده:</span> ${book.author}</p>
+              <br>
+              <p class="pitem"><span class="label">تعداد صفحات:</span> ${book.pages || book.page}</p>
+              <br>
+              <p class="pitem"><span class="label">تاریخ مطالعه:</span> ${book.year}</p>
             `;
   
             card.appendChild(backgroundText);
