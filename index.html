@@ -575,11 +575,11 @@ summaryBox.innerHTML = `
           // محاسبه تعداد صفحات و تعیین وضعیت خواندن کتاب به شیوه قبلی
           const totalPagesCount = book.pages || book.page || 0;
           let statusText, pagesText;
-          statusColor = "#b59b79";
+          statusColor = "#9e8e71";
           if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
             statusText = "در حال خواندن";
             pagesText = `${book.stat}/${totalPagesCount} صفحه`;
-            statusColor = "#b59b79";
+            statusColor = "#798478";
           } else if (book.stat === "fe") {
             statusText = "خواهم خواند";
             statusColor = "#2179b5";
