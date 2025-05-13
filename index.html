@@ -578,6 +578,7 @@ summaryBox.innerHTML = `
           if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
             statusText = "در حال خواندن";
             pagesText = `${book.stat}/${totalPagesCount} صفحه`;
+            statusColor = "#0ea960";
           } else if (book.stat === "fe") {
             statusText = "خواهم خواند";
             pagesText = `${totalPagesCount} صفحه`;
@@ -602,7 +603,7 @@ summaryBox.innerHTML = `
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
               <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${reviewCardText}</span></p>
               <div class="status-container">
-                <div class="status-right"><p class="sitem">${statusText}</p></div>
+                <div class="status-right" style="color:${statusColor};"><p class="sitem">${statusText}</p></div>
                 <div class="status-left"><p class="sitem">${pagesText}</p></div>
               </div>
             </div>
