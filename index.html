@@ -94,31 +94,33 @@
       font-family: 'Mikhak', sans-serif;
       color: var(--text);
       background-color: var(--span);
-      display: inline-block;
       padding: 5px 10px;
       border-radius: 5px;
       font-size: 0.95rem;
-      margin: 0;
+      width: 100%;
+      text-align: center;
     }
     /* ظرف وضعیت کتاب با دو ستون */
     .status-container {
       display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-    }
-    .status-left {
-      text-align: right;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%; /* جلوگیری از کشیده شدن بیش از حد */
+    box-sizing: border-box; /* محاسبه صحیح عرض */
+    flex-wrap: wrap; /* جلوگیری از خروج از کادر */
     }
     .status-right {
-      text-align: left;
+      display: flex;
+      text-align: center;
+      width: 68%;
+      max-width: 68%;
     }
-    .status-left p {
-      margin: 0;
-      text-align: right !important;
-    }
-    .status-right p {
-      margin: 0;
-      text-align: left !important;
+    .status-left {
+      display: flex;
+      text-align: center;
+      width: 28%;
+       max-width: 28%;
     }
     /* استایل کلی صفحه */
     body {
@@ -592,8 +594,8 @@ summaryBox.innerHTML = `
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
               <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${reviewCardText}</span></p>
               <div class="status-container">
-                <div class="status-left"><p class="sitem">${statusText}</p></div>
-                <div class="status-right"><p class="sitem">${pagesText}</p></div>
+                <div class="status-right"><p class="sitem">${statusText}</p></div>
+                <div class="status-left"><p class="sitem">${pagesText}</p></div>
               </div>
             </div>
           `;
