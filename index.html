@@ -616,17 +616,21 @@ summaryBox.innerHTML = `
           const totalPagesCount = book.pages || book.page || 0;
           let statusText, pagesText;
           statusColor = "#9e8e71";
+          statusAnim = "";
           if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
             statusText = "در حال خواندن";
             pagesText = `${book.stat}/${totalPagesCount} صفحه`;
             statusColor = "#798478";
+            statusAnim = "typing";
           } else if (book.stat === "fe") {
             statusText = "خواهم خواند";
             statusColor = "#2179b5";
+            statusAnim = "later";
             pagesText = `${totalPagesCount} صفحه`;
           } else if (book.stat === "re") {
             statusText = "خوانده ام";
             statusColor = "#0ea960";
+            statusAnim = "ticked";
             pagesText = `${totalPagesCount} صفحه`;
           } else {
             statusText = "نامشخص";
@@ -647,7 +651,7 @@ summaryBox.innerHTML = `
               <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
               <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${reviewCardText}</span></p>
               <div class="status-container">
-                <div class="status-right"><p class="sitem" style="background-color: ${statusColor};">${statusText}</p></div>
+                <div class="status-right"><p class="sitem ${statusAnim}" style="background-color: ${statusColor};">${statusText}</p></div>
                 <div class="status-left"><p class="sitem">${pagesText}</p></div>
               </div>
             </div>
