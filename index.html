@@ -342,6 +342,46 @@
       font-weight: bold;
       color: var(--span);
     }
+
+    .typing::after {
+    content: "...";
+    display: inline-block;
+    animation: typingDots 1.5s infinite steps(3);
+   }
+  
+    @keyframes typingDots {
+        0% { content: "."; }
+        33% { content: ".."; }
+        66% { content: "..."; }
+    }
+
+    .ticked::before {
+    content: " ✓"; /* تیک متنی */
+    font-weight: bold; /* تاکید بیشتر */
+    opacity: 0;
+    animation: fadeTick 2s infinite;
+    }
+    
+    @keyframes fadeTick {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+
+    .later::after {
+    content: " >>"; /* فلش دوتایی نشان‌دهنده خواندن در آینده */
+    font-weight: bold;
+    opacity: 0;
+    animation: fadeArrow 2s infinite;
+    }
+    
+    @keyframes fadeArrow {
+        0% { opacity: 0; }
+        50% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+
+
     
   </style>
 </head>
