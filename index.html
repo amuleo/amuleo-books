@@ -575,6 +575,7 @@ summaryBox.innerHTML = `
           // محاسبه تعداد صفحات و تعیین وضعیت خواندن کتاب به شیوه قبلی
           const totalPagesCount = book.pages || book.page || 0;
           let statusText, pagesText;
+          statusColor = "#0ea960";
           if (book.stat !== null && book.stat !== "null" && !isNaN(Number(book.stat))) {
             statusText = "در حال خواندن";
             pagesText = `${book.stat}/${totalPagesCount} صفحه`;
