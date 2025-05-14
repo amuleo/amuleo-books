@@ -29,7 +29,7 @@
       text-orientation: mixed;
     }
     
-    /* پشتیبانی از تم تاریک */
+    /* پشتیبانی از تم تاریک (به جز تغییر minimal-border-color) */
     @media (prefers-color-scheme: dark) {
       :root {
         --bg-color: #121212;
@@ -39,7 +39,6 @@
         --alert-bg: #1e1e1e;
         --button-bg: #81c784;
         --button-text: #ffffff;
-        --minimal-border-color: var(--secondary-color);
       }
     }
     
@@ -101,7 +100,7 @@
       margin: 100px auto;
     }
     
-    /* یکنواخت‌سازی عرض فیلد، دکمه و پیام ورود */
+    /* یکنواخت‌سازی عرض فیلد، دکمه ورود و پیام ورود */
     #login-container input,
     #login-container button,
     #loginMessage {
@@ -133,12 +132,13 @@
       appearance: none;
     }
     
-    /* استایل تب‌ها: فعال کردن اسکرول افقی و جلوگیری از Wrapping */
+    /* استایل تب‌ها با اسکرول افقی و مرکز چین کردن */
     #tabs {
       display: flex;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       flex-wrap: nowrap;
+      justify-content: center;
       margin-bottom: 20px;
     }
     
