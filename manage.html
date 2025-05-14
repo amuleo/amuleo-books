@@ -370,7 +370,8 @@
       .then(result => {
         console.log("Response from check-password:", result);
         if (result.success) {
-          document.getElementById("login-container").classList.add("hidden");
+          //document.getElementById("login-container").classList.add("hidden");
+          document.getElementById('login-container').style.display = 'none';
           document.getElementById("manage-container").classList.remove("hidden");
         } else {
           // نمایش پیام خطا در صورت عدم موفقیت ورود
