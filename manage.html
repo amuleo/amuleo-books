@@ -44,13 +44,25 @@
       font-style: normal;
     }
     
-    body {
+    /* استفاده از فونت میخک در تمام المان‌ها */
+    body,
+    input,
+    button,
+    textarea {
       font-family: 'Mikhak', Arial, sans-serif;
+    }
+    
+    body {
       margin: 0;
       padding: 20px;
       text-align: center;
       background-color: var(--bg-color);
       color: var(--text-color);
+    }
+    
+    /* حذف outline برای المان‌های فرم */
+    input, button, textarea {
+      outline: none;
     }
     
     .hidden {
@@ -69,9 +81,12 @@
       padding: 10px;
       margin: 10px 0;
       font-size: 1rem;
+      border: 1px solid var(--secondary-color);
+      border-radius: 4px;
     }
     
-    .alert {
+    /* استایل پیام ورود، مقدار اولیه خوش آمدید */
+    #loginMessage {
       margin-top: 20px;
       padding: 10px;
       border: 1px solid var(--secondary-color);
@@ -111,7 +126,8 @@
       flex-direction: column;
     }
     
-    form input, form button {
+    form input,
+    form button {
       margin: 10px 0;
       padding: 8px;
       font-size: 1rem;
@@ -194,7 +210,7 @@
     <h2>ورود به پنل مدیریت</h2>
     <input type="password" id="loginPassword" placeholder="رمز عبور" required>
     <button id="loginButton">ورود</button>
-    <div id="loginMessage" class="alert"></div>
+    <div id="loginMessage" class="alert">خوش آمدید</div>
     
     <!-- این بخش در داخل div#login-container قرار می‌گیرد -->
     <div id="cf-turnstile" style="display: none;"
