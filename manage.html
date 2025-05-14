@@ -16,7 +16,7 @@
       --button-text: #ffffff;
       --tab-bg: #eeeeee;
       --tab-active-bg: #4caf50;
-      --guide-default-text: "وراهنمایی اولیه: این پیام راهنماست. شما می‌توانید این متن را از طریق سورس آپدیت کنید. تست ۱، تست ۲، تست ۳، تستتتتتتتتتتتت، متننننننن";
+      --guide-default-text: "راهنمایی اولیه: این پیام راهنماست. شما می‌توانید این متن را از طریق سورس آپدیت کنید.";
       
       writing-mode: horizontal-tb;
       direction: rtl;
@@ -75,8 +75,10 @@
       margin: 100px auto;
     }
     
+    /* اطمینان از یکسان بودن عرض فیلد ورودی، دکمه و پیغام در ورود */
     #login-container input,
-    #login-container button {
+    #login-container button,
+    #loginMessage {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -85,11 +87,9 @@
       border-radius: 4px;
     }
     
-    /* استایل پیام ورود، مقدار اولیه خوش آمدید */
+    /* استایل پیام ورود، مقدار اولیه "خوش آمدید" در HTML قرار دارد */
     #loginMessage {
       margin-top: 20px;
-      padding: 10px;
-      border: 1px solid var(--secondary-color);
       background-color: var(--alert-bg);
     }
     
@@ -110,6 +110,10 @@
       border: none;
       border-radius: 4px;
       transition: background-color 0.3s;
+      /* حذف استایل پیشفرض در سافاری و سایر مرورگرها */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
     
     #tabs button.active {
@@ -140,6 +144,10 @@
       background-color: var(--button-bg);
       color: var(--button-text);
       border: none;
+      /* حذف استایل پیشفرض در سافاری برای دکمه */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
     
     /* استایل پاپ‌آپ تب راهنما */
@@ -167,6 +175,9 @@
       max-width: 90%;
       width: 400px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      /* افزودن margin چپ و راست 10 پیکس برای فاصله گرفتن در نمایش‌های کوچک */
+      margin-left: 10px;
+      margin-right: 10px;
     }
     
     .popup-content {
@@ -187,6 +198,10 @@
       color: var(--button-text);
       border: none;
       border-radius: 4px;
+      /* حذف استایل پیشفرض سافاری */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
     
     /* استایل ریسپانسیو */
@@ -287,7 +302,27 @@
   
   <script>
     /* ------------------ جلوگیری از inspect ------------------ */
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+    });
     
+    document.addEventListener('keydown', function(e) {
+      // جلوگیری از کلید F12
+      if (e.keyCode === 123) {
+        e.preventDefault();
+        return false;
+      }
+      // جلوگیری از ترکیب‌های Ctrl+Shift+I و Ctrl+Shift+J
+      if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
+        e.preventDefault();
+        return false;
+      }
+      // جلوگیری از Ctrl+U
+      if (e.ctrlKey && e.keyCode === 85) {
+        e.preventDefault();
+        return false;
+      }
+    });
     /* ------------------ پایان جلوگیری از inspect ------------------ */
     
     // ------------------ تعریف متغیر اختیاری برای ذخیره شناسه‌ی widget ------------------
