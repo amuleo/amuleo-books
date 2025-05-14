@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>پنل مدیریت کتاب</title>
   <style>
-‎    /* تنظیمات پایه با استفاده از :root */
+    /* تنظیمات پایه با استفاده از :root */
     :root {
       writing-mode: horizontal-tb;
       direction: rtl;
@@ -20,7 +20,7 @@
     .hidden {
       display: none;
     }
-‎    /* استایل فرم ورود */
+    /* استایل فرم ورود */
     #login-container {
       max-width: 300px;
       margin: 100px auto;
@@ -37,7 +37,7 @@
       padding: 10px;
       border: 1px solid #ccc;
     }
-‎    /* استایل برای تب‌های مدیریت */
+    /* استایل برای تب‌های مدیریت */
     #tabs {
       display: flex;
       justify-content: center;
@@ -55,7 +55,7 @@
       background-color: #4caf50;
       color: white;
     }
-‎    /* استایل فرم‌های موجود در تب‌ها */
+    /* استایل فرم‌های موجود در تب‌ها */
     form {
       width: 80%;
       max-width: 400px;
@@ -78,14 +78,14 @@
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
-‎  <!-- بخش ورود: تنها یک فرم رمز عبور -->
+  <!-- بخش ورود: تنها یک فرم رمز عبور -->
   <div id="login-container">
     <h2>ورود به پنل مدیریت</h2>
     <input type="password" id="loginPassword" placeholder="رمز عبور" required>
     <button id="loginButton">ورود</button>
     <div id="loginMessage" class="alert"></div>
     
-‎  <!-- این بخش در داخل div#login-container قرار می‌گیرد -->
+  <!-- این بخش در داخل div#login-container قرار می‌گیرد -->
  <div id="cf-turnstile" style="display: none;"
       data-sitekey="0x4AAAAAABcaO4pROuwFvmWC"
       data-size="invisible"
@@ -94,15 +94,15 @@
 
   </div>
   
-‎  <!-- محتوای اصلی پنل مدیریت (ابتدا پنهان) -->
+  <!-- محتوای اصلی پنل مدیریت (ابتدا پنهان) -->
   <div id="manage-container" class="hidden">
-‎    <!-- تب‌های مدیریت -->
+    <!-- تب‌های مدیریت -->
     <div id="tabs">
       <button id="tab-add" class="active">افزودن کتاب</button>
       <button id="tab-update">آپدیت کتاب</button>
     </div>
     
-‎    <!-- تب افزودن کتاب -->
+    <!-- تب افزودن کتاب -->
     <div id="tabContentAdd">
       <h2>افزودن کتاب جدید</h2>
       <form id="addBookForm">
@@ -116,11 +116,11 @@
       <div id="message" class="alert"></div>
     </div>
     
-‎    <!-- تب آپدیت کتاب -->
+    <!-- تب آپدیت کتاب -->
     <div id="tabContentUpdate" class="hidden">
       <h2>آپدیت کتاب</h2>
       
-‎      <!-- بخش جستجوی کتاب -->
+      <!-- بخش جستجوی کتاب -->
       <div id="search-section">
         <h3>جستجو بر اساس شماره (ID) کتاب</h3>
         <form id="searchForm">
@@ -130,7 +130,7 @@
         <div id="searchMessage" class="alert"></div>
       </div>
       
-‎      <!-- بخش به روزرسانی اطلاعات کتاب -->
+      <!-- بخش به روزرسانی اطلاعات کتاب -->
       <div id="update-section" class="hidden">
         <h3>ویرایش اطلاعات کتاب</h3>
         <form id="updateForm">
@@ -149,41 +149,41 @@
   </div>
 
  <script>
-‎  /* ------------------ جلوگیری از inspect ------------------ */
+  /* ------------------ جلوگیری از inspect ------------------ */
   document.addEventListener('contextmenu', function(e) {
     e.preventDefault();
   });
   
   document.addEventListener('keydown', function(e) {
-‎    // جلوگیری از کلید F12
+    // جلوگیری از کلید F12
     if (e.keyCode === 123) {
       e.preventDefault();
       return false;
     }
-‎    // جلوگیری از ترکیب‌های Ctrl+Shift+I و Ctrl+Shift+J
+    // جلوگیری از ترکیب‌های Ctrl+Shift+I و Ctrl+Shift+J
     if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) {
       e.preventDefault();
       return false;
     }
-‎    // جلوگیری از Ctrl+U
+    // جلوگیری از Ctrl+U
     if (e.ctrlKey && e.keyCode === 85) {
       e.preventDefault();
       return false;
     }
   });
-‎  /* ------------------ پایان جلوگیری از inspect ------------------ */
+  /* ------------------ پایان جلوگیری از inspect ------------------ */
   
-‎  // ------------------ تعریف متغیر اختیاری برای ذخیره شناسه‌ی widget ------------------
+  // ------------------ تعریف متغیر اختیاری برای ذخیره شناسه‌ی widget ------------------
   let widgetId = null;
   
-‎  // ------------------ تعریف callback برای Turnstile ------------------
+  // ------------------ تعریف callback برای Turnstile ------------------
   function onTurnstileSuccess(token) {
     console.log("Turnstile token received:", token);
-‎    // پس از دریافت توکن، فراخوانی تابع ورود
+    // پس از دریافت توکن، فراخوانی تابع ورود
     loginRequest(token);
   }
   
-‎  // ------------------ تابع ارسال درخواست ورود به سرور ------------------
+  // ------------------ تابع ارسال درخواست ورود به سرور ------------------
   function loginRequest(turnstileToken) {
     const inputPass = document.getElementById("loginPassword").value;
     const loginMsg  = document.getElementById("loginMessage");
@@ -200,10 +200,10 @@
         document.getElementById("login-container").classList.add("hidden");
         document.getElementById("manage-container").classList.remove("hidden");
       } else {
-‎        // نمایش پیام خطا در صورت عدم موفقیت ورود
+        // نمایش پیام خطا در صورت عدم موفقیت ورود
         loginMsg.textContent = result.error || "رمز عبور اشتباه است.";
-‎        // ------------------ تغییر اضافه شده ------------------
-‎        // ریست کردن ویجت Turnstile برای دریافت توکن تازه
+        // ------------------ تغییر اضافه شده ------------------
+        // ریست کردن ویجت Turnstile برای دریافت توکن تازه
         if (window.turnstile && document.getElementById("cf-turnstile")) {
           turnstile.reset("#cf-turnstile");
         }
@@ -216,7 +216,7 @@
     });
   }
   
-‎  // ------------------ (اختیاری) رندر دستی widget Turnstile پس از بارگذاری صفحه ------------------
+  // ------------------ (اختیاری) رندر دستی widget Turnstile پس از بارگذاری صفحه ------------------
   window.addEventListener("load", function() {
     if (typeof turnstile !== "undefined" && !widgetId) {
       widgetId = turnstile.render('#cf-turnstile', {
@@ -227,20 +227,20 @@
     }
   });
   
-‎  // ------------------ تغییر رویداد کلیک بر روی دکمه ورود ------------------
-‎  // حذف کد قدیمی بررسی رمز (با CORRECT_PASSWORD) و استفاده از Turnstile
+  // ------------------ تغییر رویداد کلیک بر روی دکمه ورود ------------------
+  // حذف کد قدیمی بررسی رمز (با CORRECT_PASSWORD) و استفاده از Turnstile
   document.getElementById("loginButton").addEventListener("click", function(e) {
     e.preventDefault();
-‎    // اجرای چالش نامرئی Turnstile؛ اگر widget رندر شده باشد از آن استفاده می‌کنیم.
+    // اجرای چالش نامرئی Turnstile؛ اگر widget رندر شده باشد از آن استفاده می‌کنیم.
     if (widgetId !== null) {
       turnstile.execute(widgetId);
     } else {
-‎      // اگر widgetId تعریف نشده باشد، اجرای مستقیم روی دایو مربوطه
+      // اگر widgetId تعریف نشده باشد، اجرای مستقیم روی دایو مربوطه
       turnstile.execute(document.getElementById('cf-turnstile'));
     }
   });
   
-‎  /* ------------------ مدیریت تب‌ها ------------------ */
+  /* ------------------ مدیریت تب‌ها ------------------ */
   const tabAdd    = document.getElementById("tab-add");
   const tabUpdate = document.getElementById("tab-update");
   const contentAdd    = document.getElementById("tabContentAdd");
@@ -260,7 +260,7 @@
     contentAdd.classList.add("hidden");
   });
   
-‎  /* ------------------ کد فرم افزودن کتاب ------------------ */
+  /* ------------------ کد فرم افزودن کتاب ------------------ */
   document.getElementById('addBookForm').addEventListener('submit', async function(e) {
     e.preventDefault();
   
@@ -301,8 +301,8 @@
     }
   });
   
-‎  /* ------------------ کد فرم آپدیت کتاب ------------------ */
-‎  // جستجو بر اساس شماره (ID) کتاب
+  /* ------------------ کد فرم آپدیت کتاب ------------------ */
+  // جستجو بر اساس شماره (ID) کتاب
   document.getElementById('searchForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const id = document.getElementById('searchId').value.trim();
@@ -339,7 +339,7 @@
     }
   });
   
-‎  // به روزرسانی اطلاعات کتاب
+  // به روزرسانی اطلاعات کتاب
   document.getElementById('updateForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const updateMsg = document.getElementById('updateMessage');
@@ -379,7 +379,7 @@
     }
   });
   
-‎  /* ------------------ پایان کد ------------------ */
+  /* ------------------ پایان کد ------------------ */
 </script>
 
 </body>
