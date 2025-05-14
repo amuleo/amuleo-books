@@ -552,7 +552,7 @@
     /* ------------------ مدیریت تب راهنما و پاپ‌آپ ------------------ */
     document.addEventListener('DOMContentLoaded', function() {
       const guideText = getComputedStyle(document.documentElement).getPropertyValue('--guide-default-text').trim();
-      guideText = guideText.slice(1, -1);
+      guideText = guideText.replace(/^"|"$/g, '');
       const formattedText = guideText.replace(/br\.sp/g, '<br>');
       document.getElementById('guide-text').innerHTML = formattedText;
       
