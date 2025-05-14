@@ -1,367 +1,401 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>پنل مدیریت کتاب</title>
   <style>
-    /* فونت میخک */
     @font-face {
       font-family: 'Mikhak';
-      src: url('./fonts/Mikhak.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
+      src: url('fonts/Mikhak.ttf') format('truetype');
+      font-display: swap;
     }
 
-    /* متغیرهای رنگی */
     :root {
-      --font-family: 'Mikhak', sans-serif;
-
-      /* رنگ‌ها برای حالت روشن */
-      --bg-color: #ffffff;
-      --text-color: #000000;
-      --primary-color: #4caf50;
-      --secondary-color: #f0f0f0;
-      --border-color: #cccccc;
-      --alert-bg: #e0e0e0;
-
-      /* رنگ‌ها برای حالت تاریک */
-      --bg-color-dark: #121212;
-      --text-color-dark: #ffffff;
-      --primary-color-dark: #81c784;
-      --secondary-color-dark: #1e1e1e;
-      --border-color-dark: #444444;
-      --alert-bg-dark: #2c2c2c;
-
-      /* متن راهنما */
-      --help-text: "در این بخش می‌توانید کتاب‌های جدید را اضافه کرده یا اطلاعات کتاب‌های موجود را به‌روزرسانی کنید. لطفاً تمامی فیلدها را با دقت پر کنید.";
+      --bg-light: #f9f9f9;
+      --text-light: #1a1a1a;
+      --bg-dark: #121212;
+      --text-dark: #eaeaea;
+      --primary: #4caf50;
+      --accent: #eeeeee;
     }
 
-    /* تنظیمات بر اساس حالت تاریک یا روشن سیستم */
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-color: var(--bg-color-dark);
-        --text-color: var(--text-color-dark);
-        --primary-color: var(--primary-color-dark);
-        --secondary-color: var(--secondary-color-dark);
-        --border-color: var(--border-color-dark);
-        --alert-bg: var(--alert-bg-dark);
-      }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      direction: rtl;
     }
 
     body {
-      font-family: var(--font-family);
-      background-color: var(--bg-color);
-      color: var(--text-color);
       margin: 0;
       padding: 20px;
-      text-align: center;
+      font-family: 'Mikhak', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      input, button, textarea {
+        background-color: #1f1f1f;
+        color: var(--text-dark);
+        border: 1px solid #333;
+      }
+      #tabs button.active {
+        background-color: var(--primary);
+        color: white;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: var(--bg-light);
+        color: var(--text-light);
+      }
+      input, button, textarea {
+        background-color: white;
+        color: var(--text-light);
+        border: 1px solid #ccc;
+      }
     }
 
     .hidden {
       display: none;
     }
 
-    .alert {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: var(--alert-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
+    #login-container, form {
+      max-width: 400px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    /* فرم ورود */
-    #login-container {
-      max-width: 300px;
-      margin: 100px auto;
-    }
-
-    #login-container input,
-    #login-container button {
-      width: 100%;
+    input, button, textarea {
       padding: 10px;
-      margin: 10px 0;
       font-size: 1rem;
-      border: 1px solid var(--border-color);
       border-radius: 5px;
-      background-color: var(--secondary-color);
-      color: var(--text-color);
     }
 
-    #login-container button {
-      background-color: var(--primary-color);
-      color: #ffffff;
+    button {
       cursor: pointer;
+      background-color: var(--primary);
+      color: white;
       border: none;
+      transition: background-color 0.2s;
     }
 
-    /* تب‌ها */
+    button:hover {
+      background-color: #3e9142;
+    }
+
+    .alert {
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      background-color: var(--accent);
+    }
+
     #tabs {
       display: flex;
       justify-content: center;
-      margin-bottom: 20px;
+      flex-wrap: wrap;
       gap: 10px;
+      margin: 20px 0;
     }
 
     #tabs button {
       padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      background-color: var(--secondary-color);
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
-      color: var(--text-color);
+      background-color: var(--accent);
     }
 
     #tabs button.active {
-      background-color: var(--primary-color);
-      color: #ffffff;
-      border: none;
+      background-color: var(--primary);
+      color: white;
     }
 
-    /* فرم‌ها */
-    form {
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-    }
-
-    form input,
-    form button {
-      margin: 10px 0;
-      padding: 10px;
-      font-size: 1rem;
-      border: 1px solid var(--border-color);
-      border-radius: 5px;
-      background-color: var(--secondary-color);
-      color: var(--text-color);
-    }
-
-    form button {
-      background-color: var(--primary-color);
-      color: #ffffff;
-      cursor: pointer;
-      border: none;
-    }
-
-    /* آیکون راهنما */
-    .help-icon {
-      display: inline-block;
-      margin-left: 10px;
+    /* راهنما */
+    #help-icon {
       cursor: pointer;
       font-size: 1.2rem;
-      color: var(--primary-color);
+      margin-bottom: 10px;
+      background: none;
+      border: none;
+      color: inherit;
     }
 
-    /* پاپ‌آپ راهنما */
     #help-popup {
       position: fixed;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-      display: none;
-      align-items: center;
+      background: rgba(0,0,0,0.4);
+      display: flex;
       justify-content: center;
+      align-items: center;
       z-index: 1000;
     }
 
     #help-popup-content {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      width: 90%;
-      max-width: 400px;
-      max-height: 80%;
-      overflow-y: auto;
+      background-color: inherit;
+      color: inherit;
+      max-width: 90%;
+      width: 400px;
+      max-height: 80vh;
       padding: 20px;
-      border-radius: 10px;
-      position: relative;
+      overflow-y: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
-    #help-popup-content p {
-      text-align: justify;
-    }
-
-    #help-popup-close {
-      display: block;
+    #help-popup-content button {
       width: 100%;
-      margin-top: 20px;
-      padding: 10px;
-      background-color: var(--primary-color);
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    /* واکنش‌گرایی */
-    @media (max-width: 600px) {
-      #tabs {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      form {
-        width: 90%;
-      }
+      margin-top: 15px;
     }
   </style>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
-  <!-- فرم ورود -->
+
+  <!-- ورود -->
   <div id="login-container">
     <h2>ورود به پنل مدیریت</h2>
     <input type="password" id="loginPassword" placeholder="رمز عبور" required />
     <button id="loginButton">ورود</button>
     <div id="loginMessage" class="alert"></div>
-
     <div id="cf-turnstile" style="display: none;"
-      data-sitekey="0x4AAAAAABcaO4pROuwFvmWC"
-      data-size="invisible"
-      data-callback="onTurnstileSuccess">
-    </div>
+         data-sitekey="0x4AAAAAABcaO4pROuwFvmWC"
+         data-size="invisible"
+         data-callback="onTurnstileSuccess"></div>
   </div>
 
-  <!-- پنل مدیریت -->
+  <!-- محتوای مدیریت -->
   <div id="manage-container" class="hidden">
+    <!-- راهنما -->
+    <button id="help-icon" title="راهنما">؟</button>
+
+    <!-- پاپ‌آپ راهنما -->
+    <div id="help-popup" class="hidden">
+      <div id="help-popup-content">
+        <p id="help-text">در این قسمت می‌توانید کتاب اضافه یا به‌روزرسانی کنید.</p>
+        <button onclick="document.getElementById('help-popup').classList.add('hidden')">بستن</button>
+      </div>
+    </div>
+
     <!-- تب‌ها -->
     <div id="tabs">
-      <span class="help-icon" onclick="showHelp()">❔</span>
       <button id="tab-add" class="active">افزودن کتاب</button>
       <button id="tab-update">آپدیت کتاب</button>
     </div>
 
-    <!-- تب افزودن کتاب -->
+    <!-- افزودن کتاب -->
     <div id="tabContentAdd">
       <h2>افزودن کتاب جدید</h2>
       <form id="addBookForm">
         <input type="text" id="title" placeholder="عنوان کتاب" required />
         <input type="text" id="author" placeholder="نویسنده" required />
         <input type="number" id="year" placeholder="تاریخ مطالعه" required />
-        <input type="number" id="page" placeholder="تعداد صفحات کتاب" required />
+        <input type="number" id="page" placeholder="تعداد صفحات" required />
         <input type="text" id="stat" placeholder="وضعیت کتاب" required />
         <button type="submit">افزودن کتاب</button>
       </form>
       <div id="message" class="alert"></div>
     </div>
 
-    <!-- تب آپدیت کتاب -->
+    <!-- آپدیت کتاب -->
     <div id="tabContentUpdate" class="hidden">
       <h2>آپدیت کتاب</h2>
 
-      <!-- جستجوی کتاب -->
-      <div id="search-section">
-        <h3>جستجو بر اساس شماره (ID) کتاب</h3>
-        <form id="searchForm">
-          <input type="number" id="searchId" placeholder="شماره کتاب (ID)" required />
-          <button type="submit">نمایش اطلاعات کتاب</button>
-        </form>
-        <div id="searchMessage" class="alert"></div>
-      </div>
+      <!-- جستجو -->
+      <form id="searchForm">
+        <input type="number" id="searchId" placeholder="شماره کتاب (ID)" required />
+        <button type="submit">نمایش اطلاعات کتاب</button>
+      </form>
+      <div id="searchMessage" class="alert"></div>
 
-      <!-- به‌روزرسانی اطلاعات کتاب -->
+      <!-- فرم ویرایش -->
       <div id="update-section" class="hidden">
-        <h3>ویرایش اطلاعات کتاب</h3>
         <form id="updateForm">
           <input type="hidden" id="updateId" />
           <input type="text" id="updateTitle" placeholder="عنوان کتاب" required />
           <input type="text" id="updateAuthor" placeholder="نویسنده" required />
-                    <input type="number" id="updateYear" placeholder="تاریخ مطالعه" required />
-          <input type="number" id="updatePage" placeholder="تعداد صفحات کتاب" required />
+          <input type="text" id="updateYear" placeholder="سال انتشار" required />
+          <input type="text" id="updatePage" placeholder="تعداد صفحات" required />
           <input type="text" id="updateStat" placeholder="وضعیت کتاب" required />
-          <button type="submit">ذخیره تغییرات</button>
+          <input type="text" id="updateIntro" placeholder="بررسی کتاب" required />
+          <button type="submit">به‌روزرسانی کتاب</button>
         </form>
         <div id="updateMessage" class="alert"></div>
       </div>
     </div>
   </div>
 
-  <!-- پاپ‌آپ راهنما -->
-  <div id="help-popup">
-    <div id="help-popup-content">
-      <h3>راهنما</h3>
-      <p>
-        در این بخش می‌توانید کتاب‌های جدید را اضافه کنید یا اطلاعات کتاب‌های قبلی را ویرایش نمایید. لطفاً فیلدها را با دقت پر کرده و هنگام استفاده از شماره کتاب (ID) مطمئن شوید که عدد صحیح وارد می‌کنید. برای افزودن کتاب، از تب "افزودن کتاب" و برای ویرایش، ابتدا جستجو کرده و سپس تغییرات را ذخیره کنید.
-      </p>
-      <button id="help-popup-close" onclick="closeHelp()">بستن</button>
-    </div>
-  </div>
-
   <script>
-    // مدیریت ورود
-    const loginButton = document.getElementById('loginButton');
-    loginButton.addEventListener('click', () => {
-      const password = document.getElementById('loginPassword').value;
-      if (password === '1234') {
-        document.getElementById('login-container').classList.add('hidden');
-        document.getElementById('manage-container').classList.remove('hidden');
+    // جلوگیری از inspect
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    let widgetId = null;
+    function onTurnstileSuccess(token) {
+      loginRequest(token);
+    }
+
+    function loginRequest(turnstileToken) {
+      const pass = document.getElementById("loginPassword").value;
+      const msg = document.getElementById("loginMessage");
+      fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/check-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pass, turnstileToken })
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          document.getElementById("login-container").classList.add("hidden");
+          document.getElementById("manage-container").classList.remove("hidden");
+        } else {
+          msg.textContent = res.error || "رمز عبور اشتباه است.";
+          if (window.turnstile) turnstile.reset("#cf-turnstile");
+        }
+      })
+      .catch(() => msg.textContent = "خطا در ارتباط با سرور.");
+    }
+
+    window.addEventListener("load", () => {
+      if (typeof turnstile !== "undefined" && !widgetId) {
+        widgetId = turnstile.render('#cf-turnstile', {
+          sitekey: document.getElementById("cf-turnstile").dataset.sitekey,
+          size: 'invisible',
+          callback: onTurnstileSuccess
+        });
+      }
+    });
+
+    document.getElementById("loginButton").addEventListener("click", e => {
+      e.preventDefault();
+      if (widgetId !== null) {
+        turnstile.execute(widgetId);
       } else {
-        document.getElementById('loginMessage').textContent = 'رمز نادرست است.';
+        turnstile.execute(document.getElementById('cf-turnstile'));
       }
     });
 
     // تب‌ها
-    const tabAdd = document.getElementById('tab-add');
-    const tabUpdate = document.getElementById('tab-update');
-    const contentAdd = document.getElementById('tabContentAdd');
-    const contentUpdate = document.getElementById('tabContentUpdate');
+    const tabAdd = document.getElementById("tab-add");
+    const tabUpdate = document.getElementById("tab-update");
+    const contentAdd = document.getElementById("tabContentAdd");
+    const contentUpdate = document.getElementById("tabContentUpdate");
 
-    tabAdd.addEventListener('click', () => {
-      tabAdd.classList.add('active');
-      tabUpdate.classList.remove('active');
-      contentAdd.classList.remove('hidden');
-      contentUpdate.classList.add('hidden');
+    tabAdd.addEventListener("click", () => {
+      tabAdd.classList.add("active");
+      tabUpdate.classList.remove("active");
+      contentAdd.classList.remove("hidden");
+      contentUpdate.classList.add("hidden");
     });
 
-    tabUpdate.addEventListener('click', () => {
-      tabUpdate.classList.add('active');
-      tabAdd.classList.remove('active');
-      contentUpdate.classList.remove('hidden');
-      contentAdd.classList.add('hidden');
+    tabUpdate.addEventListener("click", () => {
+      tabUpdate.classList.add("active");
+      tabAdd.classList.remove("active");
+      contentUpdate.classList.remove("hidden");
+      contentAdd.classList.add("hidden");
     });
 
-    // پاپ‌آپ راهنما
-    function showHelp() {
-      document.getElementById('help-popup').style.display = 'flex';
-    }
-
-    function closeHelp() {
-      document.getElementById('help-popup').style.display = 'none';
-    }
-
-    // افزودن کتاب - دمو
-    document.getElementById('addBookForm').addEventListener('submit', function (e) {
+    // فرم افزودن
+    document.getElementById('addBookForm').addEventListener('submit', async e => {
       e.preventDefault();
-      document.getElementById('message').textContent = 'کتاب با موفقیت اضافه شد.';
-      this.reset();
-    });
-
-    // جستجو و آپدیت - دمو
-    document.getElementById('searchForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const id = document.getElementById('searchId').value;
-      if (id === '1') {
-        document.getElementById('update-section').classList.remove('hidden');
-        document.getElementById('updateId').value = '1';
-        document.getElementById('updateTitle').value = 'مثال کتاب';
-        document.getElementById('updateAuthor').value = 'نویسنده نمونه';
-        document.getElementById('updateYear').value = '1400';
-        document.getElementById('updatePage').value = '200';
-        document.getElementById('updateStat').value = 'خوانده شده';
-        document.getElementById('searchMessage').textContent = '';
-      } else {
-        document.getElementById('searchMessage').textContent = 'کتاب یافت نشد.';
-        document.getElementById('update-section').classList.add('hidden');
+      const title = document.getElementById('title').value.trim();
+      const author = document.getElementById('author').value.trim();
+      const year = document.getElementById('year').value.trim();
+      const page = document.getElementById('page').value.trim();
+      const stat = document.getElementById('stat').value.trim();
+      if (!title || !author || !year || !page || !stat) return document.getElementById('message').textContent = 'لطفا همه فیلدها را پر کنید.';
+      const payload = { title, author, year, page, stat };
+      try {
+        const res = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/add-book", {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        if (result.success) {
+          document.getElementById('message').textContent = "کتاب افزوده شد.";
+          document.getElementById('addBookForm').reset();
+        } else {
+          document.getElementById('message').textContent = "خطا: " + result.error;
+        }
+      } catch {
+        document.getElementById('message').textContent = "خطا در ارتباط با سرور.";
       }
     });
 
-    document.getElementById('updateForm').addEventListener('submit', function (e) {
+    // فرم جستجو
+    document.getElementById('searchForm').addEventListener('submit', async e => {
       e.preventDefault();
-      document.getElementById('updateMessage').textContent = 'تغییرات با موفقیت ذخیره شد.';
+      const id = document.getElementById('searchId').value.trim();
+      const msg = document.getElementById('searchMessage');
+      if (!id) return msg.textContent = 'لطفا شماره کتاب را وارد کنید.';
+      msg.textContent = 'در حال جستجو...';
+      try {
+        const res = await fetch(`https://book-manager-worker.immohammaddavoodi.workers.dev/get-book?id=${id}`);
+        const data = await res.json();
+        if (data.success && data.book) {
+          const b = data.book;
+          document.getElementById('updateId').value = b.id;
+          document.getElementById('updateTitle').value = b.title;
+          document.getElementById('updateAuthor').value = b.author;
+          document.getElementById('updateYear').value = b.year;
+          document.getElementById('updatePage').value = b.page || "";
+          document.getElementById('updateStat').value = b.stat;
+          document.getElementById('updateIntro').value = b.intro;
+          document.getElementById('update-section').classList.remove('hidden');
+          msg.textContent = '';
+        } else {
+          msg.textContent = 'کتاب با این شماره پیدا نشد.';
+        }
+      } catch {
+        msg.textContent = 'خطا در دریافت اطلاعات کتاب.';
+      }
+    });
+    
+    // فرم آپدیت
+    document.getElementById('updateForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const msg = document.getElementById('updateMessage');
+      const id = document.getElementById('updateId').value.trim();
+      const title = document.getElementById('updateTitle').value.trim();
+      const author = document.getElementById('updateAuthor').value.trim();
+      const year = document.getElementById('updateYear').value.trim();
+      const page = document.getElementById('updatePage').value.trim();
+      const stat = document.getElementById('updateStat').value.trim();
+      const intro = document.getElementById('updateIntro').value.trim();
+      if (!title || !author || !year || !page || !stat || !intro) return msg.textContent = 'همه فیلدها لازم هستند.';
+      const payload = { id, title, author, year, page, stat, intro };
+      try {
+        const res = await fetch("https://book-manager-worker.immohammaddavoodi.workers.dev/update-book", {
+          method: 'POST',
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        msg.textContent = result.success ? "کتاب با موفقیت به روز شد." : "خطا: " + result.error;
+      } catch {
+        msg.textContent = "خطا در ارتباط با سرور.";
+      }
+    });
+
+    // راهنما
+    document.getElementById("help-icon").addEventListener("click", () => {
+      document.getElementById("help-popup").classList.remove("hidden");
     });
   </script>
 </body>
