@@ -1,144 +1,278 @@
 <!DOCTYPE html>
-<html lang="fa">
+<html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>پنل مدیریت کتاب</title>
   <style>
-    :root {
-      writing-mode: horizontal-tb;
-      direction: rtl;
-      text-orientation: mixed;
+    /* فونت میخک */
+    @font-face {
+      font-family: 'Mikhak';
+      src: url('./fonts/Mikhak.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
     }
+
+    /* متغیرهای رنگی */
+    :root {
+      --font-family: 'Mikhak', sans-serif;
+
+      /* رنگ‌ها برای حالت روشن */
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --primary-color: #4caf50;
+      --secondary-color: #f0f0f0;
+      --border-color: #cccccc;
+      --alert-bg: #e0e0e0;
+
+      /* رنگ‌ها برای حالت تاریک */
+      --bg-color-dark: #121212;
+      --text-color-dark: #ffffff;
+      --primary-color-dark: #81c784;
+      --secondary-color-dark: #1e1e1e;
+      --border-color-dark: #444444;
+      --alert-bg-dark: #2c2c2c;
+
+      /* متن راهنما */
+      --help-text: "در این بخش می‌توانید کتاب‌های جدید را اضافه کرده یا اطلاعات کتاب‌های موجود را به‌روزرسانی کنید. لطفاً تمامی فیلدها را با دقت پر کنید.";
+    }
+
+    /* تنظیمات بر اساس حالت تاریک یا روشن سیستم */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-color: var(--bg-color-dark);
+        --text-color: var(--text-color-dark);
+        --primary-color: var(--primary-color-dark);
+        --secondary-color: var(--secondary-color-dark);
+        --border-color: var(--border-color-dark);
+        --alert-bg: var(--alert-bg-dark);
+      }
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      font-family: var(--font-family);
+      background-color: var(--bg-color);
+      color: var(--text-color);
       margin: 0;
       padding: 20px;
       text-align: center;
-      background-color: #f9f9f9;
     }
+
     .hidden {
       display: none;
     }
+
+    .alert {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: var(--alert-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+    }
+
+    /* فرم ورود */
     #login-container {
       max-width: 300px;
       margin: 100px auto;
     }
+
     #login-container input,
     #login-container button {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
       font-size: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
     }
-    .alert {
-      margin-top: 20px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      background-color: #fff;
+
+    #login-container button {
+      background-color: var(--primary-color);
+      color: #ffffff;
+      cursor: pointer;
+      border: none;
     }
+
+    /* تب‌ها */
     #tabs {
       display: flex;
       justify-content: center;
       margin-bottom: 20px;
+      gap: 10px;
     }
+
     #tabs button {
       padding: 10px 20px;
-      margin: 0 10px;
       font-size: 1rem;
       cursor: pointer;
-      background-color: #eee;
+      background-color: var(--secondary-color);
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      color: var(--text-color);
+    }
+
+    #tabs button.active {
+      background-color: var(--primary-color);
+      color: #ffffff;
       border: none;
     }
-    #tabs button.active {
-      background-color: #4caf50;
-      color: white;
-    }
+
+    /* فرم‌ها */
     form {
-      width: 80%;
+      width: 100%;
       max-width: 400px;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
     }
-    form input, form button {
-      margin: 10px 0;
-      padding: 8px;
-      font-size: 1rem;
-    }
+
+    form input,
     form button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 5px;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+    }
+
+    form button {
+      background-color: var(--primary-color);
+      color: #ffffff;
       cursor: pointer;
-      background-color: #4caf50;
-      color: white;
       border: none;
     }
+
+    /* آیکون راهنما */
+    .help-icon {
+      display: inline-block;
+      margin-left: 10px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+    }
+
+    /* پاپ‌آپ راهنما */
     #help-popup {
       position: fixed;
       top: 0;
       right: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.6);
+      bottom: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
       display: none;
       align-items: center;
       justify-content: center;
+      z-index: 1000;
     }
+
     #help-popup-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      width: 90%;
       max-width: 400px;
-      text-align: right;
+      max-height: 80%;
+      overflow-y: auto;
+      padding: 20px;
+      border-radius: 10px;
+      position: relative;
+    }
+
+    #help-popup-content p {
+      text-align: justify;
+    }
+
+    #help-popup-close {
+      display: block;
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* واکنش‌گرایی */
+    @media (max-width: 600px) {
+      #tabs {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      form {
+        width: 90%;
+      }
     }
   </style>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
-
+  <!-- فرم ورود -->
   <div id="login-container">
     <h2>ورود به پنل مدیریت</h2>
-    <input type="password" id="loginPassword" placeholder="رمز عبور" required>
+    <input type="password" id="loginPassword" placeholder="رمز عبور" required />
     <button id="loginButton">ورود</button>
     <div id="loginMessage" class="alert"></div>
+
+    <div id="cf-turnstile" style="display: none;"
+      data-sitekey="0x4AAAAAABcaO4pROuwFvmWC"
+      data-size="invisible"
+      data-callback="onTurnstileSuccess">
+    </div>
   </div>
 
+  <!-- پنل مدیریت -->
   <div id="manage-container" class="hidden">
+    <!-- تب‌ها -->
     <div id="tabs">
+      <span class="help-icon" onclick="showHelp()">❔</span>
       <button id="tab-add" class="active">افزودن کتاب</button>
       <button id="tab-update">آپدیت کتاب</button>
     </div>
 
+    <!-- تب افزودن کتاب -->
     <div id="tabContentAdd">
       <h2>افزودن کتاب جدید</h2>
       <form id="addBookForm">
-        <input type="text" id="title" placeholder="عنوان کتاب" required>
-        <input type="text" id="author" placeholder="نویسنده" required>
-        <input type="number" id="year" placeholder="تاریخ مطالعه" required>
-        <input type="number" id="page" placeholder="تعداد صفحات کتاب" required>
-        <input type="text" id="stat" placeholder="وضعیت کتاب" required>
+        <input type="text" id="title" placeholder="عنوان کتاب" required />
+        <input type="text" id="author" placeholder="نویسنده" required />
+        <input type="number" id="year" placeholder="تاریخ مطالعه" required />
+        <input type="number" id="page" placeholder="تعداد صفحات کتاب" required />
+        <input type="text" id="stat" placeholder="وضعیت کتاب" required />
         <button type="submit">افزودن کتاب</button>
       </form>
       <div id="message" class="alert"></div>
     </div>
 
+    <!-- تب آپدیت کتاب -->
     <div id="tabContentUpdate" class="hidden">
       <h2>آپدیت کتاب</h2>
+
+      <!-- جستجوی کتاب -->
       <div id="search-section">
+        <h3>جستجو بر اساس شماره (ID) کتاب</h3>
         <form id="searchForm">
-          <input type="number" id="searchId" placeholder="شماره کتاب (ID)" required>
+          <input type="number" id="searchId" placeholder="شماره کتاب (ID)" required />
           <button type="submit">نمایش اطلاعات کتاب</button>
         </form>
         <div id="searchMessage" class="alert"></div>
       </div>
 
+      <!-- به‌روزرسانی اطلاعات کتاب -->
       <div id="update-section" class="hidden">
         <h3>ویرایش اطلاعات کتاب</h3>
         <form id="updateForm">
-          <input type="hidden" id="updateId">
-          <input type="text" id="updateTitle" placeholder="عنوان کتاب" required>
-          <input type="text" id="updateAuthor" placeholder="نویسنده" required>
-          <input type="number" id="updateYear" placeholder="تاریخ مطالعه" required>
-          <input type="number" id="updatePage" placeholder="تعداد صفحات کتاب" required>
-          <input type="text" id="updateStat" placeholder="وضعیت کتاب" required>
+          <input type="hidden" id="updateId" />
+          <input type="text" id="updateTitle" placeholder="عنوان کتاب" required />
+          <input type="text" id="updateAuthor" placeholder="نویسنده" required />
+                    <input type="number" id="updateYear" placeholder="تاریخ مطالعه" required />
+          <input type="number" id="updatePage" placeholder="تعداد صفحات کتاب" required />
+          <input type="text" id="updateStat" placeholder="وضعیت کتاب" required />
           <button type="submit">ذخیره تغییرات</button>
         </form>
         <div id="updateMessage" class="alert"></div>
@@ -146,20 +280,23 @@
     </div>
   </div>
 
+  <!-- پاپ‌آپ راهنما -->
   <div id="help-popup">
     <div id="help-popup-content">
       <h3>راهنما</h3>
       <p>
-        در این بخش می‌توانید کتاب‌های جدید را اضافه کنید یا اطلاعات کتاب‌های قبلی را ویرایش نمایید. لطفاً فیلدها را با دقت پر کرده و هنگام استفاده از شماره کتاب (ID) مطمئن شوید که عدد صحیح وارد می‌کنید.
+        در این بخش می‌توانید کتاب‌های جدید را اضافه کنید یا اطلاعات کتاب‌های قبلی را ویرایش نمایید. لطفاً فیلدها را با دقت پر کرده و هنگام استفاده از شماره کتاب (ID) مطمئن شوید که عدد صحیح وارد می‌کنید. برای افزودن کتاب، از تب "افزودن کتاب" و برای ویرایش، ابتدا جستجو کرده و سپس تغییرات را ذخیره کنید.
       </p>
-      <button onclick="closeHelp()">بستن</button>
+      <button id="help-popup-close" onclick="closeHelp()">بستن</button>
     </div>
   </div>
 
   <script>
-    document.getElementById('loginButton').addEventListener('click', () => {
-      const pass = document.getElementById('loginPassword').value;
-      if (pass === '1234') {
+    // مدیریت ورود
+    const loginButton = document.getElementById('loginButton');
+    loginButton.addEventListener('click', () => {
+      const password = document.getElementById('loginPassword').value;
+      if (password === '1234') {
         document.getElementById('login-container').classList.add('hidden');
         document.getElementById('manage-container').classList.remove('hidden');
       } else {
@@ -167,6 +304,7 @@
       }
     });
 
+    // تب‌ها
     const tabAdd = document.getElementById('tab-add');
     const tabUpdate = document.getElementById('tab-update');
     const contentAdd = document.getElementById('tabContentAdd');
@@ -186,16 +324,23 @@
       contentAdd.classList.add('hidden');
     });
 
+    // پاپ‌آپ راهنما
+    function showHelp() {
+      document.getElementById('help-popup').style.display = 'flex';
+    }
+
     function closeHelp() {
       document.getElementById('help-popup').style.display = 'none';
     }
 
+    // افزودن کتاب - دمو
     document.getElementById('addBookForm').addEventListener('submit', function (e) {
       e.preventDefault();
       document.getElementById('message').textContent = 'کتاب با موفقیت اضافه شد.';
       this.reset();
     });
 
+    // جستجو و آپدیت - دمو
     document.getElementById('searchForm').addEventListener('submit', function (e) {
       e.preventDefault();
       const id = document.getElementById('searchId').value;
@@ -215,7 +360,7 @@
     });
 
     document.getElementById('updateForm').addEventListener('submit', function (e) {
-      e.preventDefault()
+      e.preventDefault();
       document.getElementById('updateMessage').textContent = 'تغییرات با موفقیت ذخیره شد.';
     });
   </script>
