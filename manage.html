@@ -16,6 +16,7 @@
       --button-text: #ffffff;
       --tab-bg: #eeeeee;
       --tab-active-bg: #4caf50;
+      --minimal-border-color: var(--secondary-color);
       --guide-default-text: "راهنمایی اولیه: این پیام راهنماست. شما می‌توانید این متن را از طریق سورس آپدیت کنید.";
       
       writing-mode: horizontal-tb;
@@ -33,6 +34,7 @@
         --alert-bg: #1e1e1e;
         --button-bg: #81c784;
         --button-text: #ffffff;
+        --minimal-border-color: var(--secondary-color);
       }
     }
     
@@ -75,7 +77,7 @@
       margin: 100px auto;
     }
     
-    /* اطمینان از یکسان بودن عرض فیلد ورودی، دکمه و پیغام در ورود */
+    /* یکسان کردن عرض فیلد، دکمه و پیام در ورود */
     #login-container input,
     #login-container button,
     #loginMessage {
@@ -83,22 +85,37 @@
       padding: 10px;
       margin: 10px 0;
       font-size: 1rem;
-      border: 1px solid var(--secondary-color);
+      border: 1px solid var(--minimal-border-color);
       border-radius: 4px;
     }
     
-    /* استایل پیام ورود، مقدار اولیه "خوش آمدید" در HTML قرار دارد */
+    /* استایل پیام ورود: مقدار اولیه "خوش آمدید" در HTML قرار دارد */
     #loginMessage {
-      margin-top: 20px;
       background-color: var(--alert-bg);
     }
     
-    /* استایل تب‌ها (شامل تب راهنما) */
+    /* استایل دکمه ورود ویژه برای iOS و سایر مرورگرها */
+    #loginButton {
+      background-color: #ffffff;
+      color: #000000;
+      border: 1px solid var(--minimal-border-color);
+      padding: 10px;
+      width: 100%;
+      font-size: 1rem;
+      border-radius: 4px;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+    
+    /* استایل تب‌ها: اضافه کردن اسکرول افقی و جلوگیری از شکستن ردیف */
     #tabs {
       display: flex;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      flex-wrap: nowrap;
       justify-content: center;
       margin-bottom: 20px;
-      flex-wrap: wrap;
     }
     
     #tabs button {
@@ -110,10 +127,10 @@
       border: none;
       border-radius: 4px;
       transition: background-color 0.3s;
-      /* حذف استایل پیشفرض در سافاری و سایر مرورگرها */
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
+      border: 1px solid var(--minimal-border-color);
     }
     
     #tabs button.active {
@@ -135,7 +152,7 @@
       margin: 10px 0;
       padding: 8px;
       font-size: 1rem;
-      border: 1px solid var(--secondary-color);
+      border: 1px solid var(--minimal-border-color);
       border-radius: 4px;
     }
     
@@ -144,7 +161,6 @@
       background-color: var(--button-bg);
       color: var(--button-text);
       border: none;
-      /* حذف استایل پیشفرض در سافاری برای دکمه */
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
@@ -175,7 +191,6 @@
       max-width: 90%;
       width: 400px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      /* افزودن margin چپ و راست 10 پیکس برای فاصله گرفتن در نمایش‌های کوچک */
       margin-left: 10px;
       margin-right: 10px;
     }
@@ -196,9 +211,8 @@
       cursor: pointer;
       background-color: var(--button-bg);
       color: var(--button-text);
-      border: none;
+      border: 1px solid var(--minimal-border-color);
       border-radius: 4px;
-      /* حذف استایل پیشفرض سافاری */
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
