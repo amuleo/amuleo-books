@@ -5,12 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>پنل مدیریت کتاب</title>
   <style>
+    /* تنظیم box-sizing برای تمامی المان‌ها به‌منظور یکنواختی */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    
     /* تنظیمات پایه و متغیرهای رنگی در :root */
     :root {
       --bg-color: #ffffff;
       --text-color: #333333;
       --primary-color: #4caf50;
-      --secondary-color: #eeeeee;
+      --secondary-color: #eeeeee; /* برای پس‌زمینه‌های سبک و بوردها */
       --alert-bg: #f2f2f2;
       --button-bg: #4caf50;
       --button-text: #ffffff;
@@ -38,6 +43,25 @@
       }
     }
     
+    /* استایل سفارشی اسکرول بارها */
+    /* برای Chrome، Edge، Safari */
+    ::-webkit-scrollbar {
+      width: 1px;
+      height: 1px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--minimal-border-color);
+      border-radius: 1px;
+    }
+    /* برای Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--minimal-border-color) transparent;
+    }
+    
     /* تعریف فونت میخک از پوشه fonts */
     @font-face {
       font-family: 'Mikhak';
@@ -46,7 +70,7 @@
       font-style: normal;
     }
     
-    /* استفاده از فونت میخک در تمام المان‌ها */
+    /* استفاده از فونت میخک در تمامی المان‌ها */
     body,
     input,
     button,
@@ -77,7 +101,7 @@
       margin: 100px auto;
     }
     
-    /* یکسان کردن عرض فیلد، دکمه و پیام در ورود */
+    /* یکنواخت‌سازی عرض فیلد، دکمه و پیام ورود */
     #login-container input,
     #login-container button,
     #loginMessage {
@@ -89,12 +113,12 @@
       border-radius: 4px;
     }
     
-    /* استایل پیام ورود: مقدار اولیه "خوش آمدید" در HTML قرار دارد */
+    /* استایل پیام ورود */
     #loginMessage {
       background-color: var(--alert-bg);
     }
     
-    /* استایل دکمه ورود ویژه برای iOS و سایر مرورگرها */
+    /* استایل دکمه ورود ویژه (برای iOS و سایر مرورگرها) */
     #loginButton {
       background-color: #ffffff;
       color: #000000;
@@ -103,18 +127,18 @@
       width: 100%;
       font-size: 1rem;
       border-radius: 4px;
+      display: block;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
     }
     
-    /* استایل تب‌ها: اضافه کردن اسکرول افقی و جلوگیری از شکستن ردیف */
+    /* استایل تب‌ها: فعال کردن اسکرول افقی و جلوگیری از Wrapping */
     #tabs {
       display: flex;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       flex-wrap: nowrap;
-      justify-content: center;
       margin-bottom: 20px;
     }
     
@@ -124,13 +148,13 @@
       font-size: 1rem;
       cursor: pointer;
       background-color: var(--tab-bg);
-      border: none;
+      border: 1px solid var(--minimal-border-color);
       border-radius: 4px;
       transition: background-color 0.3s;
       -webkit-appearance: none;
       -moz-appearance: none;
       appearance: none;
-      border: 1px solid var(--minimal-border-color);
+      white-space: nowrap;
     }
     
     #tabs button.active {
