@@ -27,6 +27,9 @@
             --text: #333;
             --hover: #dbdce0;
             --span: #9e8e71;
+            /* New variables for pin indicator styling in light mode */
+            --pin-indicator-shadow: none; /* No shadow in light mode */
+            --pin-indicator-border: 1px solid var(--text); /* Border matching text color in light mode */
         }
 
         /* استایل‌های تم تاریک */
@@ -36,6 +39,9 @@
             --border: #666;
             --text: #f0f0f0;
             --hover: #1a1a1c;
+            /* New variables for pin indicator styling in dark mode */
+            --pin-indicator-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Shadow in dark mode */
+            --pin-indicator-border: 1px solid var(--border); /* Border matching general border in dark mode */
         }
 
         /* استایل اسکرول‌بار برای مرورگرهای WebKit */
@@ -296,7 +302,7 @@
             max-width: 800px;
             width: 100%;
             box-sizing: border-box;
-            position: relative;
+            position: relative; /* برای موقعیت‌دهی مطلق نشانگر پین */
             overflow: hidden;
             min-height: 250px;
             cursor: pointer;
@@ -551,6 +557,55 @@
             width: 39.5%;
             max-width: 39.5%;
         }
+
+        /* New flex container for the book title and pin */
+        .book-title-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* 10px gap between pin and title */
+            background: var(--bg); /* Inherit background from the theme */
+            padding: 15px; /* Inherit padding from pitem */
+            border-radius: 15px; /* Inherit border-radius from pitem */
+            /* No white-space: nowrap here, allow wrapping for title */
+            /* No overflow-x: auto here, let the text wrap */
+        }
+
+        .book-title-container .pin-indicator {
+            /* The pin indicator styles as defined before, but now within a flex context */
+            width: 30px;
+            height: 30px;
+            background-color: var(--card); /* Should match card background, not general bg */
+            border-radius: 10px; /* Match card border-radius */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            box-shadow: var(--pin-indicator-shadow); /* Use variable for shadow */
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            border: var(--pin-indicator-border); /* Use variable for border */
+            flex-shrink: 0; /* Prevent it from shrinking */
+        }
+
+        .book-title-container .pin-indicator i {
+            color: var(--text);
+            font-size: 1rem;
+        }
+
+        @media (max-width: 480px) {
+            .book-title-container .pin-indicator {
+                width: 25px;
+                height: 25px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .book-title-container .book-title-text {
+            flex-grow: 1; /* Allow the title text to take remaining space */
+            margin: 0; /* Remove default paragraph margin */
+            text-align: justify; /* Keep text justified */
+            white-space: normal; /* Allow text to wrap */
+            overflow-x: hidden; /* Prevent horizontal scroll on text */
+        }
     </style>
 </head>
 <body>
@@ -782,7 +837,8 @@
                     if (currentTitle && /pin/i.test(currentTitle)) {
                         // پاکسازی کلمه "pin" به صورت global و case‑insensitive و افزودن ایموجی پیش از عنوان
                         let cleanedTitle = currentTitle.replace(/pin/gi, "").trim();
-                        let newTitle = `📌 ${cleanedTitle}`;
+                        // Removed the emoji from here as per user request
+                        let newTitle = `${cleanedTitle}`;
                         if (book.name) {
                             book.name = newTitle;
                         } else if (book.title) {
@@ -933,6 +989,24 @@
                             statusColor = "#c44040";
                         }
 
+                        // ایجاد نشانگر پین برای کارت‌های پین شده
+                        let pinIndicatorHtml = '';
+                        if (book.isPinned) {
+                            pinIndicatorHtml = `
+                                <div class="pin-indicator">
+                                    <i class="fa-solid fa-thumbtack"></i>
+                                </div>
+                            `;
+                        }
+
+                        // Construct the title section with the pin indicator
+                        const titleSectionHtml = `
+                            <div class="book-title-container">
+                                ${pinIndicatorHtml}
+                                <p class="book-title-text"><span class="label">نام کتاب</span> │ ${title}</p>
+                            </div>
+                        `;
+
                         // ایجاد المان کارد و تعریف ساختار داخلی آن:
                         // - اطلاعات کتاب (نام کتاب، نویسنده، تاریخ مطالعه و بررسی) به صورت منسجم نمایش داده می‌شود.
                         // - بخش بررسی (بررسی) در قالب یک <span> جهت ثبت رویداد کلیک جداگانه تعریف شده است.
@@ -941,7 +1015,7 @@
                         card.className = 'card fade-in'; // اضافه کردن کلاس فید-این
                         card.innerHTML = `
                             <div class="card-content">
-                                <p class="pitem"><span class="label">نام کتاب</span> │ ${title}</p>
+                                ${titleSectionHtml}
                                 <p class="pitem"><span class="label">نویسنده</span> │ ${author}</p>
                                 <p class="pitem"><span class="label">تاریخ مطالعه</span> │ ${year}</p>
                                 <p class="pitem"><span class="label">بررسی</span> │ <span class="review-text">${reviewCardText}</span></p>
