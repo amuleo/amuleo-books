@@ -252,33 +252,33 @@
             box-sizing: border-box;
         }
 
-        /* استایل Skeleton Loader برای Summary Box */
+        /* استایل Skeleton Loader برای Summary Box (یکسان‌سازی با کارت‌های کتاب) */
         .summary-box-skeleton {
-            background-color: var(--card);
+            background-color: var(--card); /* Base background color */
             border-radius: 10px;
             padding: 15px;
-            margin: 15px auto;
-            max-width: 800px;
+            margin: 15px auto; /* حفظ حاشیه و مرکزیت */
+            max-width: 800px; /* حفظ حداکثر عرض */
             width: 100%;
             height: 80px; /* ارتفاع ثابت برای اسکلتون خلاصه */
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: flex-start; /* تغییر به flex-start برای تراز چپ */
+            justify-content: space-around; /* یکسان‌سازی با کارت‌های اسکلتون */
+            align-items: flex-start;
             animation: shimmer 1.5s infinite linear;
-            /* تغییر پالت رنگی و گرادینت برای مطابقت با کارت‌های اسکلتون */
-            background: linear-gradient(to right, var(--border) 8%, var(--hover) 18%, var(--border) 33%);
+            /* Removed direct linear-gradient from container to match card skeleton */
             background-size: 800px 100%;
             opacity: 1 !important;
         }
 
-        .summary-box-skeleton .skeleton-line {
+        /* استایل خطوط اسکلتون (یکسان برای خلاصه و کارت‌ها) */
+        .summary-box-skeleton .skeleton-line,
+        .card.skeleton .skeleton-line {
             height: 1em;
             background-color: var(--border);
             border-radius: 3px;
             margin-bottom: 0.5em;
-            /* اضافه کردن انیمیشن shimmer به خطوط اسکلتون خلاصه */
             animation: shimmer 1.5s infinite linear;
             background: linear-gradient(to right, var(--border) 8%, var(--hover) 18%, var(--border) 33%);
             background-size: 800px 100%;
@@ -319,16 +319,6 @@
             align-items: flex-start;
             padding: 15px;
             opacity: 1 !important; /* مطمئن شوید که در ابتدا قابل مشاهده است */
-        }
-
-        .card.skeleton .skeleton-line {
-            height: 1em;
-            background-color: var(--border);
-            border-radius: 3px;
-            margin-bottom: 0.5em;
-            animation: shimmer 1.5s infinite linear;
-            background: linear-gradient(to right, var(--border) 8%, var(--hover) 18%, var(--border) 33%);
-            background-size: 800px 100%;
         }
 
         .card.skeleton .skeleton-line:nth-child(1) {
@@ -602,7 +592,7 @@
             flex-grow: 1; /* Allow the title text to take remaining space */
             margin: 0; /* Remove default paragraph margin */
             text-align: justify; /* Keep text justified */
-            /* Remove white-space: normal and overflow-x: hidden to allow pitem's default nowrap and auto scroll */
+            /* Removed white-space: normal and overflow-x: hidden to allow pitem's default nowrap and auto scroll */
             background: none; /* Remove background from pitem itself */
             padding: 0; /* Remove padding from pitem itself */
             border-radius: 0; /* Remove border-radius from pitem itself */
