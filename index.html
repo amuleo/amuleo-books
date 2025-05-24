@@ -599,12 +599,17 @@
             }
         }
 
-        .book-title-container .book-title-text {
+        /* Styles for pitem when it's inside book-title-container */
+        .book-title-container .pitem {
             flex-grow: 1; /* Allow the title text to take remaining space */
             margin: 0; /* Remove default paragraph margin */
             text-align: justify; /* Keep text justified */
-            white-space: normal; /* Allow text to wrap */
-            overflow-x: hidden; /* Prevent horizontal scroll on text */
+            white-space: normal; /* Override pitem's nowrap for this specific context */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            /* The background, padding, border-radius are handled by .book-title-container */
+            background: none; /* Remove background from pitem itself */
+            padding: 0; /* Remove padding from pitem itself */
+            border-radius: 0; /* Remove border-radius from pitem itself */
         }
     </style>
 </head>
@@ -1003,7 +1008,7 @@
                         const titleSectionHtml = `
                             <div class="book-title-container">
                                 ${pinIndicatorHtml}
-                                <p class="book-title-text"><span class="label">نام کتاب</span> │ ${title}</p>
+                                <p class="pitem"><span class="label">نام کتاب</span> │ ${title}</p>
                             </div>
                         `;
 
