@@ -259,8 +259,9 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* تغییر به flex-start برای تراز چپ */
             animation: shimmer 1.5s infinite linear;
+            /* تغییر پالت رنگی و گرادینت برای مطابقت با کارت‌های اسکلتون */
             background: linear-gradient(to right, var(--border) 8%, var(--hover) 18%, var(--border) 33%);
             background-size: 800px 100%;
             opacity: 1 !important;
@@ -271,6 +272,10 @@
             background-color: var(--border);
             border-radius: 3px;
             margin-bottom: 0.5em;
+            /* اضافه کردن انیمیشن shimmer به خطوط اسکلتون خلاصه */
+            animation: shimmer 1.5s infinite linear;
+            background: linear-gradient(to right, var(--border) 8%, var(--hover) 18%, var(--border) 33%);
+            background-size: 800px 100%;
         }
 
         .summary-box-skeleton .skeleton-line:nth-child(1) {
