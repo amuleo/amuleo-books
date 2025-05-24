@@ -566,8 +566,6 @@
             background: var(--bg); /* Inherit background from the theme */
             padding: 15px; /* Inherit padding from pitem */
             border-radius: 15px; /* Inherit border-radius from pitem */
-            /* No white-space: nowrap here, allow wrapping for title */
-            /* No overflow-x: auto here, let the text wrap */
         }
 
         .book-title-container .pin-indicator {
@@ -604,9 +602,7 @@
             flex-grow: 1; /* Allow the title text to take remaining space */
             margin: 0; /* Remove default paragraph margin */
             text-align: justify; /* Keep text justified */
-            white-space: normal; /* Override pitem's nowrap for this specific context */
-            overflow-x: hidden; /* Prevent horizontal scroll */
-            /* The background, padding, border-radius are handled by .book-title-container */
+            /* Remove white-space: normal and overflow-x: hidden to allow pitem's default nowrap and auto scroll */
             background: none; /* Remove background from pitem itself */
             padding: 0; /* Remove padding from pitem itself */
             border-radius: 0; /* Remove border-radius from pitem itself */
